@@ -4,6 +4,7 @@
       <w>grpc</w>
       <w>mongo</w>
       <w>spaceuptech</w>
+      <w>upsert</w>
     </words>
   </dictionary>
 </component>

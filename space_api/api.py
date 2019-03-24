@@ -18,10 +18,10 @@ class API:
         return Mongo(self.project_id, self.url, self.token)
 
     def postgres(self):
-        return SQL(self.project_id, self.url, 'postgres', self.token)
+        return SQL(self.project_id, self.url, 'sql-postgres', self.token)
 
     def my_sql(self):
-        return SQL(self.project_id, self.url, 'mysql', self.token)
+        return SQL(self.project_id, self.url, 'sql-mysql', self.token)
 
     def call(self, engine_name: str, func_name: str, params, timeout: int = 5000):
         raise NotImplementedError("Coming Soon!")

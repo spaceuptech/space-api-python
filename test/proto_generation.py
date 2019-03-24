@@ -2,7 +2,7 @@ from space_api.proto import server_pb2
 import json
 
 project = 'project'
-db_type = 'sql'
+db_type = 'sql-mysql'
 col = 'collection'
 
 meta = server_pb2.Meta(project=project, dbType=db_type, col=col, token=None)

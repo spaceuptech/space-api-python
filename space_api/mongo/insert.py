@@ -3,11 +3,11 @@ from space_api.transport import make_meta, create
 
 
 class Insert:
-    def __init__(self, project_id: str, collection: str, url: str, db_type: str, token: Optional[str] = None):
+    def __init__(self, project_id: str, collection: str, url: str, token: Optional[str] = None):
         self.project_id = project_id
         self.collection = collection
         self.url = url
-        self.db_type = db_type
+        self.db_type = "mongo"
         self.token = token
         self.meta = make_meta(self.project_id, self.db_type, self.collection, self.token)
 

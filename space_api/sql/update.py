@@ -11,6 +11,7 @@ class Update:
         self.db_type = db_type
         self.token = token
         self.params = {'find': {}, 'update': {'$set': {}}}
+        self.meta = make_meta(self.project_id, self.db_type, self.collection, self.token)
 
     def where(self, *conditions):
         self.params['find'] = generate_find(AND(*conditions))
@@ -21,8 +22,7 @@ class Update:
         return self
 
     def all(self):
-        meta = make_meta(self.project_id, self.db_type, self.collection, self.token)
-        return update(self.url, find=self.params['find'], operation='all', _update=self.params['update'], meta=meta)
+        return update(self.url, find=self.params['find'], operation='all', _update=self.params['update'], meta=self.meta)
 
 
 __all__ = ['Update']

@@ -4,11 +4,11 @@ from space_api.transport import make_meta, read, make_read_options
 
 
 class Get:
-    def __init__(self, project_id: str, collection: str, url: str, db_type: str, token: Optional[str] = None):
+    def __init__(self, project_id: str, collection: str, url: str, token: Optional[str] = None):
         self.project_id = project_id
         self.collection = collection
         self.url = url
-        self.db_type = db_type
+        self.db_type = "mongo"
         self.token = token
         self.params = {'find': {}, 'options': {}}
         self.meta = make_meta(self.project_id, self.db_type, self.collection, self.token)
@@ -40,10 +40,6 @@ class Get:
         return self
 
     def one(self):
-        # Set a default limit if offset is specified and limit is not specified.
-        if self.params['options'].get('skip') is not None and self.params['options'].get('limit') is None:
-            self.params['options']['limit'] = 1
-
         options = self.params['options']
         read_options = make_read_options(select=options.get('select'), sort=options.get('sort'),
                                          skip=options.get('skip'), limit=options.get('limit'),
@@ -60,6 +56,21 @@ class Get:
                                          skip=options.get('skip'), limit=options.get('limit'),
                                          distinct=options.get('distinct'))
         return read(self.url, find=self.params['find'], operation='all', options=read_options, meta=self.meta)
+
+    def distinct(self, key):
+        self.params['options']['distinct'] = key
+        options = self.params['options']
+        read_options = make_read_options(select=options.get('select'), sort=options.get('sort'),
+                                         skip=options.get('skip'), limit=options.get('limit'),
+                                         distinct=options.get('distinct'))
+        return read(self.url, find=self.params['find'], operation='distinct', options=read_options, meta=self.meta)
+
+    def count(self):
+        options = self.params['options']
+        read_options = make_read_options(select=options.get('select'), sort=options.get('sort'),
+                                         skip=options.get('skip'), limit=options.get('limit'),
+                                         distinct=options.get('distinct'))
+        return read(self.url, find=self.params['find'], operation='count', options=read_options, meta=self.meta)
 
 
 __all__ = ['Get']
