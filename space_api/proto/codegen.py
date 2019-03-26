@@ -23,4 +23,5 @@ protoc.main((
     'server.proto',
 ))
 
-# Then, change the import line in server_pb2_grpc to `from space_api.proto import server_pb2 as server__pb2`
+# Then, change the import line in server_pb2_grpc TO:
+# `from space_api.proto import server_pb2 as server__pb2`

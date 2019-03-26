@@ -1,26 +1,64 @@
+"""
+SpaceUp Client Python API
+"""
 from space_api.sql.sql import SQL
 from space_api.mongo.mongo import Mongo
 
 
 class API:
-    def __init__(self, project_id, url):
+    """
+    The SpaceUp Client API
+    ::
+        from space_api import API
+        api = API("My-Project", "http://localhost:8080")
+
+    :param project_id: (str) The project ID
+    :param url: (str) The base URL of space-cloud server
+    """
+
+    def __init__(self, project_id: str, url: str):
         self.project_id = project_id
         self.url = url
         self.token = None
 
     def set_token(self, token: str):
+        """
+        Sets the JWT Token
+
+        :param token: (str) The signed JWT token received from the server on successful authentication
+        """
         self.token = token
 
     def set_project_id(self, project_id: str):
+        """
+        Sets the Project ID
+
+        :param project_id: (str) The project ID
+        """
         self.project_id = project_id
 
-    def mongo(self):
+    def mongo(self) -> 'Mongo':
+        """
+        Returns a MongoDB client instance
+
+        :return: MongoDB client instance
+        """
         return Mongo(self.project_id, self.url, self.token)
 
-    def postgres(self):
+    def postgres(self) -> 'SQL':
+        """
+        Returns a Postgres client instance
+
+        :return: Postgres client instance
+        """
         return SQL(self.project_id, self.url, 'sql-postgres', self.token)
 
-    def my_sql(self):
+    def my_sql(self) -> 'SQL':
+        """
+        Returns a MySQL client instance
+
+        :return: MySQL client instance
+        """
         return SQL(self.project_id, self.url, 'sql-mysql', self.token)
 
     def call(self, engine_name: str, func_name: str, params, timeout: int = 5000):

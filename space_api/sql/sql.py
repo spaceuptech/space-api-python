@@ -6,6 +6,20 @@ from space_api.sql.delete import Delete
 
 
 class SQL:
+    """
+    The SQL Client Interface
+    ::
+        from space_api import API
+        api = API("My-Project", "http://localhost:8080")
+        db = api.my_sql() # For a MySQL interface
+        db = api.postgres() # For a Postgres interface
+
+    :param project_id: (str) The project ID
+    :param url: (str) The project URL
+    :param db_type: (str) The database type
+    :param token: (str) The (optional) JWT Token
+    """
+
     def __init__(self, project_id: str, url: str, db_type: str, token: Optional[str] = None):
         self.project_id = project_id
         self.url = url
@@ -13,15 +27,38 @@ class SQL:
         self.token = token
 
     def get(self, collection: str):
+        """
+        Returns a SQL Get object
+        :param collection: (str) The collection name
+        :return: The SQL Get object
+        """
         return Get(self.project_id, collection, self.url, self.db_type, self.token)
 
     def insert(self, collection: str):
+        """
+        Returns a SQL Insert object
+
+        :param collection: (str) The collection name
+        :return: The SQL Insert object
+        """
         return Insert(self.project_id, collection, self.url, self.db_type, self.token)
 
     def update(self, collection: str):
+        """
+        Returns a SQL Update object
+
+        :param collection: (str) The collection name
+        :return: The SQL Update object
+        """
         return Update(self.project_id, collection, self.url, self.db_type, self.token)
 
     def delete(self, collection: str):
+        """
+        Returns a SQL Delete object
+
+        :param collection: (str) The collection name
+        :return: The SQL Delete object
+        """
         return Delete(self.project_id, collection, self.url, self.db_type, self.token)
 
     def live_query(self, collection: str):
