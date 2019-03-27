@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Dict, Any
 from space_api.utils import generate_find, AND
 from space_api.transport import make_meta, update
 
@@ -28,7 +28,7 @@ class Update:
         self.params = {'find': {}, 'update': {'$set': {}}}
         self.meta = make_meta(self.project_id, self.db_type, self.collection, self.token)
 
-    def where(self, *conditions):
+    def where(self, *conditions) -> 'Update':
         """
         Prepares the find parameters
 
@@ -37,7 +37,7 @@ class Update:
         self.params['find'] = generate_find(AND(*conditions))
         return self
 
-    def set(self, obj):
+    def set(self, obj) -> 'Update':
         """
         Prepares the updated values
 
@@ -46,13 +46,14 @@ class Update:
         self.params['update']['$set'] = obj
         return self
 
-    def all(self):
+    def all(self) -> Dict[str, Any]:
         """
         Updates all matching records
 
         :return: (dict{str:Any})  The response dictionary
         """
-        return update(self.url, find=self.params['find'], operation='all', _update=self.params['update'], meta=self.meta)
+        return update(self.url, find=self.params['find'], operation='all', _update=self.params['update'],
+                      meta=self.meta)
 
 
 __all__ = ['Update']

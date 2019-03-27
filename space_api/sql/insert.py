@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Dict, Any
 from space_api.transport import make_meta, create
 
 
@@ -27,7 +27,7 @@ class Insert:
         self.token = token
         self.meta = make_meta(self.project_id, self.db_type, self.collection, self.token)
 
-    def one(self, record):
+    def one(self, record) -> Dict[str, Any]:
         """
         Inserts a single record
         ::
@@ -39,7 +39,7 @@ class Insert:
         """
         return create(self.url, document=record, operation='one', meta=self.meta)
 
-    def all(self, records):
+    def all(self, records) -> Dict[str, Any]:
         """
         Inserts multiple records
         ::

@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Dict, Any
 from space_api.utils import generate_find, AND
 from space_api.transport import make_meta, delete
 
@@ -28,7 +28,7 @@ class Delete:
         self.params = {'find': {}}
         self.meta = make_meta(self.project_id, self.db_type, self.collection, self.token)
 
-    def where(self, *conditions):
+    def where(self, *conditions) -> 'Delete':
         """
         Prepares the find parameters
 
@@ -37,7 +37,7 @@ class Delete:
         self.params['find'] = generate_find(AND(*conditions))
         return self
 
-    def all(self):
+    def all(self) -> Dict[str, Any]:
         """
         Deletes all matching records
 

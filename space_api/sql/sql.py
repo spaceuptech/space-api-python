@@ -26,35 +26,36 @@ class SQL:
         self.db_type = db_type
         self.token = token
 
-    def get(self, collection: str):
+    def get(self, collection: str) -> 'Get':
         """
-        Returns a SQL Get object
+        Returns an SQL Get object
+        
         :param collection: (str) The collection name
         :return: The SQL Get object
         """
         return Get(self.project_id, collection, self.url, self.db_type, self.token)
 
-    def insert(self, collection: str):
+    def insert(self, collection: str) -> 'Insert':
         """
-        Returns a SQL Insert object
+        Returns an SQL Insert object
 
         :param collection: (str) The collection name
         :return: The SQL Insert object
         """
         return Insert(self.project_id, collection, self.url, self.db_type, self.token)
 
-    def update(self, collection: str):
+    def update(self, collection: str) -> 'Update':
         """
-        Returns a SQL Update object
+        Returns an SQL Update object
 
         :param collection: (str) The collection name
         :return: The SQL Update object
         """
         return Update(self.project_id, collection, self.url, self.db_type, self.token)
 
-    def delete(self, collection: str):
+    def delete(self, collection: str) -> 'Delete':
         """
-        Returns a SQL Delete object
+        Returns an SQL Delete object
 
         :param collection: (str) The collection name
         :return: The SQL Delete object
@@ -64,10 +65,10 @@ class SQL:
     def live_query(self, collection: str):
         raise NotImplementedError("Coming Soon!")
 
-    def profile(self, id: str):
+    def profile(self, _id: str):
         raise NotImplementedError("Coming Soon!")
 
-    def edit_profile(self, id: str, email: str, name: str, password: str):
+    def edit_profile(self, _id: str, email: str, name: str, password: str):
         raise NotImplementedError("Coming Soon!")
 
     def profiles(self):

@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Dict, Any
 from space_api.utils import generate_find, AND
 from space_api.transport import make_meta, read, make_read_options
 
@@ -27,7 +27,7 @@ class Get:
         self.params = {'find': {}, 'options': {}}
         self.meta = make_meta(self.project_id, self.db_type, self.collection, self.token)
 
-    def where(self, *conditions):
+    def where(self, *conditions) -> 'Get':
         """
         Prepares the find parameters
 
@@ -36,7 +36,7 @@ class Get:
         self.params['find'] = generate_find(AND(*conditions))
         return self
 
-    def select(self, select):
+    def select(self, select) -> 'Get':
         """
         Sets the fields to be selected
         ::
@@ -48,7 +48,7 @@ class Get:
         self.params['options']['select'] = select
         return self
 
-    def sort(self, *array):
+    def sort(self, *array) -> 'Get':
         """
         Sets the fields to sort the results
         ::
@@ -66,7 +66,7 @@ class Get:
         self.params['options']['sort'] = ans
         return self
 
-    def skip(self, offset: int):
+    def skip(self, offset: int) -> 'Get':
         """
         Sets the number of records to skip
         ::
@@ -78,7 +78,7 @@ class Get:
         self.params['options']['skip'] = offset
         return self
 
-    def limit(self, _limit: int):
+    def limit(self, _limit: int) -> 'Get':
         """
         Sets the limit on number of records returned by the query
         ::
@@ -91,7 +91,7 @@ class Get:
         self.params['options']['limit'] = _limit
         return self
 
-    def one(self):
+    def one(self) -> Dict[str, Any]:
         """
         Gets a single record (If no record is returned, the status code is 400)
         ::
@@ -109,7 +109,7 @@ class Get:
                                          distinct=options.get('distinct'))
         return read(self.url, find=self.params['find'], operation='one', options=read_options, meta=self.meta)
 
-    def all(self):
+    def all(self) -> Dict[str, Any]:
         """
         Gets multiple records
         ::

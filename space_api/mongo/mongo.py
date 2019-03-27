@@ -7,34 +7,76 @@ from space_api.mongo.aggregate import Aggregate
 
 
 class Mongo:
+    """
+    The Mongo Client Interface
+    ::
+        from space_api import API
+        api = API("My-Project", "http://localhost:8080")
+        db = api.mongo()
+
+    :param project_id: (str) The project ID
+    :param url: (str) The project URL
+    :param token: (str) The (optional) JWT Token
+    """
+
     def __init__(self, project_id: str, url: str, token: Optional[str] = None):
         self.project_id = project_id
         self.url = url
         self.db_type = "mongo"
         self.token = token
 
-    def get(self, collection: str):
+    def get(self, collection: str) -> 'Get':
+        """
+        Returns a Mongo Get object
+
+        :param collection: (str) The collection name
+        :return: The Mongo Get object
+        """
         return Get(self.project_id, collection, self.url, self.token)
 
-    def insert(self, collection: str):
+    def insert(self, collection: str) -> 'Insert':
+        """
+        Returns a Mongo Insert object
+
+        :param collection: (str) The collection name
+        :return: The Mongo Insert object
+        """
         return Insert(self.project_id, collection, self.url, self.token)
 
-    def update(self, collection: str):
+    def update(self, collection: str) -> 'Update':
+        """
+        Returns a Mongo Update object
+
+        :param collection: (str) The collection name
+        :return: The Mongo Update object
+        """
         return Update(self.project_id, collection, self.url, self.token)
 
-    def delete(self, collection: str):
+    def delete(self, collection: str) -> 'Delete':
+        """
+        Returns a Mongo Delete object
+
+        :param collection: (str) The collection name
+        :return: The Mongo Delete object
+        """
         return Delete(self.project_id, collection, self.url, self.token)
 
-    def aggr(self, collection: str):
+    def aggr(self, collection: str) -> 'Aggregate':
+        """
+        Returns a Mongo Aggregate object
+
+        :param collection: (str) The collection name
+        :return: The Mongo Aggregate object
+        """
         return Aggregate(self.project_id, collection, self.url, self.token)
 
     def live_query(self, collection: str):
         raise NotImplementedError("Coming Soon!")
 
-    def profile(self, id: str):
+    def profile(self, _id: str):
         raise NotImplementedError("Coming Soon!")
 
-    def edit_profile(self, id: str, email: str, name: str, password: str):
+    def edit_profile(self, _id: str, email: str, name: str, password: str):
         raise NotImplementedError("Coming Soon!")
 
     def profiles(self):
