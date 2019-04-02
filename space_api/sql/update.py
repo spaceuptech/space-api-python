@@ -25,7 +25,7 @@ class Update:
         self.url = url
         self.db_type = db_type
         self.token = token
-        self.params = {'find': {}, 'update': {'$set': {}}}
+        self.params = {'find': {}, 'update': {}}
         self.meta = make_meta(self.project_id, self.db_type, self.collection, self.token)
 
     def where(self, *conditions) -> 'Update':
@@ -43,7 +43,7 @@ class Update:
 
         :param obj: The object containing the fields to set
         """
-        self.params['update']['$set'] = obj
+        self.params['update'] = {'$set': obj}
         return self
 
     def all(self) -> Dict[str, Any]:
