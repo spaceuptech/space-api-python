@@ -18,7 +18,13 @@ class API:
 
     def __init__(self, project_id: str, url: str):
         self.project_id = project_id
-        self.url = url
+        if url.startswith("http://"):
+            self.url = url.lstrip("http://")
+        elif url.startswith("https://"):
+            self.url = url.lstrip("https://")
+        else:
+            self.url = url
+        print(self.url)
         self.token = None
 
     def set_token(self, token: str):
@@ -60,6 +66,9 @@ class API:
         :return: MySQL client instance
         """
         return SQL(self.project_id, self.url, 'sql-mysql', self.token)
+
+    def __str__(self):
+        return f'SpaceAPI(project_id:{self.project_id}, url:{self.url}, token:{self.token})'
 
     def call(self, engine_name: str, func_name: str, params, timeout: int = 5000):
         raise NotImplementedError("Coming Soon!")

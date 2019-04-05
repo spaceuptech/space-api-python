@@ -13,7 +13,7 @@ def _obj_to_utf8_bytes(obj) -> bytes:
     return json.dumps(obj, separators=(',', ':')).encode(encoding='utf-8')
 
 
-def _get_response_dict(response: server_pb2.Response) -> Dict[str:Any]:
+def _get_response_dict(response: server_pb2.Response) -> Dict[str, Any]:
     """
     Gets the response dictionary corresponding to a gRPC Response
 
@@ -23,7 +23,7 @@ def _get_response_dict(response: server_pb2.Response) -> Dict[str:Any]:
     ans = dict()
     ans["status"] = response.status
     ans["error"] = response.error
-    ans["result"] = json.loads(response.result)
+    ans["result"] = json.loads(response.result) if len(response.result) > 0 else ""
     return ans
 
 
