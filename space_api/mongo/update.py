@@ -44,7 +44,7 @@ class Update:
 
         :param obj: An object containing the fields to set
         """
-        self.params['update'] = {'$set': obj}
+        self.params['update']['$set'] = obj
         return self
 
     def push(self, obj) -> 'Update':

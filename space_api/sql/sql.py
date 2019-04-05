@@ -26,6 +26,12 @@ class SQL:
         self.db_type = db_type
         self.token = token
 
+    def __str__(self):
+        if self.db_type == 'sql-mysql':
+            return f'SpaceAPI MySQL(project_id:{self.project_id}, url:{self.url}, token:{self.token})'
+        elif self.db_type == 'sql-postgres':
+            return f'SpaceAPI Postgres(project_id:{self.project_id}, url:{self.url}, token:{self.token})'
+
     def get(self, collection: str) -> 'Get':
         """
         Returns an SQL Get object

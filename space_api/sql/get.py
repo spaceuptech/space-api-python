@@ -40,6 +40,7 @@ class Get:
         """
         Sets the fields to be selected
         ::
+            # Given query will only select author and title fields
             select = {'author':1, 'title':1}
             response = db.get('posts').select(select).all()
 

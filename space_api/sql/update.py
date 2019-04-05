@@ -43,7 +43,7 @@ class Update:
 
         :param obj: The object containing the fields to set
         """
-        self.params['update'] = {'$set': obj}
+        self.params['update']['$set'] = obj
         return self
 
     def all(self) -> Dict[str, Any]:

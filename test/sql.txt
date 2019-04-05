@@ -1,0 +1,2 @@
+create database test_database;
+create table books(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), author VARCHAR(255));
