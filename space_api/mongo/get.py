@@ -1,6 +1,7 @@
 from typing import Optional, Dict, Any
 from space_api.utils import generate_find, AND
 from space_api.transport import make_meta, read, make_read_options
+from space_api.proto.server_pb2_grpc import SpaceCloudStub
 
 
 class Get:
@@ -8,20 +9,20 @@ class Get:
     The Mongo Get Interface
     ::
         from space_api import API, AND, OR, COND
-        api = API("My-Project", "http://localhost:8080")
+        api = API("My-Project", "localhost:8080")
         db = api.mongo()
         response = db.get('posts').where(AND(COND('title', '==', 'Title1'))).all()
 
     :param project_id: (str) The project ID
     :param collection: (str) The collection name
-    :param url: (str) The project URL
+    :param stub: (server_pb2_grpc.SpaceCloudStub) The gRPC endpoint stub
     :param token: (str) The (optional) JWT Token
     """
 
-    def __init__(self, project_id: str, collection: str, url: str, token: Optional[str] = None):
+    def __init__(self, project_id: str, collection: str, stub: SpaceCloudStub, token: Optional[str] = None):
         self.project_id = project_id
         self.collection = collection
-        self.url = url
+        self.stub = stub
         self.db_type = "mongo"
         self.token = token
         self.params = {'find': {}, 'options': {}}
@@ -103,7 +104,7 @@ class Get:
         read_options = make_read_options(select=options.get('select'), sort=options.get('sort'),
                                          skip=options.get('skip'), limit=options.get('limit'),
                                          distinct=options.get('distinct'))
-        return read(self.url, find=self.params['find'], operation='one', options=read_options, meta=self.meta)
+        return read(self.stub, find=self.params['find'], operation='one', options=read_options, meta=self.meta)
 
     def all(self) -> Dict[str, Any]:
         """
@@ -121,7 +122,7 @@ class Get:
         read_options = make_read_options(select=options.get('select'), sort=options.get('sort'),
                                          skip=options.get('skip'), limit=options.get('limit'),
                                          distinct=options.get('distinct'))
-        return read(self.url, find=self.params['find'], operation='all', options=read_options, meta=self.meta)
+        return read(self.stub, find=self.params['find'], operation='all', options=read_options, meta=self.meta)
 
     def distinct(self, key) -> Dict[str, Any]:
         """
@@ -137,7 +138,7 @@ class Get:
         read_options = make_read_options(select=options.get('select'), sort=options.get('sort'),
                                          skip=options.get('skip'), limit=options.get('limit'),
                                          distinct=options.get('distinct'))
-        return read(self.url, find=self.params['find'], operation='distinct', options=read_options, meta=self.meta)
+        return read(self.stub, find=self.params['find'], operation='distinct', options=read_options, meta=self.meta)
 
     def count(self) -> Dict[str, Any]:
         """
@@ -151,7 +152,7 @@ class Get:
         read_options = make_read_options(select=options.get('select'), sort=options.get('sort'),
                                          skip=options.get('skip'), limit=options.get('limit'),
                                          distinct=options.get('distinct'))
-        return read(self.url, find=self.params['find'], operation='count', options=read_options, meta=self.meta)
+        return read(self.stub, find=self.params['find'], operation='count', options=read_options, meta=self.meta)
 
 
 __all__ = ['Get']

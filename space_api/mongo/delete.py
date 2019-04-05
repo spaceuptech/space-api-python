@@ -1,6 +1,7 @@
 from typing import Optional, Dict, Any
 from space_api.utils import generate_find, AND
 from space_api.transport import make_meta, delete
+from space_api.proto.server_pb2_grpc import SpaceCloudStub
 
 
 class Delete:
@@ -8,19 +9,20 @@ class Delete:
     The Mongo Delete Interface
     ::
         from space_api import API, AND, OR, COND
-        api = API("My-Project", "http://localhost:8080")
+        api = API("My-Project", "localhost:8080")
         db = api.mongo()
         response = db.delete('posts').where(AND(COND('title', '==', 'Title1'))).all()
 
     :param project_id: (str) The project ID
     :param collection: (str) The collection name
-    :param url: (str) The project URL
+    :param stub: (server_pb2_grpc.SpaceCloudStub) The gRPC endpoint stub
     :param token: (str) The (optional) JWT Token
     """
-    def __init__(self, project_id: str, collection: str, url: str, token: Optional[str] = None):
+
+    def __init__(self, project_id: str, collection: str, stub: SpaceCloudStub, token: Optional[str] = None):
         self.project_id = project_id
         self.collection = collection
-        self.url = url
+        self.stub = stub
         self.db_type = "mongo"
         self.token = token
         self.params = {'find': {}}
@@ -41,7 +43,7 @@ class Delete:
 
         :return: (dict{str:Any})  The response dictionary
         """
-        return delete(self.url, find=self.params['find'], operation='one', meta=self.meta)
+        return delete(self.stub, find=self.params['find'], operation='one', meta=self.meta)
 
     def all(self) -> Dict[str, Any]:
         """
@@ -49,7 +51,7 @@ class Delete:
 
         :return: (dict{str:Any})  The response dictionary
         """
-        return delete(self.url, find=self.params['find'], operation='all', meta=self.meta)
+        return delete(self.stub, find=self.params['find'], operation='all', meta=self.meta)
 
 
 __all__ = ['Delete']
