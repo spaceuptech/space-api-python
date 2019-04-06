@@ -1,5 +1,6 @@
 from typing import Optional, Dict, Any
 from space_api.transport import make_meta, aggregate
+from space_api.proto.server_pb2_grpc import SpaceCloudStub
 
 
 class Aggregate:
@@ -7,7 +8,7 @@ class Aggregate:
     The Mongo Aggregate Interface
     ::
         from space_api import API, AND, OR, COND
-        api = API("My-Project", "http://localhost:8080")
+        api = API("My-Project", "localhost:8080")
         db = api.mongo()
         _pipe = [
             {'$match': {'status': 'A'}},
@@ -17,14 +18,14 @@ class Aggregate:
 
     :param project_id: (str) The project ID
     :param collection: (str) The collection name
-    :param url: (str) The project URL
+    :param stub: (server_pb2_grpc.SpaceCloudStub) The gRPC endpoint stub
     :param token: (str) The (optional) JWT Token
     """
 
-    def __init__(self, project_id: str, collection: str, url: str, token: Optional[str] = None):
+    def __init__(self, project_id: str, collection: str, stub: SpaceCloudStub, token: Optional[str] = None):
         self.project_id = project_id
         self.collection = collection
-        self.url = url
+        self.stub = stub
         self.db_type = "mongo"
         self.token = token
         self.params = {}
@@ -47,7 +48,7 @@ class Aggregate:
 
         :return: (dict{str:Any})  The response dictionary
         """
-        return aggregate(self.url, pipeline=self.params['pipe'], operation='one', meta=self.meta)
+        return aggregate(self.stub, pipeline=self.params['pipe'], operation='one', meta=self.meta)
 
     def all(self) -> Dict[str, Any]:
         """
@@ -57,7 +58,7 @@ class Aggregate:
 
         :return: (dict{str:Any})  The response dictionary
         """
-        return aggregate(self.url, pipeline=self.params['pipe'], operation='all', meta=self.meta)
+        return aggregate(self.stub, pipeline=self.params['pipe'], operation='all', meta=self.meta)
 
 
 __all__ = ['Aggregate']

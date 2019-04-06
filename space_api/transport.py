@@ -55,11 +55,11 @@ def make_read_options(select: Dict[str, int], sort: Dict[str, int], skip: int, l
     return server_pb2.ReadOptions(select=select, sort=sort, skip=skip, limit=limit, distinct=distinct)
 
 
-def create(url: str, document, operation: str, meta: server_pb2.Meta) -> Dict[str, Any]:
+def create(stub: server_pb2_grpc.SpaceCloudStub, document, operation: str, meta: server_pb2.Meta) -> Dict[str, Any]:
     """
     Calls the gRPC Create function
 
-    :param url: (str) The project URL
+    :param stub: (server_pb2_grpc.SpaceCloudStub) The gRPC endpoint stub
     :param document: The document to create
     :param operation: (str) The operation to perform
     :param meta: (server_pb2.Meta) The gRPC Meta object
@@ -67,16 +67,14 @@ def create(url: str, document, operation: str, meta: server_pb2.Meta) -> Dict[st
     """
     document = _obj_to_utf8_bytes(document)
     create_request = server_pb2.CreateRequest(document=document, operation=operation, meta=meta)
-    with grpc.insecure_channel(url) as channel:
-        stub = server_pb2_grpc.SpaceCloudStub(channel)
-        return _get_response_dict(stub.Create(create_request))
+    return _get_response_dict(stub.Create(create_request))
 
 
-def read(url: str, find, operation: str, options: server_pb2.ReadOptions, meta: server_pb2.Meta) -> Dict[str, Any]:
+def read(stub: server_pb2_grpc.SpaceCloudStub, find, operation: str, options: server_pb2.ReadOptions, meta: server_pb2.Meta) -> Dict[str, Any]:
     """
     Calls the gRPC Read function
     
-    :param url: (str) The project URL 
+    :param stub: (server_pb2_grpc.SpaceCloudStub) The gRPC endpoint stub 
     :param find: The find parameters
     :param operation: (str) The operation to perform
     :param options: (server_pb2.ReadOptions) 
@@ -85,16 +83,14 @@ def read(url: str, find, operation: str, options: server_pb2.ReadOptions, meta: 
     """
     find = _obj_to_utf8_bytes(find)
     read_request = server_pb2.ReadRequest(find=find, operation=operation, options=options, meta=meta)
-    with grpc.insecure_channel(url) as channel:
-        stub = server_pb2_grpc.SpaceCloudStub(channel)
-        return _get_response_dict(stub.Read(read_request))
+    return _get_response_dict(stub.Read(read_request))
 
 
-def update(url: str, find, operation: str, _update, meta: server_pb2.Meta) -> Dict[str, Any]:
+def update(stub: server_pb2_grpc.SpaceCloudStub, find, operation: str, _update, meta: server_pb2.Meta) -> Dict[str, Any]:
     """
     Calls the gRPC Update function
 
-    :param url: (str) The project URL
+    :param stub: (server_pb2_grpc.SpaceCloudStub) The gRPC endpoint stub
     :param find: The find parameters
     :param operation: (str) The operation to perform
     :param _update: The update parameters
@@ -104,16 +100,14 @@ def update(url: str, find, operation: str, _update, meta: server_pb2.Meta) -> Di
     find = _obj_to_utf8_bytes(find)
     _update = _obj_to_utf8_bytes(_update)
     update_request = server_pb2.UpdateRequest(find=find, operation=operation, update=_update, meta=meta)
-    with grpc.insecure_channel(url) as channel:
-        stub = server_pb2_grpc.SpaceCloudStub(channel)
-        return _get_response_dict(stub.Update(update_request))
+    return _get_response_dict(stub.Update(update_request))
 
 
-def delete(url: str, find, operation: str, meta: server_pb2.Meta) -> Dict[str, Any]:
+def delete(stub: server_pb2_grpc.SpaceCloudStub, find, operation: str, meta: server_pb2.Meta) -> Dict[str, Any]:
     """
     Calls the gRPC Delete function
 
-    :param url: (str) The project URL
+    :param stub: (server_pb2_grpc.SpaceCloudStub) The gRPC endpoint stub
     :param find: The find parameters
     :param operation: (str) The operation to perform
     :param meta: (server_pb2.Meta) The gRPC Meta object
@@ -121,16 +115,14 @@ def delete(url: str, find, operation: str, meta: server_pb2.Meta) -> Dict[str, A
     """
     find = _obj_to_utf8_bytes(find)
     delete_request = server_pb2.DeleteRequest(find=find, operation=operation, meta=meta)
-    with grpc.insecure_channel(url) as channel:
-        stub = server_pb2_grpc.SpaceCloudStub(channel)
-        return _get_response_dict(stub.Delete(delete_request))
+    return _get_response_dict(stub.Delete(delete_request))
 
 
-def aggregate(url: str, pipeline, operation: str, meta: server_pb2.Meta) -> Dict[str, Any]:
+def aggregate(stub: server_pb2_grpc.SpaceCloudStub, pipeline, operation: str, meta: server_pb2.Meta) -> Dict[str, Any]:
     """
     Calls the gRPC Aggregate function
 
-    :param url: (str) The project URL
+    :param stub: (server_pb2_grpc.SpaceCloudStub) The gRPC endpoint stub
     :param pipeline: The pipeline parameters
     :param operation: (str) The operation to perform
     :param meta: (server_pb2.Meta) The gRPC Meta object
@@ -138,6 +130,4 @@ def aggregate(url: str, pipeline, operation: str, meta: server_pb2.Meta) -> Dict
     """
     pipeline = _obj_to_utf8_bytes(pipeline)
     aggregate_request = server_pb2.AggregateRequest(pipeline=pipeline, operation=operation, meta=meta)
-    with grpc.insecure_channel(url) as channel:
-        stub = server_pb2_grpc.SpaceCloudStub(channel)
-        return _get_response_dict(stub.Aggregate(aggregate_request))
+    return _get_response_dict(stub.Aggregate(aggregate_request))

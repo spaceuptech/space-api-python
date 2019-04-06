@@ -1,6 +1,8 @@
 """
 SpaceUp Client Python API
 """
+import grpc
+from space_api.proto.server_pb2_grpc import SpaceCloudStub
 from space_api.sql.sql import SQL
 from space_api.mongo.mongo import Mongo
 
@@ -10,7 +12,7 @@ class API:
     The SpaceUp Client API
     ::
         from space_api import API
-        api = API("My-Project", "http://localhost:8080")
+        api = API("My-Project", "localhost:8080")
 
     :param project_id: (str) The project ID
     :param url: (str) The base URL of space-cloud server
@@ -24,8 +26,16 @@ class API:
             self.url = url.lstrip("https://")
         else:
             self.url = url
-        print(self.url)
         self.token = None
+        self.channel = grpc.insecure_channel(self.url)
+        self.stub = SpaceCloudStub(self.channel)
+
+    def close(self):
+        self.channel.close()
+
+    def connect(self):
+        self.channel = grpc.insecure_channel(self.url)
+        self.stub = SpaceCloudStub(self.channel)
 
     def set_token(self, token: str):
         """
@@ -49,7 +59,7 @@ class API:
 
         :return: MongoDB client instance
         """
-        return Mongo(self.project_id, self.url, self.token)
+        return Mongo(self.project_id, self.stub, self.token)
 
     def postgres(self) -> 'SQL':
         """
@@ -57,7 +67,7 @@ class API:
 
         :return: Postgres client instance
         """
-        return SQL(self.project_id, self.url, 'sql-postgres', self.token)
+        return SQL(self.project_id, self.stub, 'sql-postgres', self.token)
 
     def my_sql(self) -> 'SQL':
         """
@@ -65,7 +75,7 @@ class API:
 
         :return: MySQL client instance
         """
-        return SQL(self.project_id, self.url, 'sql-mysql', self.token)
+        return SQL(self.project_id, self.stub, 'sql-mysql', self.token)
 
     def __str__(self):
         return f'SpaceAPI(project_id:{self.project_id}, url:{self.url}, token:{self.token})'
