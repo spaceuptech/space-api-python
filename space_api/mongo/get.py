@@ -11,15 +11,17 @@ class Get:
         from space_api import API, AND, OR, COND
         api = API("My-Project", "localhost:8080")
         db = api.mongo()
-        response = db.get('posts').where(AND(COND('title', '==', 'Title1'))).all()
+        response = db.get('posts').where(AND(COND('title', '==', 'Title1'))).apply()
 
     :param project_id: (str) The project ID
     :param collection: (str) The collection name
     :param stub: (server_pb2_grpc.SpaceCloudStub) The gRPC endpoint stub
     :param token: (str) The (optional) JWT Token
+    :param operation: (str) The (optional) operation (one/all/distinct/count) (Defaults to 'all')
     """
 
-    def __init__(self, project_id: str, collection: str, stub: SpaceCloudStub, token: Optional[str] = None):
+    def __init__(self, project_id: str, collection: str, stub: SpaceCloudStub, token: Optional[str] = None,
+                 operation: str = 'all'):
         self.project_id = project_id
         self.collection = collection
         self.stub = stub
@@ -27,6 +29,7 @@ class Get:
         self.token = token
         self.params = {'find': {}, 'options': {}}
         self.meta = make_meta(self.project_id, self.db_type, self.collection, self.token)
+        self.operation = operation
 
     def where(self, *conditions) -> 'Get':
         """
@@ -42,7 +45,7 @@ class Get:
         Sets the fields to be selected
         ::
             select = {'author':1, 'title':1}
-            response = db.get('posts').select(select).all()
+            response = db.get('posts').select(select).apply()
 
         :param select: (*) The conditions to find by
         """
@@ -54,7 +57,7 @@ class Get:
         Sets the fields to sort the results
         ::
             # The given query will sort results first by age (asc) then by age (desc)
-            response = db.get('posts').sort('title', '-age').all()
+            response = db.get('posts').sort('title', '-age').apply()
 
         :param array: (*) The fields to sort the results by
         """
@@ -72,7 +75,7 @@ class Get:
         Sets the number of records to skip
         ::
             The given query will skip the first 10 records
-            response = db.get('posts').skip(10).all()
+            response = db.get('posts').skip(10).apply()
 
         :param offset: (int) The number of records to skip
         """
@@ -84,7 +87,7 @@ class Get:
         Sets the limit on number of records returned by the query
         ::
             # The given query will limit the result to 10 records
-            response = db.get('posts').limit(10).all()
+            response = db.get('posts').limit(10).apply()
 
         :param _limit: (int) The maximum number of results returned
         :return:
@@ -92,25 +95,20 @@ class Get:
         self.params['options']['limit'] = _limit
         return self
 
-    def one(self) -> Dict[str, Any]:
+    def key(self, key) -> 'Get':
         """
-        Gets a single record (If no record is returned, the status code is 400)
-        ::
-            response = db.get('posts').one()
+        Sets the key for distinct values
 
-        :return: (dict{str:Any})  The response dictionary
+        :param key: The key for distinct values
         """
-        options = self.params['options']
-        read_options = make_read_options(select=options.get('select'), sort=options.get('sort'),
-                                         skip=options.get('skip'), limit=options.get('limit'),
-                                         distinct=options.get('distinct'))
-        return read(self.stub, find=self.params['find'], operation='one', options=read_options, meta=self.meta)
+        self.params['options']['distinct'] = key
+        return self
 
-    def all(self) -> Dict[str, Any]:
+    def apply(self) -> Dict[str, Any]:
         """
-        Gets multiple records
+        Triggers the get request
         ::
-            response = db.get('posts').all()
+            response = db.get('posts').apply()
 
         :return: (dict{str:Any})  The response dictionary
         """
@@ -122,37 +120,7 @@ class Get:
         read_options = make_read_options(select=options.get('select'), sort=options.get('sort'),
                                          skip=options.get('skip'), limit=options.get('limit'),
                                          distinct=options.get('distinct'))
-        return read(self.stub, find=self.params['find'], operation='all', options=read_options, meta=self.meta)
-
-    def distinct(self, key) -> Dict[str, Any]:
-        """
-        Gets all distinct records
-        ::
-            response = db.get('posts').distinct('category')
-
-        :param key: The key for distinct values
-        :return: (dict{str:Any})  The response dictionary
-        """
-        self.params['options']['distinct'] = key
-        options = self.params['options']
-        read_options = make_read_options(select=options.get('select'), sort=options.get('sort'),
-                                         skip=options.get('skip'), limit=options.get('limit'),
-                                         distinct=options.get('distinct'))
-        return read(self.stub, find=self.params['find'], operation='distinct', options=read_options, meta=self.meta)
-
-    def count(self) -> Dict[str, Any]:
-        """
-        Gets the count of total number of documents that were queried
-        ::
-            response = db.get('posts').count()
-
-        :return: (dict{str:Any})  The response dictionary
-        """
-        options = self.params['options']
-        read_options = make_read_options(select=options.get('select'), sort=options.get('sort'),
-                                         skip=options.get('skip'), limit=options.get('limit'),
-                                         distinct=options.get('distinct'))
-        return read(self.stub, find=self.params['find'], operation='count', options=read_options, meta=self.meta)
+        return read(self.stub, find=self.params['find'], operation=self.operation, options=read_options, meta=self.meta)
 
 
 __all__ = ['Get']

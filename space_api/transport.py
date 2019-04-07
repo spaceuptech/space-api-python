@@ -1,4 +1,3 @@
-import grpc
 import json
 from typing import Optional, Dict, Any
 from space_api.proto import server_pb2, server_pb2_grpc
@@ -70,7 +69,8 @@ def create(stub: server_pb2_grpc.SpaceCloudStub, document, operation: str, meta:
     return _get_response_dict(stub.Create(create_request))
 
 
-def read(stub: server_pb2_grpc.SpaceCloudStub, find, operation: str, options: server_pb2.ReadOptions, meta: server_pb2.Meta) -> Dict[str, Any]:
+def read(stub: server_pb2_grpc.SpaceCloudStub, find, operation: str, options: server_pb2.ReadOptions,
+         meta: server_pb2.Meta) -> Dict[str, Any]:
     """
     Calls the gRPC Read function
     
@@ -86,7 +86,8 @@ def read(stub: server_pb2_grpc.SpaceCloudStub, find, operation: str, options: se
     return _get_response_dict(stub.Read(read_request))
 
 
-def update(stub: server_pb2_grpc.SpaceCloudStub, find, operation: str, _update, meta: server_pb2.Meta) -> Dict[str, Any]:
+def update(stub: server_pb2_grpc.SpaceCloudStub, find, operation: str, _update, meta: server_pb2.Meta) -> \
+        Dict[str, Any]:
     """
     Calls the gRPC Update function
 

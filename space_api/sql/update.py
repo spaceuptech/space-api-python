@@ -11,17 +11,18 @@ class Update:
         from space_api import API, AND, OR, COND
         api = API("My-Project", "localhost:8080")
         db = api.my_sql() # For a MySQL interface
-        response = db.update('posts').where(AND(COND('title', '==', 'Title1'))).set({'title':'Title2'}).all()
+        response = db.update('posts').where(AND(COND('title', '==', 'Title1'))).set({'title':'Title2'}).apply()
 
     :param project_id: (str) The project ID
     :param collection: (str) The collection name
     :param stub: (server_pb2_grpc.SpaceCloudStub) The gRPC endpoint stub
     :param db_type: (str) The database type
     :param token: (str) The (optional) JWT Token
+    :param operation: (str) The (optional) operation (one/all) (Defaults to 'all')
     """
 
     def __init__(self, project_id: str, collection: str, stub: SpaceCloudStub, db_type: str,
-                 token: Optional[str] = None):
+                 token: Optional[str] = None, operation: str = 'all'):
         self.project_id = project_id
         self.collection = collection
         self.stub = stub
@@ -29,6 +30,7 @@ class Update:
         self.token = token
         self.params = {'find': {}, 'update': {}}
         self.meta = make_meta(self.project_id, self.db_type, self.collection, self.token)
+        self.operation = operation
 
     def where(self, *conditions) -> 'Update':
         """
@@ -48,13 +50,13 @@ class Update:
         self.params['update']['$set'] = obj
         return self
 
-    def all(self) -> Dict[str, Any]:
+    def apply(self) -> Dict[str, Any]:
         """
-        Updates all matching records
+        Triggers the update request
 
         :return: (dict{str:Any})  The response dictionary
         """
-        return update(self.stub, find=self.params['find'], operation='all', _update=self.params['update'],
+        return update(self.stub, find=self.params['find'], operation=self.operation, _update=self.params['update'],
                       meta=self.meta)
 
 
