@@ -1,55 +1,62 @@
-from space_api import API, AND, OR, COND
+from space_api import API, COND
 
 api = API('grpc', 'localhost:8081')
 api.set_token('my_secret')
 db = api.my_sql()
 
 # insert - 2/2 passing
+# all
+print(db.insert('books').docs([{"name": "BookName"}, {"name": "BookName"}]).apply())
 # one
-print(db.insert('books').one({"name": "MyBook", "author": "John Doe"}))
-# all
-print(db.insert('books').all([{"name": "BookName"}, {"name": "BookName"}]))
+print(db.insert('books').doc({"name": "MyBook", "author": "John Doe"}).apply())
 
-# delete - 2/2 passing
+# delete - 4/4 passing
 # all
-print(db.delete('books').all())
+print(db.delete('books').apply())
+# one
+print(db.delete_one('books').apply())
 # where, all
-print(db.delete('books').where(COND('name', '!=', 'Book_name')).all())
+print(db.delete('books').where(COND('name', '!=', 'Book_name')).apply())
+# where, one
+print(db.delete_one('books').where(COND('name', '!=', 'Book_name')).apply())
 
 # get - 12/12 passing
 # all
-print(db.get('books').all())
+print(db.get('books').apply())
 # one
-print(db.get('books').one())
+print(db.get_one('books').apply())
 # limit all
-print(db.get('books').limit(2).all())
+print(db.get('books').limit(2).apply())
 # limit one
-print(db.get('books').limit(2).one())
+print(db.get_one('books').limit(2).apply())
 # skip all
-print(db.get('books').skip(2).all())
+print(db.get('books').skip(2).apply())
 # skip one
-print(db.get('books').skip(2).one())
+print(db.get_one('books').skip(2).apply())
 # sort all
-print(db.get('books').sort('-author').all())
+print(db.get('books').sort('-author').apply())
 # sort one
-print(db.get('books').sort('author').one())
+print(db.get_one('books').sort('author').apply())
 # select all
-print(db.get('books').select({'author': 1}).all())
+print(db.get('books').select({'author': 1}).apply())
 # select one
-print(db.get('books').select({'author': 1}).one())
+print(db.get_one('books').select({'author': 1}).apply())
 # where all
-print(db.get('books').where(COND("name", "==", "Book_name")).all())
+print(db.get('books').where(COND("name", "==", "Book_name")).apply())
 # where one
-print(db.get('books').where(COND("name", "==", "BookName")).one())
+print(db.get_one('books').where(COND("name", "==", "BookName")).apply())
 
-
-# update - 2/2 passing
+# update - 4/4 passing
 # set all
-print(db.update('books').set({"author": "myself"}).all())
+print(db.update('books').set({"author": "myself"}).apply())
+# set one
+print(db.update_one('books').set({"author": "myself"}).apply())
 # set where all
-print(db.update('books').where(COND("author", "==", "some_author")).set({"author": "myself"}).all())
+print(db.update('books').where(COND("author", "==", "some_author")).set({"author": "myself"}).apply())
+# set where one
+print(db.update_one('books').where(COND("author", "==", "some_author")).set({"author": "myself"}).apply())
 
 # testing
-print(db.get('books').all())
+print(db.get('books').apply())
 
 api.close()

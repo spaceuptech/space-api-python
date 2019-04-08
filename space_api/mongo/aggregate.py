@@ -12,17 +12,19 @@ class Aggregate:
         db = api.mongo()
         _pipe = [
             {'$match': {'status': 'A'}},
-            {'$group': {'_id': '$cust_id', 'total': {'$sum': '$amount'}}}
+            {'$group': {'_id': '$customer_id', 'total': {'$sum': '$amount'}}}
         ]
-        response = db.aggr('posts').pipe(_pipe).all()
+        response = db.aggr('posts').pipe(_pipe).apply()
 
     :param project_id: (str) The project ID
     :param collection: (str) The collection name
     :param stub: (server_pb2_grpc.SpaceCloudStub) The gRPC endpoint stub
     :param token: (str) The (optional) JWT Token
+    :param operation: (str) The (optional) operation (one/all) (Defaults to 'all')
     """
 
-    def __init__(self, project_id: str, collection: str, stub: SpaceCloudStub, token: Optional[str] = None):
+    def __init__(self, project_id: str, collection: str, stub: SpaceCloudStub, token: Optional[str] = None,
+                 operation: str = 'all'):
         self.project_id = project_id
         self.collection = collection
         self.stub = stub
@@ -30,6 +32,7 @@ class Aggregate:
         self.token = token
         self.params = {}
         self.meta = make_meta(self.project_id, self.db_type, self.collection, self.token)
+        self.operation = operation
 
     def pipe(self, pipe_obj) -> 'Aggregate':
         """
@@ -40,25 +43,15 @@ class Aggregate:
         self.params['pipe'] = pipe_obj
         return self
 
-    def one(self) -> Dict[str, Any]:
+    def apply(self) -> Dict[str, Any]:
         """
-        Makes a query and returns a single object
+        Triggers the aggregate request
         ::
-            response = db.aggr('posts').pipe([...]).one()
+            response = db.aggr('posts').pipe([...]).apply()
 
         :return: (dict{str:Any})  The response dictionary
         """
-        return aggregate(self.stub, pipeline=self.params['pipe'], operation='one', meta=self.meta)
-
-    def all(self) -> Dict[str, Any]:
-        """
-        Makes a query and returns all objects
-        ::
-            response = db.aggr('posts').pipe([...]).all()
-
-        :return: (dict{str:Any})  The response dictionary
-        """
-        return aggregate(self.stub, pipeline=self.params['pipe'], operation='all', meta=self.meta)
+        return aggregate(self.stub, pipeline=self.params['pipe'], operation=self.operation, meta=self.meta)
 
 
 __all__ = ['Aggregate']

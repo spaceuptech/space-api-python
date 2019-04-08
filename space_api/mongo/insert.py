@@ -11,45 +11,62 @@ class Insert:
         api = API("My-Project", "localhost:8080")
         db = api.mongo()
         record = {'author': 'John', 'title': 'Title1'}
-        response = db.insert('posts').one(record)
+        response = db.insert('posts').doc(record).apply()
 
     :param project_id: (str) The project ID
     :param collection: (str) The collection name
     :param stub: (server_pb2_grpc.SpaceCloudStub) The gRPC endpoint stub
     :param token: (str) The (optional) JWT Token
+    :param operation: (str) The (optional) operation (one/all) (Defaults to 'all')
     """
 
-    def __init__(self, project_id: str, collection: str, stub: SpaceCloudStub, token: Optional[str] = None):
+    def __init__(self, project_id: str, collection: str, stub: SpaceCloudStub, token: Optional[str] = None,
+                 operation: str = 'all'):
         self.project_id = project_id
         self.collection = collection
         self.stub = stub
         self.db_type = "mongo"
         self.token = token
         self.meta = make_meta(self.project_id, self.db_type, self.collection, self.token)
+        self.operation = operation
+        self.document = None
 
-    def one(self, record) -> Dict[str, Any]:
+    def doc(self, record) -> 'Insert':
         """
-        Inserts a single record
+        Sets the record to insert
         ::
             record = {'author': 'John', 'title': 'Title1'}
-            response = db.insert('posts').one(record)
+            response = db.insert('posts').doc(record).apply()
 
         :param record: The record to insert
-        :return: (dict{str:Any}) The response dictionary
         """
-        return create(self.stub, document=record, operation='one', meta=self.meta)
+        self.operation = 'one'
+        self.document = record
+        return self
 
-    def all(self, records) -> Dict[str, Any]:
+    def docs(self, records) -> 'Insert':
         """
-        Inserts multiple records
+        Sets the records to insert
         ::
             records = [{'author': 'John', 'title': 'Title1'}]
-            response = db.insert('posts').all(records)
+            response = db.insert('posts').docs(records).apply()
 
-        :param records: (list) The records to insert
+        :param records: The records to insert
+        """
+        self.operation = 'all'
+        self.document = records
+        return self
+
+    def apply(self) -> Dict[str, Any]:
+        """
+        Triggers the insert request
+        ::
+            records = [{'author': 'John', 'title': 'Title1'}]
+            response = db.insert('posts').docs(records).apply()
+
         :return: (dict{str:Any}) The response dictionary
         """
-        return create(self.stub, document=records, operation='all', meta=self.meta)
+        return create(self.stub, document=self.document, operation=self.operation, meta=self.meta)
 
 
 __all__ = ['Insert']

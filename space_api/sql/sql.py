@@ -35,12 +35,21 @@ class SQL:
 
     def get(self, collection: str) -> 'Get':
         """
-        Returns an SQL Get object
+        Returns an SQL Get object, with operation 'all'
         
         :param collection: (str) The collection name
         :return: The SQL Get object
         """
         return Get(self.project_id, collection, self.stub, self.db_type, self.token)
+
+    def get_one(self, collection: str) -> 'Get':
+        """
+        Returns an SQL Get object, with operation 'one'
+
+        :param collection: (str) The collection name
+        :return: The SQL Get object
+        """
+        return Get(self.project_id, collection, self.stub, self.db_type, self.token, operation='one')
 
     def insert(self, collection: str) -> 'Insert':
         """
@@ -53,21 +62,39 @@ class SQL:
 
     def update(self, collection: str) -> 'Update':
         """
-        Returns an SQL Update object
+        Returns an SQL Update object, with operation 'all'
 
         :param collection: (str) The collection name
         :return: The SQL Update object
         """
         return Update(self.project_id, collection, self.stub, self.db_type, self.token)
 
+    def update_one(self, collection: str) -> 'Update':
+        """
+        Returns an SQL Update object, with operation 'one'
+
+        :param collection: (str) The collection name
+        :return: The SQL Update object
+        """
+        return Update(self.project_id, collection, self.stub, self.db_type, self.token, operation='one')
+
     def delete(self, collection: str) -> 'Delete':
         """
-        Returns an SQL Delete object
+        Returns an SQL Delete object, with operation 'all'
 
         :param collection: (str) The collection name
         :return: The SQL Delete object
         """
         return Delete(self.project_id, collection, self.stub, self.db_type, self.token)
+
+    def delete_one(self, collection: str) -> 'Delete':
+        """
+        Returns an SQL Delete object, with operation 'one'
+
+        :param collection: (str) The collection name
+        :return: The SQL Delete object
+        """
+        return Delete(self.project_id, collection, self.stub, self.db_type, self.token, operation='one')
 
     def live_query(self, collection: str):
         raise NotImplementedError("Coming Soon!")
