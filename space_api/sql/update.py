@@ -54,7 +54,7 @@ class Update:
         """
         Triggers the update request
 
-        :return: (dict{str:Any})  The response dictionary
+        :return: (Dict[str, Any])  The response dictionary
         """
         return update(self.stub, find=self.params['find'], operation=self.operation, _update=self.params['update'],
                       meta=self.meta)

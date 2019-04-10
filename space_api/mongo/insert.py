@@ -64,7 +64,7 @@ class Insert:
             records = [{'author': 'John', 'title': 'Title1'}]
             response = db.insert('posts').docs(records).apply()
 
-        :return: (dict{str:Any}) The response dictionary
+        :return: (Dict[str, Any]) The response dictionary
         """
         return create(self.stub, document=self.document, operation=self.operation, meta=self.meta)
 

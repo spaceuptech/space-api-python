@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='proto',
   syntax='proto3',
   serialized_options=_b('\n\037com.spaceuptech.space_api.protoB\017SpaceCloudProtoP\001'),
-  serialized_pb=_b('\n\x0cserver.proto\x12\x05proto\"O\n\rCreateRequest\x12\x10\n\x08\x64ocument\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12\x19\n\x04meta\x18\x03 \x01(\x0b\x32\x0b.proto.Meta\"n\n\x0bReadRequest\x12\x0c\n\x04\x66ind\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12#\n\x07options\x18\x03 \x01(\x0b\x32\x12.proto.ReadOptions\x12\x19\n\x04meta\x18\x04 \x01(\x0b\x32\x0b.proto.Meta\"\xf4\x01\n\x0bReadOptions\x12.\n\x06select\x18\x01 \x03(\x0b\x32\x1e.proto.ReadOptions.SelectEntry\x12*\n\x04sort\x18\x02 \x03(\x0b\x32\x1c.proto.ReadOptions.SortEntry\x12\x0c\n\x04skip\x18\x03 \x01(\x03\x12\r\n\x05limit\x18\x04 \x01(\x03\x12\x10\n\x08\x64istinct\x18\x05 \x01(\t\x1a-\n\x0bSelectEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a+\n\tSortEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\"[\n\rUpdateRequest\x12\x0c\n\x04\x66ind\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12\x0e\n\x06update\x18\x03 \x01(\x0c\x12\x19\n\x04meta\x18\x04 \x01(\x0b\x32\x0b.proto.Meta\"K\n\rDeleteRequest\x12\x0c\n\x04\x66ind\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12\x19\n\x04meta\x18\x03 \x01(\x0b\x32\x0b.proto.Meta\"R\n\x10\x41ggregateRequest\x12\x10\n\x08pipeline\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12\x19\n\x04meta\x18\x03 \x01(\x0b\x32\x0b.proto.Meta\"9\n\x08Response\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\r\n\x05\x65rror\x18\x02 \x01(\t\x12\x0e\n\x06result\x18\x03 \x01(\x0c\"C\n\x04Meta\x12\x0f\n\x07project\x18\x01 \x01(\t\x12\x0e\n\x06\x64\x62Type\x18\x02 \x01(\t\x12\x0b\n\x03\x63ol\x18\x03 \x01(\t\x12\r\n\x05token\x18\x04 \x01(\t2\x8d\x02\n\nSpaceCloud\x12\x31\n\x06\x43reate\x12\x14.proto.CreateRequest\x1a\x0f.proto.Response\"\x00\x12-\n\x04Read\x12\x12.proto.ReadRequest\x1a\x0f.proto.Response\"\x00\x12\x31\n\x06Update\x12\x14.proto.UpdateRequest\x1a\x0f.proto.Response\"\x00\x12\x31\n\x06\x44\x65lete\x12\x14.proto.DeleteRequest\x1a\x0f.proto.Response\"\x00\x12\x37\n\tAggregate\x12\x17.proto.AggregateRequest\x1a\x0f.proto.Response\"\x00\x42\x34\n\x1f\x63om.spaceuptech.space_api.protoB\x0fSpaceCloudProtoP\x01\x62\x06proto3')
+  serialized_pb=_b('\n\x0cserver.proto\x12\x05proto\"O\n\rCreateRequest\x12\x10\n\x08\x64ocument\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12\x19\n\x04meta\x18\x03 \x01(\x0b\x32\x0b.proto.Meta\"n\n\x0bReadRequest\x12\x0c\n\x04\x66ind\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12#\n\x07options\x18\x03 \x01(\x0b\x32\x12.proto.ReadOptions\x12\x19\n\x04meta\x18\x04 \x01(\x0b\x32\x0b.proto.Meta\"\xf4\x01\n\x0bReadOptions\x12.\n\x06select\x18\x01 \x03(\x0b\x32\x1e.proto.ReadOptions.SelectEntry\x12*\n\x04sort\x18\x02 \x03(\x0b\x32\x1c.proto.ReadOptions.SortEntry\x12\x0c\n\x04skip\x18\x03 \x01(\x03\x12\r\n\x05limit\x18\x04 \x01(\x03\x12\x10\n\x08\x64istinct\x18\x05 \x01(\t\x1a-\n\x0bSelectEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a+\n\tSortEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\"[\n\rUpdateRequest\x12\x0c\n\x04\x66ind\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12\x0e\n\x06update\x18\x03 \x01(\x0c\x12\x19\n\x04meta\x18\x04 \x01(\x0b\x32\x0b.proto.Meta\"K\n\rDeleteRequest\x12\x0c\n\x04\x66ind\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12\x19\n\x04meta\x18\x03 \x01(\x0b\x32\x0b.proto.Meta\"R\n\x10\x41ggregateRequest\x12\x10\n\x08pipeline\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12\x19\n\x04meta\x18\x03 \x01(\x0b\x32\x0b.proto.Meta\"9\n\x08Response\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\r\n\x05\x65rror\x18\x02 \x01(\t\x12\x0e\n\x06result\x18\x03 \x01(\x0c\"C\n\x04Meta\x12\x0f\n\x07project\x18\x01 \x01(\t\x12\x0e\n\x06\x64\x62Type\x18\x02 \x01(\t\x12\x0b\n\x03\x63ol\x18\x03 \x01(\t\x12\r\n\x05token\x18\x04 \x01(\t\"j\n\nAllRequest\x12\x0b\n\x03\x63ol\x18\x01 \x01(\t\x12\x10\n\x08\x64ocument\x18\x02 \x01(\x0c\x12\x11\n\toperation\x18\x03 \x01(\t\x12\x0c\n\x04\x66ind\x18\x04 \x01(\x0c\x12\x0e\n\x06update\x18\x05 \x01(\x0c\x12\x0c\n\x04type\x18\x06 \x01(\t\"R\n\x0c\x42\x61tchRequest\x12\'\n\x0c\x62\x61tchrequest\x18\x01 \x03(\x0b\x32\x11.proto.AllRequest\x12\x19\n\x04meta\x18\x02 \x01(\x0b\x32\x0b.proto.Meta\"_\n\x0b\x46\x61\x61SRequest\x12\x0e\n\x06params\x18\x01 \x01(\x0c\x12\x0f\n\x07timeout\x18\x02 \x01(\x03\x12\x0e\n\x06\x65ngine\x18\x03 \x01(\t\x12\x10\n\x08\x66unction\x18\x04 \x01(\t\x12\r\n\x05token\x18\x05 \x01(\t2\xed\x02\n\nSpaceCloud\x12\x31\n\x06\x43reate\x12\x14.proto.CreateRequest\x1a\x0f.proto.Response\"\x00\x12-\n\x04Read\x12\x12.proto.ReadRequest\x1a\x0f.proto.Response\"\x00\x12\x31\n\x06Update\x12\x14.proto.UpdateRequest\x1a\x0f.proto.Response\"\x00\x12\x31\n\x06\x44\x65lete\x12\x14.proto.DeleteRequest\x1a\x0f.proto.Response\"\x00\x12\x37\n\tAggregate\x12\x17.proto.AggregateRequest\x1a\x0f.proto.Response\"\x00\x12/\n\x05\x42\x61tch\x12\x13.proto.BatchRequest\x1a\x0f.proto.Response\"\x00\x12-\n\x04\x43\x61ll\x12\x12.proto.FaaSRequest\x1a\x0f.proto.Response\"\x00\x42\x34\n\x1f\x63om.spaceuptech.space_api.protoB\x0fSpaceCloudProtoP\x01\x62\x06proto3')
 )
 
 
@@ -493,6 +493,169 @@ _META = _descriptor.Descriptor(
   serialized_end=843,
 )
 
+
+_ALLREQUEST = _descriptor.Descriptor(
+  name='AllRequest',
+  full_name='proto.AllRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='col', full_name='proto.AllRequest.col', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='document', full_name='proto.AllRequest.document', index=1,
+      number=2, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b(""),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='operation', full_name='proto.AllRequest.operation', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='find', full_name='proto.AllRequest.find', index=3,
+      number=4, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b(""),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='update', full_name='proto.AllRequest.update', index=4,
+      number=5, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b(""),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='type', full_name='proto.AllRequest.type', index=5,
+      number=6, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=845,
+  serialized_end=951,
+)
+
+
+_BATCHREQUEST = _descriptor.Descriptor(
+  name='BatchRequest',
+  full_name='proto.BatchRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='batchrequest', full_name='proto.BatchRequest.batchrequest', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='meta', full_name='proto.BatchRequest.meta', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=953,
+  serialized_end=1035,
+)
+
+
+_FAASREQUEST = _descriptor.Descriptor(
+  name='FaaSRequest',
+  full_name='proto.FaaSRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='params', full_name='proto.FaaSRequest.params', index=0,
+      number=1, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b(""),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='timeout', full_name='proto.FaaSRequest.timeout', index=1,
+      number=2, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='engine', full_name='proto.FaaSRequest.engine', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='function', full_name='proto.FaaSRequest.function', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='token', full_name='proto.FaaSRequest.token', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1037,
+  serialized_end=1132,
+)
+
 _CREATEREQUEST.fields_by_name['meta'].message_type = _META
 _READREQUEST.fields_by_name['options'].message_type = _READOPTIONS
 _READREQUEST.fields_by_name['meta'].message_type = _META
@@ -503,6 +666,8 @@ _READOPTIONS.fields_by_name['sort'].message_type = _READOPTIONS_SORTENTRY
 _UPDATEREQUEST.fields_by_name['meta'].message_type = _META
 _DELETEREQUEST.fields_by_name['meta'].message_type = _META
 _AGGREGATEREQUEST.fields_by_name['meta'].message_type = _META
+_BATCHREQUEST.fields_by_name['batchrequest'].message_type = _ALLREQUEST
+_BATCHREQUEST.fields_by_name['meta'].message_type = _META
 DESCRIPTOR.message_types_by_name['CreateRequest'] = _CREATEREQUEST
 DESCRIPTOR.message_types_by_name['ReadRequest'] = _READREQUEST
 DESCRIPTOR.message_types_by_name['ReadOptions'] = _READOPTIONS
@@ -511,6 +676,9 @@ DESCRIPTOR.message_types_by_name['DeleteRequest'] = _DELETEREQUEST
 DESCRIPTOR.message_types_by_name['AggregateRequest'] = _AGGREGATEREQUEST
 DESCRIPTOR.message_types_by_name['Response'] = _RESPONSE
 DESCRIPTOR.message_types_by_name['Meta'] = _META
+DESCRIPTOR.message_types_by_name['AllRequest'] = _ALLREQUEST
+DESCRIPTOR.message_types_by_name['BatchRequest'] = _BATCHREQUEST
+DESCRIPTOR.message_types_by_name['FaaSRequest'] = _FAASREQUEST
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 CreateRequest = _reflection.GeneratedProtocolMessageType('CreateRequest', (_message.Message,), dict(
@@ -585,6 +753,27 @@ Meta = _reflection.GeneratedProtocolMessageType('Meta', (_message.Message,), dic
   ))
 _sym_db.RegisterMessage(Meta)
 
+AllRequest = _reflection.GeneratedProtocolMessageType('AllRequest', (_message.Message,), dict(
+  DESCRIPTOR = _ALLREQUEST,
+  __module__ = 'server_pb2'
+  # @@protoc_insertion_point(class_scope:proto.AllRequest)
+  ))
+_sym_db.RegisterMessage(AllRequest)
+
+BatchRequest = _reflection.GeneratedProtocolMessageType('BatchRequest', (_message.Message,), dict(
+  DESCRIPTOR = _BATCHREQUEST,
+  __module__ = 'server_pb2'
+  # @@protoc_insertion_point(class_scope:proto.BatchRequest)
+  ))
+_sym_db.RegisterMessage(BatchRequest)
+
+FaaSRequest = _reflection.GeneratedProtocolMessageType('FaaSRequest', (_message.Message,), dict(
+  DESCRIPTOR = _FAASREQUEST,
+  __module__ = 'server_pb2'
+  # @@protoc_insertion_point(class_scope:proto.FaaSRequest)
+  ))
+_sym_db.RegisterMessage(FaaSRequest)
+
 
 DESCRIPTOR._options = None
 _READOPTIONS_SELECTENTRY._options = None
@@ -596,8 +785,8 @@ _SPACECLOUD = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=846,
-  serialized_end=1115,
+  serialized_start=1135,
+  serialized_end=1500,
   methods=[
   _descriptor.MethodDescriptor(
     name='Create',
@@ -641,6 +830,24 @@ _SPACECLOUD = _descriptor.ServiceDescriptor(
     index=4,
     containing_service=None,
     input_type=_AGGREGATEREQUEST,
+    output_type=_RESPONSE,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='Batch',
+    full_name='proto.SpaceCloud.Batch',
+    index=5,
+    containing_service=None,
+    input_type=_BATCHREQUEST,
+    output_type=_RESPONSE,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='Call',
+    full_name='proto.SpaceCloud.Call',
+    index=6,
+    containing_service=None,
+    input_type=_FAASREQUEST,
     output_type=_RESPONSE,
     serialized_options=None,
   ),
