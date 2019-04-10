@@ -44,7 +44,7 @@ class Delete:
         """
         Triggers the delete request
 
-        :return: (dict{str:Any})  The response dictionary
+        :return: (Dict[str, Any])  The response dictionary
         """
         return delete(self.stub, find=self.params['find'], operation=self.operation, meta=self.meta)
 

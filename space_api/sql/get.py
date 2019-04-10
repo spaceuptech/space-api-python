@@ -103,7 +103,7 @@ class Get:
         ::
             response = db.get('posts').apply()
 
-        :return: (dict{str:Any})  The response dictionary
+        :return: (Dict[str, Any])  The response dictionary
         """
         # Set a default limit if offset is specified and limit is not specified.
         if self.params['options'].get('skip') is not None and self.params['options'].get('limit') is None:

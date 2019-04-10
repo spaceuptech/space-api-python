@@ -49,7 +49,7 @@ class Aggregate:
         ::
             response = db.aggr('posts').pipe([...]).apply()
 
-        :return: (dict{str:Any})  The response dictionary
+        :return: (Dict[str, Any])  The response dictionary
         """
         return aggregate(self.stub, pipeline=self.params['pipe'], operation=self.operation, meta=self.meta)
 

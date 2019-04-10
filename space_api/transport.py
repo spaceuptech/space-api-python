@@ -17,7 +17,7 @@ def _get_response_dict(response: server_pb2.Response) -> Dict[str, Any]:
     Gets the response dictionary corresponding to a gRPC Response
 
     :param response: (server_pb2.Response) gRPC Response
-    :return: (dict{str:Any}) The response dictionary
+    :return: (Dict[str, Any]) The response dictionary
     """
     ans = dict()
     ans["status"] = response.status
@@ -62,11 +62,29 @@ def create(stub: server_pb2_grpc.SpaceCloudStub, document, operation: str, meta:
     :param document: The document to create
     :param operation: (str) The operation to perform
     :param meta: (server_pb2.Meta) The gRPC Meta object
-    :return: (dict{str:Any}) The response dictionary corresponding to the gRPC call 
+    :return: (Dict[str, Any]) The response dictionary corresponding to the gRPC call
     """
     document = _obj_to_utf8_bytes(document)
     create_request = server_pb2.CreateRequest(document=document, operation=operation, meta=meta)
     return _get_response_dict(stub.Create(create_request))
+
+
+def faas(stub: server_pb2_grpc.SpaceCloudStub, params, timeout: int, engine: str, function: str, token: str) -> \
+        Dict[str, Any]:
+    """
+    Calls the gRPC Call function
+
+    :param stub: (server_pb2_grpc.SpaceCloudStub) The gRPC endpoint stub
+    :param params: The params for the function
+    :param timeout: (int) The (optional) timeout in milliseconds (defaults to 5000)
+    :param engine: (str) The name of engine with which the function is registered
+    :param function: (str) The name of function to be called
+    :param token: (str) The signed JWT token received from the server on successful authentication
+    :return: (Dict[str, Any]) The response dictionary corresponding to the gRPC call
+    """
+    params = _obj_to_utf8_bytes(params)
+    faas_request = server_pb2.FaaSRequest(params=params, timeout=timeout, engine=engine, function=function, token=token)
+    return _get_response_dict(stub.Call(faas_request))
 
 
 def read(stub: server_pb2_grpc.SpaceCloudStub, find, operation: str, options: server_pb2.ReadOptions,
@@ -79,7 +97,7 @@ def read(stub: server_pb2_grpc.SpaceCloudStub, find, operation: str, options: se
     :param operation: (str) The operation to perform
     :param options: (server_pb2.ReadOptions) 
     :param meta: (server_pb2.Meta) The gRPC Meta object
-    :return: (dict{str:Any}) The response dictionary corresponding to the gRPC call 
+    :return: (Dict[str, Any]) The response dictionary corresponding to the gRPC call
     """
     find = _obj_to_utf8_bytes(find)
     read_request = server_pb2.ReadRequest(find=find, operation=operation, options=options, meta=meta)
@@ -96,7 +114,7 @@ def update(stub: server_pb2_grpc.SpaceCloudStub, find, operation: str, _update, 
     :param operation: (str) The operation to perform
     :param _update: The update parameters
     :param meta: (server_pb2.Meta) The gRPC Meta object
-    :return: (dict{str:Any}) The response dictionary corresponding to the gRPC call
+    :return: (Dict[str, Any]) The response dictionary corresponding to the gRPC call
     """
     find = _obj_to_utf8_bytes(find)
     _update = _obj_to_utf8_bytes(_update)
@@ -112,7 +130,7 @@ def delete(stub: server_pb2_grpc.SpaceCloudStub, find, operation: str, meta: ser
     :param find: The find parameters
     :param operation: (str) The operation to perform
     :param meta: (server_pb2.Meta) The gRPC Meta object
-    :return: (dict{str:Any}) The response dictionary corresponding to the gRPC call
+    :return: (Dict[str, Any]) The response dictionary corresponding to the gRPC call
     """
     find = _obj_to_utf8_bytes(find)
     delete_request = server_pb2.DeleteRequest(find=find, operation=operation, meta=meta)
@@ -127,7 +145,7 @@ def aggregate(stub: server_pb2_grpc.SpaceCloudStub, pipeline, operation: str, me
     :param pipeline: The pipeline parameters
     :param operation: (str) The operation to perform
     :param meta: (server_pb2.Meta) The gRPC Meta object
-    :return: (dict{str:Any}) The response dictionary corresponding to the gRPC call
+    :return: (Dict[str, Any]) The response dictionary corresponding to the gRPC call
     """
     pipeline = _obj_to_utf8_bytes(pipeline)
     aggregate_request = server_pb2.AggregateRequest(pipeline=pipeline, operation=operation, meta=meta)
