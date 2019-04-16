@@ -4,21 +4,14 @@ api = API('grpc', 'localhost:8081')
 api.set_token('my_secret')
 db = api.my_sql()
 
+# testing
+print(db.delete('books').apply())
+
 # insert - 2/2 passing
 # all
 print(db.insert('books').docs([{"name": "BookName"}, {"name": "BookName"}]).apply())
 # one
 print(db.insert('books').doc({"name": "MyBook", "author": "John Doe"}).apply())
-
-# delete - 4/4 passing
-# all
-print(db.delete('books').apply())
-# one
-print(db.delete_one('books').apply())
-# where, all
-print(db.delete('books').where(COND('name', '!=', 'Book_name')).apply())
-# where, one
-print(db.delete_one('books').where(COND('name', '!=', 'Book_name')).apply())
 
 # get - 12/12 passing
 # all
@@ -55,6 +48,19 @@ print(db.update_one('books').set({"author": "myself"}).apply())
 print(db.update('books').where(COND("author", "==", "some_author")).set({"author": "myself"}).apply())
 # set where one
 print(db.update_one('books').where(COND("author", "==", "some_author")).set({"author": "myself"}).apply())
+
+# testing
+print(db.get('books').apply())
+
+# delete - 4/4 passing
+# all
+print(db.delete('books').apply())
+# one
+print(db.delete_one('books').apply())
+# where, all
+print(db.delete('books').where(COND('name', '!=', 'Book_name')).apply())
+# where, one
+print(db.delete_one('books').where(COND('name', '!=', 'Book_name')).apply())
 
 # testing
 print(db.get('books').apply())
