@@ -1,7 +1,9 @@
 # Python Client API for Space Cloud
 
 ## Installation
-Coming soon on pip!
+```bash
+$ pip install space-api-py
+```
 
 ## Documentation
 The complete documentation can be found [here](https://spaceuptech.com/docs).
