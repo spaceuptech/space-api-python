@@ -1,6 +1,7 @@
-from typing import Optional, Dict, Any
+from typing import Optional
 from space_api.transport import make_meta, aggregate
 from space_api.proto.server_pb2_grpc import SpaceCloudStub
+from space_api.response import Response
 
 
 class Aggregate:
@@ -43,13 +44,13 @@ class Aggregate:
         self.params['pipe'] = pipe_obj
         return self
 
-    def apply(self) -> Dict[str, Any]:
+    def apply(self) -> Response:
         """
         Triggers the aggregate request
         ::
             response = db.aggr('posts').pipe([...]).apply()
 
-        :return: (Dict[str, Any])  The response dictionary
+        :return: (Response) The response object containing values corresponding to the request
         """
         return aggregate(self.stub, pipeline=self.params['pipe'], operation=self.operation, meta=self.meta)
 

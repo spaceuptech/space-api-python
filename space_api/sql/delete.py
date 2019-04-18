@@ -1,7 +1,8 @@
-from typing import Optional, Dict, Any
+from typing import Optional
 from space_api.utils import generate_find, AND
 from space_api.transport import make_meta, delete
 from space_api.proto.server_pb2_grpc import SpaceCloudStub
+from space_api.response import Response
 
 
 class Delete:
@@ -41,11 +42,11 @@ class Delete:
         self.params['find'] = generate_find(AND(*conditions))
         return self
 
-    def apply(self) -> Dict[str, Any]:
+    def apply(self) -> Response:
         """
         Triggers the delete request
 
-        :return: (Dict[str, Any])  The response dictionary
+        :return: (Response) The response object containing values corresponding to the request
         """
         return delete(self.stub, find=self.params['find'], operation=self.operation, meta=self.meta)
 

@@ -1,7 +1,8 @@
-from typing import Optional, Dict, Any
+from typing import Optional
 from space_api.utils import generate_find, AND
 from space_api.transport import make_meta, read, make_read_options
 from space_api.proto.server_pb2_grpc import SpaceCloudStub
+from space_api.response import Response
 
 
 class Get:
@@ -104,13 +105,13 @@ class Get:
         self.params['options']['distinct'] = key
         return self
 
-    def apply(self) -> Dict[str, Any]:
+    def apply(self) -> Response:
         """
         Triggers the get request
         ::
             response = db.get('posts').apply()
 
-        :return: (Dict[str, Any])  The response dictionary
+        :return: (Response) The response object containing values corresponding to the request
         """
         # Set a default limit if offset is specified and limit is not specified.
         if self.params['options'].get('skip') is not None and self.params['options'].get('limit') is None:
