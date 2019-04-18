@@ -2,11 +2,12 @@
 SpaceUp Client Python API
 """
 import grpc
-from typing import Dict, Any, Optional
+from typing import Optional
 from space_api.proto.server_pb2_grpc import SpaceCloudStub
 from space_api.sql.sql import SQL
 from space_api.mongo.mongo import Mongo
 from space_api.transport import faas
+from space_api.response import Response
 
 
 class API:
@@ -82,7 +83,7 @@ class API:
     def __str__(self):
         return f'SpaceAPI(project_id:{self.project_id}, url:{self.url}, token:{self.token})'
 
-    def call(self, engine_name: str, func_name: str, params, timeout: Optional[int] = 5000) -> Dict[str, Any]:
+    def call(self, engine_name: str, func_name: str, params, timeout: Optional[int] = 5000) -> Response:
         """
         Calls a function from Function as a Service Engine
         ::
@@ -92,9 +93,12 @@ class API:
         :param func_name: (str) The name of function to be called
         :param params: The params for the function
         :param timeout: (int) The (optional) timeout in milliseconds (defaults to 5000)
-        :return: (Dict[str, Any]) The response dictionary
+        :return: (Response) The response object containing values corresponding to the request
         """
         return faas(self.stub, params, timeout, engine_name, func_name, self.token)
 
     def file_store(self):
         raise NotImplementedError("Coming Soon!")
+
+
+__all__ = ["API"]

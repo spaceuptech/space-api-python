@@ -1,6 +1,7 @@
-from typing import Optional, Dict, Any
+from typing import Optional
 from space_api.transport import make_meta, create
 from space_api.proto.server_pb2_grpc import SpaceCloudStub
+from space_api.response import Response
 
 
 class Insert:
@@ -58,14 +59,14 @@ class Insert:
         self.document = records
         return self
 
-    def apply(self) -> Dict[str, Any]:
+    def apply(self) -> Response:
         """
         Triggers the insert request
         ::
             records = [{'author': 'John', 'title': 'Title1'}]
             response = db.insert('posts').docs(records).apply()
 
-        :return: (Dict[str, Any]) The response dictionary
+        :return: (Response) The response object containing values corresponding to the request
         """
         return create(self.stub, document=self.document, operation=self.operation, meta=self.meta)
 

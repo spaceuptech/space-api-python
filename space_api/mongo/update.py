@@ -1,7 +1,8 @@
-from typing import Optional, Dict, Any
+from typing import Optional
 from space_api.utils import generate_find, AND
 from space_api.transport import make_meta, update
 from space_api.proto.server_pb2_grpc import SpaceCloudStub
+from space_api.response import Response
 
 
 class Update:
@@ -154,11 +155,11 @@ class Update:
         self.params['update']['$currentDate'].update({x: {'$type': 'date'} for x in values})
         return self
 
-    def apply(self) -> Dict[str, Any]:
+    def apply(self) -> Response:
         """
         Triggers the update request
 
-        :return: (Dict[str, Any])  The response dictionary
+        :return: (Response) The response object containing values corresponding to the request
         """
         return update(self.stub, find=self.params['find'], operation=self.operation, _update=self.params['update'],
                       meta=self.meta)

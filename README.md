@@ -31,45 +31,45 @@ db = api.my_sql()
 ### Insert a document into the database
 ```python
 response = db.insert('books').doc({"name": "MyBook", "author": "John Doe"}).apply()
-if response['status'] == 200:
+if response.status == 200:
     # Record successfully inserted
     print("Success")
 else:
     # An error occurred
-    print(response['error'])
+    print(response.error)
 ```
 
 ### Query documents in database
 ```python
 response = db.get('books').sort('-author').apply()
-if response['status'] == 200:
+if response.status == 200:
     # We got some result
-    print(response['result'])
+    print(response.result)
 else:
     # An error occurred
-    print(response['error'])
+    print(response.error)
 ```
 
 ### Update documents in database
 ```python
 response = db.update_one('books').where(COND("author", "==", "some_author")).set({"author": "myself"}).apply()
-if response['status'] == 200:
+if response.status == 200:
     # Record successfully updated
     print("Success")
 else:
     # An error occurred
-    print(response['error'])
+    print(response.error)
 ```
 
 ### Delete documents in database
 ```python
 response = db.delete('books').where(COND('name', '!=', 'Book_name')).apply()
-if response['status'] == 200:
+if response.status == 200:
     # Record successfully deleted
     print("Success")
 else:
     # An error occurred
-    print(response['error'])
+    print(response.error)
 ```
 
 ### Call functions directly (Function as a Service) 
