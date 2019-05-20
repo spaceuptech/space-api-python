@@ -2,7 +2,10 @@ def generate_find(condition: dict) -> dict:
     if condition.get('type') == 'and':
         d = {}
         for clause in condition.get('clauses'):
-            d.update(generate_find(clause))
+            #d.update(generate_find(clause))              update() method updates existing keys thus rewriting values
+            iterDict = generate_find(clause)              #appends values to the dict
+            for keyDict, valueDict in iterDict.items():
+                d[keyDict] = valueDict
         return d
     elif condition.get('type') == 'or':
         new_conditions = map(generate_find, condition.get('clauses'))
