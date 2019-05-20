@@ -3,9 +3,9 @@ def generate_find(condition: dict) -> dict:
         d = {}
         for clause in condition.get('clauses'):
             #d.update(generate_find(clause))              update() method updates existing keys thus rewriting values
-            iterDict = generate_find(clause)              #appends values to the dict
-            for keyDict, valueDict in iterDict.items():
-                d[keyDict] = valueDict
+            iter_dict = generate_find(clause)              #appends values to the dict
+            for key_dict, value_dict in iter_dict.items():
+                d[key_dict] = value_dict
         return d
     elif condition.get('type') == 'or':
         new_conditions = map(generate_find, condition.get('clauses'))
