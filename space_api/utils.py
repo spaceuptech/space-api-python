@@ -5,7 +5,11 @@ def generate_find(condition: dict) -> dict:
             #d.update(generate_find(clause))              update() method updates existing keys thus rewriting values
             iter_dict = generate_find(clause)              #appends values to the dict
             for key_dict, value_dict in iter_dict.items():
-                d[key_dict] = value_dict
+                if d[key_dict] is not None:
+                    d[key_dict] = list(d[key_dict])
+                    d[key_dict].append(value_dict)
+                else:
+                    d[k] = list(value_dict)    
         return d
     elif condition.get('type') == 'or':
         new_conditions = map(generate_find, condition.get('clauses'))
