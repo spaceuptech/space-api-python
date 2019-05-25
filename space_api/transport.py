@@ -56,22 +56,23 @@ def create(stub: server_pb2_grpc.SpaceCloudStub, document, operation: str, meta:
     return Response(stub.Create(create_request))
 
 
-def faas(stub: server_pb2_grpc.SpaceCloudStub, params, timeout: int, engine: str, function: str,
-         token: str) -> Response:
+def faas(stub: server_pb2_grpc.SpaceCloudStub, params, timeout: int, service: str, function: str,
+             token: str) -> Response:
     """
     Calls the gRPC Call function
 
     :param stub: (server_pb2_grpc.SpaceCloudStub) The gRPC endpoint stub
     :param params: The params for the function
     :param timeout: (int) The (optional) timeout in milliseconds (defaults to 5000)
-    :param engine: (str) The name of engine with which the function is registered
+    :param service: (str) The name of service (engine) with which the function is registered
     :param function: (str) The name of function to be called
     :param token: (str) The signed JWT token received from the server on successful authentication
     :return: (Response) The response object containing values corresponding to the request
     """
     params = _obj_to_utf8_bytes(params)
-    faas_request = server_pb2.FaaSRequest(params=params, timeout=timeout, engine=engine, function=function, token=token)
-    return Response(stub.Call(faas_request))
+    function_request = server_pb2.FunctionsRequest(params=params, timeout=timeout, service=service, function=function,
+                                                   token=token)
+    return Response(stub.Call(function_request))
 
 
 def read(stub: server_pb2_grpc.SpaceCloudStub, find, operation: str, options: server_pb2.ReadOptions,
