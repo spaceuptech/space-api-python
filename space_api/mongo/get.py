@@ -91,7 +91,6 @@ class Get:
             response = db.get('posts').limit(10).apply()
 
         :param _limit: (int) The maximum number of results returned
-        :return:
         """
         self.params['options']['limit'] = _limit
         return self

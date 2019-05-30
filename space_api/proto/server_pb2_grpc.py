@@ -46,7 +46,37 @@ class SpaceCloudStub(object):
         )
     self.Call = channel.unary_unary(
         '/proto.SpaceCloud/Call',
-        request_serializer=server__pb2.FaaSRequest.SerializeToString,
+        request_serializer=server__pb2.FunctionsRequest.SerializeToString,
+        response_deserializer=server__pb2.Response.FromString,
+        )
+    self.RealTime = channel.stream_stream(
+        '/proto.SpaceCloud/RealTime',
+        request_serializer=server__pb2.RealTimeRequest.SerializeToString,
+        response_deserializer=server__pb2.RealTimeResponse.FromString,
+        )
+    self.Profile = channel.unary_unary(
+        '/proto.SpaceCloud/Profile',
+        request_serializer=server__pb2.ProfileRequest.SerializeToString,
+        response_deserializer=server__pb2.Response.FromString,
+        )
+    self.Profiles = channel.unary_unary(
+        '/proto.SpaceCloud/Profiles',
+        request_serializer=server__pb2.ProfilesRequest.SerializeToString,
+        response_deserializer=server__pb2.Response.FromString,
+        )
+    self.EditProfile = channel.unary_unary(
+        '/proto.SpaceCloud/EditProfile',
+        request_serializer=server__pb2.EditProfileRequest.SerializeToString,
+        response_deserializer=server__pb2.Response.FromString,
+        )
+    self.SignIn = channel.unary_unary(
+        '/proto.SpaceCloud/SignIn',
+        request_serializer=server__pb2.SignInRequest.SerializeToString,
+        response_deserializer=server__pb2.Response.FromString,
+        )
+    self.SignUp = channel.unary_unary(
+        '/proto.SpaceCloud/SignUp',
+        request_serializer=server__pb2.SignUpRequest.SerializeToString,
         response_deserializer=server__pb2.Response.FromString,
         )
 
@@ -104,6 +134,48 @@ class SpaceCloudServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def RealTime(self, request_iterator, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def Profile(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def Profiles(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def EditProfile(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def SignIn(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def SignUp(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_SpaceCloudServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -139,7 +211,37 @@ def add_SpaceCloudServicer_to_server(servicer, server):
       ),
       'Call': grpc.unary_unary_rpc_method_handler(
           servicer.Call,
-          request_deserializer=server__pb2.FaaSRequest.FromString,
+          request_deserializer=server__pb2.FunctionsRequest.FromString,
+          response_serializer=server__pb2.Response.SerializeToString,
+      ),
+      'RealTime': grpc.stream_stream_rpc_method_handler(
+          servicer.RealTime,
+          request_deserializer=server__pb2.RealTimeRequest.FromString,
+          response_serializer=server__pb2.RealTimeResponse.SerializeToString,
+      ),
+      'Profile': grpc.unary_unary_rpc_method_handler(
+          servicer.Profile,
+          request_deserializer=server__pb2.ProfileRequest.FromString,
+          response_serializer=server__pb2.Response.SerializeToString,
+      ),
+      'Profiles': grpc.unary_unary_rpc_method_handler(
+          servicer.Profiles,
+          request_deserializer=server__pb2.ProfilesRequest.FromString,
+          response_serializer=server__pb2.Response.SerializeToString,
+      ),
+      'EditProfile': grpc.unary_unary_rpc_method_handler(
+          servicer.EditProfile,
+          request_deserializer=server__pb2.EditProfileRequest.FromString,
+          response_serializer=server__pb2.Response.SerializeToString,
+      ),
+      'SignIn': grpc.unary_unary_rpc_method_handler(
+          servicer.SignIn,
+          request_deserializer=server__pb2.SignInRequest.FromString,
+          response_serializer=server__pb2.Response.SerializeToString,
+      ),
+      'SignUp': grpc.unary_unary_rpc_method_handler(
+          servicer.SignUp,
+          request_deserializer=server__pb2.SignUpRequest.FromString,
           response_serializer=server__pb2.Response.SerializeToString,
       ),
   }
