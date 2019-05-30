@@ -163,20 +163,22 @@ class Mongo:
         """
         return user_man.profiles(self.project_id, self.db_type, self.token, self.stub)
 
-    def edit_profile(self, _id: str, email: Optional[str] = None, name: Optional[str] = None,
-                     password: Optional[str] = None):
+    def edit_profile(self, _id: str, password: str, new_email: Optional[str] = None, new_name: Optional[str] = None,
+                     new_password: Optional[str] = None):
         """
         Edits the profile of the user
         ::
             response = db.edit_profile("user_id", "new_email", "new_name", "new_password")
 
         :param _id: (str) The user's id
-        :param email: (str) The (optional) new email id
-        :param name: (str) Then (optional) new name
-        :param password: (str) The (optional) new password
+        :param password: (str) The user's current password
+        :param new_email: (str) The (optional) new email id
+        :param new_name: (str) Then (optional) new name
+        :param new_password: (str) The (optional) new password
         :return: (Response) The response object containing values corresponding to the request
         """
-        return user_man.edit_profile(self.project_id, self.db_type, self.token, self.stub, _id, email, name, password)
+        return user_man.edit_profile(self.project_id, self.db_type, self.token, self.stub, _id, password, new_email,
+                                     new_name, new_password)
 
     def sign_in(self, email: str, password: str):
         """

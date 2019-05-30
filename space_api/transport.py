@@ -165,20 +165,22 @@ def profiles(stub: server_pb2_grpc.SpaceCloudStub, meta: server_pb2.Meta) -> Res
     return Response(stub.Profiles(profiles_request))
 
 
-def edit_profile(stub: server_pb2_grpc.SpaceCloudStub, _id: str, email: str, name: str, password: str,
-                 meta: server_pb2.Meta) -> Response:
+def edit_profile(stub: server_pb2_grpc.SpaceCloudStub, _id: str, password: str, new_email: str, new_name: str,
+                 new_password: str, meta: server_pb2.Meta) -> Response:
     """
     Calls the gRPC EditProfile function
 
     :param stub: (server_pb2_grpc.SpaceCloudStub) The gRPC endpoint stub
     :param _id: (str) The user's id
-    :param email: (str) The (optional) new email id
-    :param name: (str) Then (optional) new name
-    :param password: (str) The (optional) new password
+    :param password: (str) The user's current password
+    :param new_email: (str) The (optional) new email id
+    :param new_name: (str) Then (optional) new name
+    :param new_password: (str) The (optional) new password
     :param meta: (server_pb2.Meta) The gRPC Meta object
     :return: (Response) The response object containing values corresponding to the request
     """
-    edit_profile_request = server_pb2.EditProfileRequest(id=_id, email=email, name=name, password=password, meta=meta)
+    edit_profile_request = server_pb2.EditProfileRequest(id=_id, password=password, newEmail=new_email, newName=new_name,
+                                                         newPassword=new_password, meta=meta)
     return Response(stub.EditProfile(edit_profile_request))
 
 
