@@ -83,19 +83,19 @@ class API:
     def __str__(self):
         return f'SpaceAPI(project_id:{self.project_id}, url:{self.url}, token:{self.token})'
 
-    def call(self, engine_name: str, func_name: str, params, timeout: Optional[int] = 5000) -> Response:
+    def call(self, service_name: str, func_name: str, params, timeout: Optional[int] = 5000) -> Response:
         """
         Calls a function from Function as a Service Engine
         ::
-            response = api.call('my-engine', 'my-func', { msg: 'Function as a Service is awesome!' }, 1000)
+            response = api.call('my-service', 'my-func', { msg: 'Function as a Service is awesome!' }, 1000)
         
-        :param engine_name: (str) The name of engine with which the function is registered
+        :param service_name: (str) The name of service(engine) with which the function is registered
         :param func_name: (str) The name of function to be called
         :param params: The params for the function
         :param timeout: (int) The (optional) timeout in milliseconds (defaults to 5000)
         :return: (Response) The response object containing values corresponding to the request
         """
-        return faas(self.stub, params, timeout, engine_name, func_name, self.token)
+        return faas(self.stub, params, timeout, service_name, func_name, self.token)
 
     def file_store(self):
         raise NotImplementedError("Coming Soon!")
