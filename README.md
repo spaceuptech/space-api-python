@@ -78,6 +78,51 @@ response = api.call('test_engine', 'test_func', 'params')
 print(response)
 ```
 
+### User Management - Sign In 
+```python
+response = db.sign_in("user_email", "user_password")
+if response.status == 200:
+    print(response.result)
+else:
+    print(response.error)
+```
+
+### User Management - Sign Up 
+```python
+response = db.sign_up("user_email", "user_name", "user_password", "user_role")
+if response.status == 200:
+    print(response.result)
+else:
+    print(response.error)
+```
+
+### User Management - View Profile 
+```python
+response = db.profile("user_id")
+if response.status == 200:
+    print(response.result)
+else:
+    print(response.error)
+```
+
+### User Management - View All Profiles 
+```python
+response = db.profiles()
+if response.status == 200:
+    print(response.result)
+else:
+    print(response.error)
+```
+
+### User Management - Edit Profile 
+```python
+response = db.edit_profile("user_id", email="new_email", name="new_name", password="new_password")
+if response.status == 200:
+    print(response.result)
+else:
+    print(response.error)
+```
+
 ## Authors
 [Aliabbas Merchant](https://github.com/AliabbasMerchant) - Initial work
 
