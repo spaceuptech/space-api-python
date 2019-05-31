@@ -109,11 +109,10 @@ message ProfilesRequest {
 }
 message EditProfileRequest {
   string id = 1;
-  string password = 2;
-  string newEmail = 3;
-  string newName = 4;
-  string newPassword = 5;
-  Meta meta = 6;
+  string email = 2;
+  string name = 3;
+  string password = 4;
+  Meta meta = 5;
 }
 message SignInRequest {
   string email = 1;
