@@ -80,7 +80,7 @@ class API:
         """
         return SQL(self.project_id, self.stub, 'sql-mysql', self.token)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'SpaceAPI(project_id:{self.project_id}, url:{self.url}, token:{self.token})'
 
     def call(self, service_name: str, func_name: str, params, timeout: Optional[int] = 5000) -> Response:

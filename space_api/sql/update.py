@@ -57,9 +57,6 @@ class Update:
 
         :return: (Response) The response object containing values corresponding to the request
         """
-
-        print(self.params['find'])
-        print(self.params['update'])
         return update(self.stub, find=self.params['find'], operation=self.operation, _update=self.params['update'],
                       meta=self.meta)
 
