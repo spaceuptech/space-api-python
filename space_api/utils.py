@@ -2,10 +2,19 @@ def generate_find(condition: dict) -> dict:
     if condition.get('type') == 'and':
         d = {}
         for clause in condition.get('clauses'):
-            d.update(generate_find(clause))
+            generated = generate_find(clause)
+            if clause.get('type') == 'cond':
+                if clause.get('f1') not in d:
+                    d.update(generated)
+                else:
+                    d[clause.get('f1')].update(generated[clause.get('f1')])
+            else:
+                d.update(generated)
         return d
     elif condition.get('type') == 'or':
-        new_conditions = map(generate_find, condition.get('clauses'))
+        new_conditions = []
+        for clause in condition.get('clauses'):
+            new_conditions.append(generate_find(clause))
         return {'$or': new_conditions}
     elif condition.get('type') == 'cond':
         if condition.get('op') == "==":
