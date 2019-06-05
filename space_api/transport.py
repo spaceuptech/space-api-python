@@ -1,5 +1,5 @@
 import json
-from typing import Optional, Dict
+from typing import Optional, Dict, List
 from space_api.proto import server_pb2, server_pb2_grpc
 from space_api.response import Response
 
@@ -19,7 +19,7 @@ def make_meta(project: str, db_type: str, col: Optional[str] = None, token: Opti
 
     :param project: (str) The project id
     :param db_type: (str) The database type
-    :param col: (str) The collection name
+    :param col: (str) The (optional) collection name
     :param token: (str) The (optional) JWT Token
     :return: (server_pb2.Meta) gRPC Meta object
     """
@@ -92,8 +92,7 @@ def read(stub: server_pb2_grpc.SpaceCloudStub, find, operation: str, options: se
     return Response(stub.Read(read_request))
 
 
-def update(stub: server_pb2_grpc.SpaceCloudStub, find, operation: str, _update, meta: server_pb2.Meta) -> \
-        Response:
+def update(stub: server_pb2_grpc.SpaceCloudStub, find, operation: str, _update, meta: server_pb2.Meta) -> Response:
     """
     Calls the gRPC Update function
 
@@ -138,6 +137,19 @@ def aggregate(stub: server_pb2_grpc.SpaceCloudStub, pipeline, operation: str, me
     pipeline = _obj_to_utf8_bytes(pipeline)
     aggregate_request = server_pb2.AggregateRequest(pipeline=pipeline, operation=operation, meta=meta)
     return Response(stub.Aggregate(aggregate_request))
+
+
+def batch(stub: server_pb2_grpc.SpaceCloudStub, all_requests: List[server_pb2.AllRequest], meta: server_pb2.Meta) -> Response:
+    """
+    Calls the gRPC Batch function
+
+    :param stub: (server_pb2_grpc.SpaceCloudStub) The gRPC endpoint stub
+    :param all_requests: (List) A list of gRPC AllRequest objects
+    :param meta: (server_pb2.Meta) The gRPC Meta object
+    :return: (Response) The response object containing values corresponding to the request
+    """
+    batch_request = server_pb2.BatchRequest(meta=meta, batchrequest=all_requests)
+    return Response(stub.Batch(batch_request))
 
 
 def profile(stub: server_pb2_grpc.SpaceCloudStub, _id: str, meta: server_pb2.Meta) -> Response:

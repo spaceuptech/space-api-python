@@ -72,6 +72,21 @@ else:
     print(response.error)
 ```
 
+### Batch Multiple Requests in database
+```python
+b = db.begin_batch()
+b.add(db.insert('books').doc({"name": "MyBook", "author": "John Doe"}))
+b.add(db.insert('books').docs([{"name": "BookName"}, {"name": "BookName"}]))
+b.add(db.delete('books').where(COND('name', '!=', 'Book_name')))
+response = b.apply()
+if response.status == 200:
+    # Record successfully made the changes
+    print("Success")
+else:
+    # An error occurred
+    print(response.error)
+```
+
 ### Call functions directly (Function as a Service) 
 ```python
 response = api.call('test_engine', 'test_func', 'params')
