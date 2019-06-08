@@ -1,6 +1,6 @@
 .idea
 docs
-test/testing.py
+test/testing/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

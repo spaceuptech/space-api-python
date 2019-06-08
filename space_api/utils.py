@@ -1,3 +1,6 @@
+import json
+
+
 def generate_find(condition: dict) -> dict:
     if condition.get('type') == 'and':
         d = {}
@@ -45,3 +48,13 @@ def COND(f1: str, op: str, f2: str) -> dict:
 
 def OR(*conditions) -> dict:
     return {'type': 'or', 'clauses': conditions}
+
+
+def obj_to_utf8_bytes(obj) -> bytes:
+    """
+    Converts a JavaScript object-like variable into utf-8 bytes
+    :param obj: A JavaScript object-like variable
+    :return: (bytes) The utf-8 bytes of the object
+    """
+    return json.dumps(obj, separators=(',', ':')).encode(encoding='utf-8')
+

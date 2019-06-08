@@ -54,6 +54,11 @@ class SpaceCloudStub(object):
         request_serializer=server__pb2.RealTimeRequest.SerializeToString,
         response_deserializer=server__pb2.RealTimeResponse.FromString,
         )
+    self.Service = channel.stream_stream(
+        '/proto.SpaceCloud/Service',
+        request_serializer=server__pb2.FunctionsPayload.SerializeToString,
+        response_deserializer=server__pb2.FunctionsPayload.FromString,
+        )
     self.Profile = channel.unary_unary(
         '/proto.SpaceCloud/Profile',
         request_serializer=server__pb2.ProfileRequest.SerializeToString,
@@ -141,6 +146,13 @@ class SpaceCloudServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def Service(self, request_iterator, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def Profile(self, request, context):
     # missing associated documentation comment in .proto file
     pass
@@ -218,6 +230,11 @@ def add_SpaceCloudServicer_to_server(servicer, server):
           servicer.RealTime,
           request_deserializer=server__pb2.RealTimeRequest.FromString,
           response_serializer=server__pb2.RealTimeResponse.SerializeToString,
+      ),
+      'Service': grpc.stream_stream_rpc_method_handler(
+          servicer.Service,
+          request_deserializer=server__pb2.FunctionsPayload.FromString,
+          response_serializer=server__pb2.FunctionsPayload.SerializeToString,
       ),
       'Profile': grpc.unary_unary_rpc_method_handler(
           servicer.Profile,

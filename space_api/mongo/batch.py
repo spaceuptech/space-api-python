@@ -1,5 +1,6 @@
 from typing import Optional, Union
-from space_api.transport import make_meta, batch, _obj_to_utf8_bytes
+from space_api.transport import make_meta, batch
+from space_api.utils import obj_to_utf8_bytes
 from space_api.proto import server_pb2
 from space_api.proto.server_pb2_grpc import SpaceCloudStub
 from space_api.mongo.delete import Delete
@@ -46,19 +47,19 @@ class Batch:
         all_request = server_pb2.AllRequest()
         if isinstance(request, Insert):
             all_request.col = request.collection
-            all_request.document = _obj_to_utf8_bytes(request.document)
+            all_request.document = obj_to_utf8_bytes(request.document)
             all_request.operation = request.operation
             all_request.type = "create"
         if isinstance(request, Update):
             all_request.col = request.collection
             all_request.operation = request.operation
-            all_request.find = _obj_to_utf8_bytes(request.params['find'])
-            all_request.update = _obj_to_utf8_bytes(request.params['update'])
+            all_request.find = obj_to_utf8_bytes(request.params['find'])
+            all_request.update = obj_to_utf8_bytes(request.params['update'])
             all_request.type = "update"
         if isinstance(request, Delete):
             all_request.col = request.collection
             all_request.operation = request.operation
-            all_request.find = _obj_to_utf8_bytes(request.params['find'])
+            all_request.find = obj_to_utf8_bytes(request.params['find'])
             all_request.type = "delete"
         self.requests.append(all_request)
         return self
