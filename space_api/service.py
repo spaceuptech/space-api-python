@@ -4,18 +4,17 @@ import collections
 import threading
 import grpc
 from concurrent import futures
-from typing import Optional, Callable
+from typing import Callable
 from space_api.proto import server_pb2, server_pb2_grpc
 from space_api import constants
 from space_api.utils import obj_to_utf8_bytes
 
 
-class Client:
+class _Client:
     def __init__(self):
         self._stop_event = threading.Event()
         self._request_condition = threading.Condition()
         self._requests = collections.deque()
-        self._responses = {}
 
     def __next__(self):
         with self._request_condition:
@@ -36,21 +35,41 @@ class Client:
 
 
 class Service:
+    """
+    The Service Interface
+    ::
+        from space_api import API
+        api = API('project', 'localhost:8081')
+
+        service = api.service('service')
+        service.register_function(my_awesome_function)
+        service.start()
+        api.close()
+
+    :param stub: (server_pb2_grpc.SpaceCloudStub) The gRPC endpoint stub
+    :param project_id: (str) The project ID
+    :param token: (str) The (optional) JWT Token
+    :param service: (str) The name of the Service
+    """
+
     def __init__(self, stub: server_pb2_grpc.SpaceCloudStub, project_id: str, token: str, service: str):
         self.stub = stub
         self.project_id = project_id
         self.token = token
         self.service = service
         self.storage = {}
-        self.client = Client()
+        self.client = _Client()
         self.uid = str(uuid.uuid1())
-        self.pool = futures.ThreadPoolExecutor(max_workers=8)
+        self.pool = futures.ThreadPoolExecutor()
 
-    def register_function(self, function: Callable, func_name: Optional[str] = None):
-        if func_name is not None:
-            self.storage[func_name] = function
-        else:
-            self.storage[function.__name__] = function
+    def register_function(self, func_name: str, function: Callable):
+        """
+        Register a function with the Service
+
+        :param function: The function to register
+        :param func_name: (str) The name with which the function should be called
+        """
+        self.storage[func_name] = function
 
     def _func(self, payload):
         return self.client.add_request(payload)
@@ -67,23 +86,41 @@ class Service:
                 if response.type == constants.TypeServiceRequest:
                     if response.function in self.storage:
                         try:
-                            result = self.storage[response.function](json.loads(response.params),
-                                                                     json.loads(response.auth))
-                            payload = server_pb2.FunctionsPayload(id=response.id, type=constants.TypeServiceRequest,
-                                                                  service=self.service,
-                                                                  params=obj_to_utf8_bytes(result))
+                            def callback(kind: str, result):
+                                if kind == "response":
+                                    self.pool.map(self._func, (
+                                        server_pb2.FunctionsPayload(id=response.id, type=constants.TypeServiceRequest,
+                                                                    service=self.service,
+                                                                    params=obj_to_utf8_bytes(result)),))
+                                else:
+                                    raise ValueError("The kind (1st parameter) should be 'response'")
+
+                            self.storage[response.function](json.loads(response.params), json.loads(response.auth),
+                                                            callback)
+                        except ValueError as e:
+                            if str(e) == "The kind (1st parameter) should be 'response'":
+                                raise e
+                            else:
+                                self.pool.map(self._func, (
+                                    server_pb2.FunctionsPayload(id=response.id, type=constants.TypeServiceRequest,
+                                                                service=self.service, error=str(e)),))
                         except Exception as e:
-                            payload = server_pb2.FunctionsPayload(id=response.id, type=constants.TypeServiceRequest,
-                                                                  service=self.service, error=str(e))
+                            self.pool.map(self._func, (
+                                server_pb2.FunctionsPayload(id=response.id, type=constants.TypeServiceRequest,
+                                                            service=self.service, error=str(e)),))
                     else:
-                        payload = server_pb2.FunctionsPayload(id=response.id, type=constants.TypeServiceRequest,
-                                                              service=self.service, error="Function not registered")
-                    self.pool.map(self._func, (payload,))
+                        self.pool.map(self._func,
+                                      (server_pb2.FunctionsPayload(id=response.id, type=constants.TypeServiceRequest,
+                                                                   service=self.service,
+                                                                   error="Function not registered"),))
         except grpc._channel._Rendezvous as e:
             a = str(e).index('details = "')
             raise Exception(str(e)[a + 11:str(e).index('"', a + 11)])
 
     def start(self):
+        """
+        Start the Service (Blocking)
+        """
         client_thread = threading.Thread(target=self._run_client)
         client_thread.start()
 

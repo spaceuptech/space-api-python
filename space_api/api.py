@@ -37,9 +37,15 @@ class API:
         self.stub = SpaceCloudStub(self.channel)
 
     def close(self):
+        """
+        Closes the communication channel
+        """
         self.channel.close()
 
     def connect(self):
+        """
+        Connects to the Space Cloud Instance
+        """
         self.channel = grpc.insecure_channel(self.url)
         self.stub = SpaceCloudStub(self.channel)
 
@@ -100,7 +106,13 @@ class API:
         """
         return faas(self.project_id, self.stub, params, timeout, service_name, func_name, self.token)
 
-    def service(self, service: str):
+    def service(self, service: str) -> 'Service':
+        """
+        Returns a Service instance
+
+        :param service: (str) The name of the service
+        :return: (Service) The Service instance
+        """
         return Service(self.stub, self.project_id, self.token, service)
 
     def file_store(self):
