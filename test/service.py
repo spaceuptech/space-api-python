@@ -14,8 +14,8 @@ def func2(params, auth, cb):
     cb('response', 'my_response')
 
 
-service.register_function('echo_func', echo_func)
-service.register_function('func2', func2)
+service.register_func('echo_func', echo_func)
+service.register_func('func2', func2)
 
 service.start()
 api.close()

@@ -10,7 +10,7 @@ from space_api.sql.update import Update
 
 class Batch:
     """
-    The SQL Batch Interface
+    The SQL Batch Class
     ::
         from space_api import API, AND, OR, COND
         api = API("My-Project", "localhost:8080")

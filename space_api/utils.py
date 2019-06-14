@@ -1,4 +1,6 @@
 import json
+import collections
+import threading
 
 
 def generate_find(condition: dict) -> dict:
@@ -58,3 +60,29 @@ def obj_to_utf8_bytes(obj) -> bytes:
     """
     return json.dumps(obj, separators=(',', ':')).encode(encoding='utf-8')
 
+
+class Client:
+    """
+    An async type client for gRPC bidirectional streams
+    """
+    def __init__(self):
+        self._stop_event = threading.Event()
+        self._request_condition = threading.Condition()
+        self._requests = collections.deque()
+
+    def __next__(self):
+        with self._request_condition:
+            while (not self._requests and not self._stop_event.is_set()) or len(self._requests) <= 0:
+                self._request_condition.wait()
+            if len(self._requests) > 0:
+                return self._requests.popleft()
+
+    def close(self):
+        self._stop_event.set()
+        with self._request_condition:
+            self._request_condition.notify()
+
+    def add_request(self, request):
+        with self._request_condition:
+            self._requests.append(request)
+            self._request_condition.notify()

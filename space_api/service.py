@@ -1,48 +1,23 @@
 import uuid
 import json
-import collections
-import threading
 import grpc
 from concurrent import futures
+from multiprocessing.pool import ThreadPool
 from typing import Callable
 from space_api.proto import server_pb2, server_pb2_grpc
 from space_api import constants
-from space_api.utils import obj_to_utf8_bytes
-
-
-class _Client:
-    def __init__(self):
-        self._stop_event = threading.Event()
-        self._request_condition = threading.Condition()
-        self._requests = collections.deque()
-
-    def __next__(self):
-        with self._request_condition:
-            while (not self._requests and not self._stop_event.is_set()) or len(self._requests) <= 0:
-                self._request_condition.wait()
-            if len(self._requests) > 0:
-                return self._requests.popleft()
-
-    def close(self):
-        self._stop_event.set()
-        with self._request_condition:
-            self._request_condition.notify()
-
-    def add_request(self, request):
-        with self._request_condition:
-            self._requests.append(request)
-            self._request_condition.notify()
+from space_api.utils import obj_to_utf8_bytes, Client
 
 
 class Service:
     """
-    The Service Interface
+    The Service Class
     ::
         from space_api import API
         api = API('project', 'localhost:8081')
 
         service = api.service('service')
-        service.register_function(my_awesome_function)
+        service.register_func(my_awesome_function)
         service.start()
         api.close()
 
@@ -58,11 +33,11 @@ class Service:
         self.token = token
         self.service = service
         self.storage = {}
-        self.client = _Client()
+        self.client = Client()
         self.uid = str(uuid.uuid1())
         self.pool = futures.ThreadPoolExecutor()
 
-    def register_function(self, func_name: str, function: Callable):
+    def register_func(self, func_name: str, function: Callable):
         """
         Register a function with the Service
 
@@ -114,22 +89,25 @@ class Service:
                                                                    service=self.service,
                                                                    error="Function not registered"),))
         except grpc._channel._Rendezvous as e:
-            a = str(e).index('details = "')
-            raise Exception(str(e)[a + 11:str(e).index('"', a + 11)])
+            raise e
+            # a = str(e).index('details = "')
+            # print("Error:", str(e)[a + 11:str(e).index('"', a + 11)])
+            # raise Exception(str(e)[a + 11:str(e).index('"', a + 11)])
+        return None
 
     def start(self):
         """
         Start the Service (Blocking)
         """
-        client_thread = threading.Thread(target=self._run_client)
-        client_thread.start()
-
+        pool = ThreadPool(processes=1)
+        async_result = pool.apply_async(self._run_client, ())
         self.pool.map(self._func, (server_pb2.FunctionsPayload(service=self.service, type=constants.TypeServiceRegister,
                                                                id=self.uid, project=self.project_id,
                                                                token=self.token),))
 
         self.client.close()
-        client_thread.join()
+        err = async_result.get()
+        print(err)
 
 
 __all__ = ['Service']

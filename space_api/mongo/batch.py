@@ -10,7 +10,7 @@ from space_api.mongo.update import Update
 
 class Batch:
     """
-    The Mongo Batch Interface
+    The Mongo Batch Class
     ::
         from space_api import API, AND, OR, COND
         api = API("My-Project", "localhost:8080")

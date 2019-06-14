@@ -7,7 +7,7 @@ from space_api.response import Response
 
 class Get:
     """
-    The SQL Get Interface
+    The SQL Get Class
     ::
         from space_api import API, AND, OR, COND
         api = API("My-Project", "localhost:8080")

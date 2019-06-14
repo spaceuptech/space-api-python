@@ -6,7 +6,7 @@ from space_api.response import Response
 
 class Insert:
     """
-    The Mongo Insert Interface
+    The Mongo Insert Class
     ::
         from space_api import API
         api = API("My-Project", "localhost:8080")

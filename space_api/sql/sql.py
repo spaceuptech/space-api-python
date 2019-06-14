@@ -7,11 +7,13 @@ from space_api.sql.batch import Batch
 from space_api.response import Response
 from space_api.proto.server_pb2_grpc import SpaceCloudStub
 from space_api import user_man
+from space_api.realtime import Realtime
+from space_api.livequery import LiveQuery
 
 
 class SQL:
     """
-    The SQL Client Interface
+    The SQL Client Class
     ::
         from space_api import API
         api = API("My-Project", "localhost:8080")
@@ -29,6 +31,7 @@ class SQL:
         self.stub = stub
         self.db_type = db_type
         self.token = token
+        self.realtime = Realtime(project_id, self.stub, self.db_type, self.token)
 
     def __str__(self) -> str:
         if self.db_type == 'sql-mysql':
@@ -111,8 +114,14 @@ class SQL:
         """
         return Batch(self.project_id, self.stub, self.db_type, self.token)
 
-    def live_query(self, collection: str):
-        raise NotImplementedError("Coming Soon!")
+    def live_query(self, collection: str) -> LiveQuery:
+        """
+        Returns an SQL LiveQuery object
+
+        :param collection: (str) The collection name
+        :return: The SQL LiveQuery object
+        """
+        return self.realtime.live_query(collection)
 
     def profile(self, _id: str) -> Response:
         """

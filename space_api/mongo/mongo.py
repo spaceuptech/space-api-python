@@ -8,11 +8,13 @@ from space_api.mongo.aggregate import Aggregate
 from space_api.mongo.batch import Batch
 from space_api.response import Response
 from space_api import user_man
+from space_api.realtime import Realtime
+from space_api.livequery import LiveQuery
 
 
 class Mongo:
     """
-    The Mongo Client Interface
+    The Mongo Client Class
     ::
         from space_api import API
         api = API("My-Project", "localhost:8080")
@@ -28,6 +30,7 @@ class Mongo:
         self.stub = stub
         self.db_type = "mongo"
         self.token = token
+        self.realtime = Realtime(project_id, self.stub, self.db_type, self.token)
 
     def get(self, collection: str) -> 'Get':
         """
@@ -153,8 +156,14 @@ class Mongo:
         """
         return Batch(self.project_id, self.stub, self.db_type, self.token)
 
-    def live_query(self, collection: str):
-        raise NotImplementedError("Coming Soon!")
+    def live_query(self, collection: str) -> LiveQuery:
+        """
+        Returns a Mongo LiveQuery object
+
+        :param collection: (str) The collection name
+        :return: The Mongo LiveQuery object
+        """
+        return self.realtime.live_query(collection)
 
     def profile(self, _id: str) -> Response:
         """
