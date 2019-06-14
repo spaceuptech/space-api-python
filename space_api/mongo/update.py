@@ -7,7 +7,7 @@ from space_api.response import Response
 
 class Update:
     """
-    The Mongo Update Interface
+    The Mongo Update Class
     ::
         from space_api import API, AND, OR, COND
         api = API("My-Project", "localhost:8080")

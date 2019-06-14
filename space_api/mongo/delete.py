@@ -7,7 +7,7 @@ from space_api.response import Response
 
 class Delete:
     """
-    The Mongo Delete Interface
+    The Mongo Delete Class
     ::
         from space_api import API, AND, OR, COND
         api = API("My-Project", "localhost:8080")
