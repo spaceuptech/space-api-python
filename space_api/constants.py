@@ -9,6 +9,7 @@ TypeServiceRequest = "service-request"
 
 Write = "write"
 Delete = "delete"
+Update = "update"
 
 # TypeRealtimeSubscribe is the request type for live query subscription
 TypeRealtimeSubscribe = "realtime-subscribe"
