@@ -3,7 +3,6 @@ import time
 import threading
 
 api = API('grpc', 'localhost:8081')
-api.set_token('my_secret')
 db = api.my_sql()
 
 
