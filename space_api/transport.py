@@ -1,16 +1,7 @@
-import json
-from typing import Optional, Dict
+from typing import Optional, Dict, List
 from space_api.proto import server_pb2, server_pb2_grpc
 from space_api.response import Response
-
-
-def _obj_to_utf8_bytes(obj) -> bytes:
-    """
-    Converts a JavaScript object-like variable into utf-8 bytes
-    :param obj: A JavaScript object-like variable 
-    :return: (bytes) The utf-8 bytes of the object
-    """
-    return json.dumps(obj, separators=(',', ':')).encode(encoding='utf-8')
+from space_api.utils import obj_to_utf8_bytes
 
 
 def make_meta(project: str, db_type: str, col: Optional[str] = None, token: Optional[str] = None) -> server_pb2.Meta:
@@ -19,7 +10,7 @@ def make_meta(project: str, db_type: str, col: Optional[str] = None, token: Opti
 
     :param project: (str) The project id
     :param db_type: (str) The database type
-    :param col: (str) The collection name
+    :param col: (str) The (optional) collection name
     :param token: (str) The (optional) JWT Token
     :return: (server_pb2.Meta) gRPC Meta object
     """
@@ -51,27 +42,28 @@ def create(stub: server_pb2_grpc.SpaceCloudStub, document, operation: str, meta:
     :param meta: (server_pb2.Meta) The gRPC Meta object
     :return: (Response) The response object containing values corresponding to the request
     """
-    document = _obj_to_utf8_bytes(document)
+    document = obj_to_utf8_bytes(document)
     create_request = server_pb2.CreateRequest(document=document, operation=operation, meta=meta)
     return Response(stub.Create(create_request))
 
 
-def faas(stub: server_pb2_grpc.SpaceCloudStub, params, timeout: int, service: str, function: str,
+def faas(project_id: str, stub: server_pb2_grpc.SpaceCloudStub, params, timeout: int, service: str, function: str,
          token: str) -> Response:
     """
     Calls the gRPC Call function
 
+    :param project_id: (str) The project ID
     :param stub: (server_pb2_grpc.SpaceCloudStub) The gRPC endpoint stub
     :param params: The params for the function
-    :param timeout: (int) The (optional) timeout in milliseconds (defaults to 5000)
+    :param timeout: (int) The timeout in seconds
     :param service: (str) The name of service(engine) with which the function is registered
     :param function: (str) The name of function to be called
     :param token: (str) The signed JWT token received from the server on successful authentication
     :return: (Response) The response object containing values corresponding to the request
     """
-    params = _obj_to_utf8_bytes(params)
-    functions_request = server_pb2.FunctionsRequest(params=params, timeout=timeout, service=service, function=function,
-                                                    token=token)
+    params = obj_to_utf8_bytes(params)
+    functions_request = server_pb2.FunctionsRequest(params=params, timeout=timeout, service=service,
+                                                    function=function, token=token, project=project_id)
     return Response(stub.Call(functions_request))
 
 
@@ -87,13 +79,12 @@ def read(stub: server_pb2_grpc.SpaceCloudStub, find, operation: str, options: se
     :param meta: (server_pb2.Meta) The gRPC Meta object
     :return: (Response) The response object containing values corresponding to the request
     """
-    find = _obj_to_utf8_bytes(find)
+    find = obj_to_utf8_bytes(find)
     read_request = server_pb2.ReadRequest(find=find, operation=operation, options=options, meta=meta)
     return Response(stub.Read(read_request))
 
 
-def update(stub: server_pb2_grpc.SpaceCloudStub, find, operation: str, _update, meta: server_pb2.Meta) -> \
-        Response:
+def update(stub: server_pb2_grpc.SpaceCloudStub, find, operation: str, _update, meta: server_pb2.Meta) -> Response:
     """
     Calls the gRPC Update function
 
@@ -104,8 +95,8 @@ def update(stub: server_pb2_grpc.SpaceCloudStub, find, operation: str, _update, 
     :param meta: (server_pb2.Meta) The gRPC Meta object
     :return: (Response) The response object containing values corresponding to the request
     """
-    find = _obj_to_utf8_bytes(find)
-    _update = _obj_to_utf8_bytes(_update)
+    find = obj_to_utf8_bytes(find)
+    _update = obj_to_utf8_bytes(_update)
     update_request = server_pb2.UpdateRequest(find=find, operation=operation, update=_update, meta=meta)
     return Response(stub.Update(update_request))
 
@@ -120,7 +111,7 @@ def delete(stub: server_pb2_grpc.SpaceCloudStub, find, operation: str, meta: ser
     :param meta: (server_pb2.Meta) The gRPC Meta object
     :return: (Response) The response object containing values corresponding to the request
     """
-    find = _obj_to_utf8_bytes(find)
+    find = obj_to_utf8_bytes(find)
     delete_request = server_pb2.DeleteRequest(find=find, operation=operation, meta=meta)
     return Response(stub.Delete(delete_request))
 
@@ -135,9 +126,23 @@ def aggregate(stub: server_pb2_grpc.SpaceCloudStub, pipeline, operation: str, me
     :param meta: (server_pb2.Meta) The gRPC Meta object
     :return: (Response) The response object containing values corresponding to the request
     """
-    pipeline = _obj_to_utf8_bytes(pipeline)
+    pipeline = obj_to_utf8_bytes(pipeline)
     aggregate_request = server_pb2.AggregateRequest(pipeline=pipeline, operation=operation, meta=meta)
     return Response(stub.Aggregate(aggregate_request))
+
+
+def batch(stub: server_pb2_grpc.SpaceCloudStub, all_requests: List[server_pb2.AllRequest],
+          meta: server_pb2.Meta) -> Response:
+    """
+    Calls the gRPC Batch function
+
+    :param stub: (server_pb2_grpc.SpaceCloudStub) The gRPC endpoint stub
+    :param all_requests: (List) A list of gRPC AllRequest objects
+    :param meta: (server_pb2.Meta) The gRPC Meta object
+    :return: (Response) The response object containing values corresponding to the request
+    """
+    batch_request = server_pb2.BatchRequest(meta=meta, batchrequest=all_requests)
+    return Response(stub.Batch(batch_request))
 
 
 def profile(stub: server_pb2_grpc.SpaceCloudStub, _id: str, meta: server_pb2.Meta) -> Response:

@@ -8,6 +8,7 @@ from space_api.sql.sql import SQL
 from space_api.mongo.mongo import Mongo
 from space_api.transport import faas
 from space_api.response import Response
+from space_api.service import Service
 
 
 class API:
@@ -31,12 +32,20 @@ class API:
             self.url = url
         self.token = None
         self.channel = grpc.insecure_channel(self.url)
+        # self.channel = grpc.insecure_channel(self.url, options=[('grpc.keepalive_timeout_ms', 10000),
+        #                                                         ('grpc.keepalive_permit_without_calls', 1)])
         self.stub = SpaceCloudStub(self.channel)
 
     def close(self):
+        """
+        Closes the communication channel
+        """
         self.channel.close()
 
     def connect(self):
+        """
+        Connects to the Space Cloud Instance
+        """
         self.channel = grpc.insecure_channel(self.url)
         self.stub = SpaceCloudStub(self.channel)
 
@@ -80,10 +89,10 @@ class API:
         """
         return SQL(self.project_id, self.stub, 'sql-mysql', self.token)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'SpaceAPI(project_id:{self.project_id}, url:{self.url}, token:{self.token})'
 
-    def call(self, service_name: str, func_name: str, params, timeout: Optional[int] = 5000) -> Response:
+    def call(self, service_name: str, func_name: str, params, timeout: Optional[int] = 5) -> Response:
         """
         Calls a function from Function as a Service Engine
         ::
@@ -92,10 +101,19 @@ class API:
         :param service_name: (str) The name of service(engine) with which the function is registered
         :param func_name: (str) The name of function to be called
         :param params: The params for the function
-        :param timeout: (int) The (optional) timeout in milliseconds (defaults to 5000)
+        :param timeout: (int) The (optional) timeout in seconds (defaults to 5)
         :return: (Response) The response object containing values corresponding to the request
         """
-        return faas(self.stub, params, timeout, service_name, func_name, self.token)
+        return faas(self.project_id, self.stub, params, timeout, service_name, func_name, self.token)
+
+    def service(self, service: str) -> 'Service':
+        """
+        Returns a Service instance
+
+        :param service: (str) The name of the service
+        :return: (Service) The Service instance
+        """
+        return Service(self.stub, self.project_id, self.token, service)
 
     def file_store(self):
         raise NotImplementedError("Coming Soon!")

@@ -5,12 +5,16 @@ from space_api.mongo.insert import Insert
 from space_api.mongo.update import Update
 from space_api.mongo.delete import Delete
 from space_api.mongo.aggregate import Aggregate
+from space_api.mongo.batch import Batch
+from space_api.response import Response
 from space_api import user_man
+from space_api.realtime import Realtime
+from space_api.livequery import LiveQuery
 
 
 class Mongo:
     """
-    The Mongo Client Interface
+    The Mongo Client Class
     ::
         from space_api import API
         api = API("My-Project", "localhost:8080")
@@ -26,6 +30,7 @@ class Mongo:
         self.stub = stub
         self.db_type = "mongo"
         self.token = token
+        self.realtime = Realtime(project_id, self.stub, self.db_type, self.token)
 
     def get(self, collection: str) -> 'Get':
         """
@@ -139,10 +144,28 @@ class Mongo:
         """
         return Aggregate(self.project_id, collection, self.stub, self.token, operation='one')
 
-    def live_query(self, collection: str):
-        raise NotImplementedError("Coming Soon!")
+    def begin_batch(self) -> 'Batch':
+        """
+        Creates a Batch request
+        ::
+            batch_obj = db.begin_batch()
+            batch_obj.add(...)
+            response = batch_obj.apply()
 
-    def profile(self, _id: str):
+        :return: (Batch) A Mongo Batch object
+        """
+        return Batch(self.project_id, self.stub, self.db_type, self.token)
+
+    def live_query(self, collection: str) -> LiveQuery:
+        """
+        Returns a Mongo LiveQuery object
+
+        :param collection: (str) The collection name
+        :return: The Mongo LiveQuery object
+        """
+        return self.realtime.live_query(collection)
+
+    def profile(self, _id: str) -> Response:
         """
         Gets the profile of the user
         ::
@@ -153,7 +176,7 @@ class Mongo:
         """
         return user_man.profile(self.project_id, self.db_type, self.token, self.stub, _id)
 
-    def profiles(self):
+    def profiles(self) -> Response:
         """
         Gets the all the profiles
         ::
@@ -164,7 +187,7 @@ class Mongo:
         return user_man.profiles(self.project_id, self.db_type, self.token, self.stub)
 
     def edit_profile(self, _id: str, email: Optional[str] = None, name: Optional[str] = None,
-                     password: Optional[str] = None):
+                     password: Optional[str] = None) -> Response:
         """
         Edits the profile of the user
         ::
@@ -178,7 +201,7 @@ class Mongo:
         """
         return user_man.edit_profile(self.project_id, self.db_type, self.token, self.stub, _id, email, name, password)
 
-    def sign_in(self, email: str, password: str):
+    def sign_in(self, email: str, password: str) -> Response:
         """
         Allows the user to sign in
         ::
@@ -190,7 +213,7 @@ class Mongo:
         """
         return user_man.sign_in(self.project_id, self.db_type, self.token, self.stub, email, password)
 
-    def sign_up(self, email: str, name: str, password: str, role: str):
+    def sign_up(self, email: str, name: str, password: str, role: str) -> Response:
         """
         Allows a user to sign up
         ::

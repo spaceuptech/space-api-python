@@ -14,7 +14,7 @@ class Response:
         self.error = response.error if len(response.error) > 0 else None
         self.result = json.loads(response.result) if len(response.result) > 0 else None
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'Response(status={self.status}, error={self.error}, result={self.result})'
 
 
