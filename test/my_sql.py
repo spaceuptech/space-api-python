@@ -1,7 +1,6 @@
 from space_api import API, COND
 
 api = API('grpc', 'localhost:8081')
-api.set_token('my_secret')
 db = api.my_sql()
 
 # testing

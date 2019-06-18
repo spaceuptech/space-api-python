@@ -21,8 +21,9 @@ def _snapshot_callback(storage: dict, rows: List[server_pb2.FeedData]):
         return
     obj = {}
     for feedData in rows:
+        # print(feedData)
         obj = storage[feedData.group][feedData.queryId]
-        if feedData.type == constants.Write:
+        if feedData.type == constants.Insert or feedData.type == constants.Update:
             exists = False
             for i in range(len(obj['snapshot'])):
                 row = obj['snapshot'][i]
