@@ -23,19 +23,7 @@ def _snapshot_callback(storage: dict, rows: List[server_pb2.FeedData]):
     for feedData in rows:
         # print(feedData)
         obj = storage[feedData.group][feedData.queryId]
-        if feedData.type == constants.Write:
-            obj['snapshot'].append(
-                {'id': feedData.docId, 'time': feedData.timeStamp, 'payload': feedData.payload,
-                 'is_deleted': False})
-        elif feedData.type == constants.Delete:
-            for i in range(len(obj['snapshot'])):
-                row = obj['snapshot'][i]
-                if row['id'] == feedData.docId and row['time'] <= feedData.timeStamp:
-                    row['time'] = feedData.timeStamp
-                    row['payload'] = {}
-                    row['is_deleted'] = True
-                obj['snapshot'][i] = row
-        elif feedData.type == constants.Update:
+        if feedData.type == constants.Insert or feedData.type == constants.Update:
             exists = False
             for i in range(len(obj['snapshot'])):
                 row = obj['snapshot'][i]
@@ -50,6 +38,14 @@ def _snapshot_callback(storage: dict, rows: List[server_pb2.FeedData]):
                 obj['snapshot'].append(
                     {'id': feedData.docId, 'time': feedData.timeStamp, 'payload': feedData.payload,
                      'is_deleted': False})
+        elif feedData.type == constants.Delete:
+            for i in range(len(obj['snapshot'])):
+                row = obj['snapshot'][i]
+                if row['id'] == feedData.docId and row['time'] <= feedData.timeStamp:
+                    row['time'] = feedData.timeStamp
+                    row['payload'] = {}
+                    row['is_deleted'] = True
+                obj['snapshot'][i] = row
     change_type = rows[0].type if len(rows) == 1 else 'initial'
     obj['subscription']['on_snapshot']([json.loads(row['payload']) for row in obj['snapshot'] if not row['is_deleted']],
                                        change_type)

@@ -7,6 +7,7 @@ TypeServiceUnregister = "service-unregister"
 # TypeServiceRequest is type triggering a service's function
 TypeServiceRequest = "service-request"
 
+Insert = "insert"
 Write = "write"
 Delete = "delete"
 Update = "update"
