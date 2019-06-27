@@ -1,4 +1,4 @@
-from typing import Optional, Callable
+from typing import Callable
 import uuid
 from multiprocessing.pool import ThreadPool
 import grpc
@@ -6,14 +6,16 @@ import json
 from concurrent import futures
 from typing import List
 from space_api.utils import generate_find, AND
-from space_api.proto import server_pb2, server_pb2_grpc
+from space_api.proto import server_pb2
 from space_api import constants
 from space_api.utils import Client, obj_to_utf8_bytes
+from space_api.transport import Transport
 
 
 def _snapshot_callback(storage: dict, rows: List[server_pb2.FeedData]):
     """
     A utility function to call the on_snapshot function
+
     :param storage: (dict) The LiveQuery storage
     :param rows: (List[server_pb2.FeedData]) The list of server_pb2.FeedData
     """
@@ -22,7 +24,7 @@ def _snapshot_callback(storage: dict, rows: List[server_pb2.FeedData]):
     obj = {}
     for feedData in rows:
         # print(feedData)
-        obj = storage[feedData.group][feedData.queryId]
+        obj = storage[feedData.queryId]
         if feedData.type == constants.Insert or feedData.type == constants.Update:
             exists = False
             for i in range(len(obj['snapshot'])):
@@ -61,33 +63,29 @@ class LiveQuery:
 
         unsubscribe = db.live_query('books').subscribe(on_snapshot, on_error)
 
-        # After some time
+        # After some condition
         unsubscribe()
         api.close()
 
-    :param project_id: (str) The project ID
-    :param stub: (server_pb2_grpc.SpaceCloudStub) The gRPC endpoint stub
+    :param transport: (Transport) The API's transport instance
     :param db_type: (str) The database type
     :param collection: (str) The collection name
-    :param store: (dict) A dictionary for temporary storage and cache
-    :param token: (str) The (optional) JWT Token
     """
 
-    def __init__(self, project_id: str, stub: server_pb2_grpc.SpaceCloudStub, db_type: str, collection: str,
-                 store: dict, token: Optional[str] = None):
-        self.project_id = project_id
+    def __init__(self, transport: Transport, db_type: str, collection: str):
+        self.stub = transport.stub
+        self.project_id = transport.project_id
+        self.token = transport.token
         self.db_type = db_type
+        self.store = {}
         self.collection = collection
-        self.stub = stub
-        self.store = store
-        self.store[collection] = {}
-        self.token = token
         self.client = Client()
         self.find = {}
         self.async_result = None
         self.id = str(uuid.uuid1())
         self.pool = futures.ThreadPoolExecutor()
         self.run_pool = ThreadPool(processes=1)
+        # TODO Register Callbacks for Reconnect
 
     def where(self, *conditions) -> 'LiveQuery':
         """
@@ -98,11 +96,11 @@ class LiveQuery:
         self.find = generate_find(AND(*conditions))
         return self
 
-    def _run_client(self, id: str, on_snapshot: Callable, on_error: Callable):
+    def _run_client(self, _id: str, on_snapshot: Callable, on_error: Callable):
         responses = self.stub.RealTime(self.client)
         try:
             for response in responses:
-                if response.id == id:
+                if response.id == _id:
                     if response.ack:
                         _snapshot_callback(self.store, response.feedData)
                     else:
@@ -121,15 +119,15 @@ class LiveQuery:
     def subscribe(self, on_snapshot: Callable, on_error: Callable) -> Callable:
         """
         Subscribes to the particular LiveQuery instance
-        :param on_snapshot: (Callable) The function to be called when new live data is encountered (takes in docs(List) and type of change(String))
+
+        :param on_snapshot: (Callable) The function to be called when new live data is encountered (takes in docs(List)
+            and type of change(String))
         :param on_error: (Callable) The function to be called when an error occurs (takes in an error(str))
         :return: (Callable) The unsubscribe function
         """
-        if self.store.get(self.collection) is None:
-            self.store[self.collection] = {}
-        self.store[self.collection][self.id] = {'snapshot': [], 'subscription': {}, 'find': self.find}
+        self.store[self.id] = {'snapshot': [], 'subscription': {}, 'find': self.find}
         subscription = {'on_snapshot': on_snapshot, 'on_error': on_error}
-        self.store[self.collection][self.id]['subscription'] = subscription
+        self.store[self.id]['subscription'] = subscription
 
         self.async_result = self.run_pool.apply_async(self._run_client, (self.id, on_snapshot, on_error))
         self.pool.map(self._send, (
@@ -151,7 +149,7 @@ class LiveQuery:
         self.client.close()
         self.run_pool.close()
         try:
-            del self.store[self.collection][self.id]
+            del self.store[self.id]
         except KeyError:
             pass
 

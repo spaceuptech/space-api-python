@@ -4,9 +4,10 @@ import grpc
 from concurrent import futures
 from multiprocessing.pool import ThreadPool
 from typing import Callable
-from space_api.proto import server_pb2, server_pb2_grpc
+from space_api.proto import server_pb2
 from space_api import constants
 from space_api.utils import obj_to_utf8_bytes, Client
+from space_api.transport import Transport
 
 
 class Service:
@@ -21,16 +22,14 @@ class Service:
         service.start()
         api.close()
 
-    :param stub: (server_pb2_grpc.SpaceCloudStub) The gRPC endpoint stub
-    :param project_id: (str) The project ID
-    :param token: (str) The (optional) JWT Token
+    :param transport: (Transport) The API's transport instance
     :param service: (str) The name of the Service
     """
 
-    def __init__(self, stub: server_pb2_grpc.SpaceCloudStub, project_id: str, token: str, service: str):
-        self.stub = stub
-        self.project_id = project_id
-        self.token = token
+    def __init__(self, transport: Transport, service: str):
+        self.stub = transport.stub
+        self.project_id = transport.project_id
+        self.token = transport.token
         self.service = service
         self.storage = {}
         self.client = Client()

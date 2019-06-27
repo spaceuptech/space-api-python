@@ -11,7 +11,6 @@ print(db.delete('books').apply())
 print(db.insert('books').docs([{"name": "BookName"}, {"name": "BookName"}]).apply())
 # one
 print(db.insert('books').doc({"name": "MyBook", "author": "John Doe"}).apply())
-exit()
 # get - 12/12 passing
 # all
 print(db.get('books').apply())

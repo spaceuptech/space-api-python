@@ -1,13 +1,11 @@
 from typing import Optional
+from space_api.transport import Transport
 from space_api.sql.get import Get
 from space_api.sql.insert import Insert
 from space_api.sql.update import Update
 from space_api.sql.delete import Delete
 from space_api.sql.batch import Batch
 from space_api.response import Response
-from space_api.proto.server_pb2_grpc import SpaceCloudStub
-from space_api import user_man
-from space_api.realtime import Realtime
 from space_api.livequery import LiveQuery
 
 
@@ -20,24 +18,13 @@ class SQL:
         db = api.my_sql() # For a MySQL interface
         db = api.postgres() # For a Postgres interface
 
-    :param project_id: (str) The project ID
-    :param stub: (server_pb2_grpc.SpaceCloudStub) The gRPC endpoint stub
+    :param transport: (Transport) The API's transport instance
     :param db_type: (str) The database type
-    :param token: (str) The (optional) JWT Token
     """
 
-    def __init__(self, project_id: str, stub: SpaceCloudStub, db_type: str, token: Optional[str] = None):
-        self.project_id = project_id
-        self.stub = stub
+    def __init__(self, transport: Transport, db_type: str):
+        self.transport = transport
         self.db_type = db_type
-        self.token = token
-        self.realtime = Realtime(project_id, self.stub, self.db_type, self.token)
-
-    def __str__(self) -> str:
-        if self.db_type == 'sql-mysql':
-            return f'SpaceAPI MySQL(project_id:{self.project_id}, stub:{self.stub}, token:{self.token})'
-        elif self.db_type == 'sql-postgres':
-            return f'SpaceAPI Postgres(project_id:{self.project_id}, stub:{self.stub}, token:{self.token})'
 
     def get(self, collection: str) -> 'Get':
         """
@@ -46,7 +33,7 @@ class SQL:
         :param collection: (str) The collection name
         :return: The SQL Get object
         """
-        return Get(self.project_id, collection, self.stub, self.db_type, self.token)
+        return Get(self.transport, collection, self.db_type)
 
     def get_one(self, collection: str) -> 'Get':
         """
@@ -55,7 +42,7 @@ class SQL:
         :param collection: (str) The collection name
         :return: The SQL Get object
         """
-        return Get(self.project_id, collection, self.stub, self.db_type, self.token, operation='one')
+        return Get(self.transport, collection, self.db_type, operation='one')
 
     def insert(self, collection: str) -> 'Insert':
         """
@@ -64,7 +51,7 @@ class SQL:
         :param collection: (str) The collection name
         :return: The SQL Insert object
         """
-        return Insert(self.project_id, collection, self.stub, self.db_type, self.token)
+        return Insert(self.transport, collection, self.db_type)
 
     def update(self, collection: str) -> 'Update':
         """
@@ -73,7 +60,7 @@ class SQL:
         :param collection: (str) The collection name
         :return: The SQL Update object
         """
-        return Update(self.project_id, collection, self.stub, self.db_type, self.token)
+        return Update(self.transport, collection, self.db_type)
 
     def update_one(self, collection: str) -> 'Update':
         """
@@ -82,7 +69,7 @@ class SQL:
         :param collection: (str) The collection name
         :return: The SQL Update object
         """
-        return Update(self.project_id, collection, self.stub, self.db_type, self.token, operation='one')
+        return Update(self.transport, collection, self.db_type, operation='one')
 
     def delete(self, collection: str) -> 'Delete':
         """
@@ -91,7 +78,7 @@ class SQL:
         :param collection: (str) The collection name
         :return: The SQL Delete object
         """
-        return Delete(self.project_id, collection, self.stub, self.db_type, self.token)
+        return Delete(self.transport, collection, self.db_type)
 
     def delete_one(self, collection: str) -> 'Delete':
         """
@@ -100,7 +87,7 @@ class SQL:
         :param collection: (str) The collection name
         :return: The SQL Delete object
         """
-        return Delete(self.project_id, collection, self.stub, self.db_type, self.token, operation='one')
+        return Delete(self.transport, collection, self.db_type, operation='one')
 
     def begin_batch(self) -> 'Batch':
         """
@@ -112,7 +99,7 @@ class SQL:
 
         :return: (Batch) A SQL Batch object
         """
-        return Batch(self.project_id, self.stub, self.db_type, self.token)
+        return Batch(self.transport, self.db_type)
 
     def live_query(self, collection: str) -> LiveQuery:
         """
@@ -121,7 +108,7 @@ class SQL:
         :param collection: (str) The collection name
         :return: The SQL LiveQuery object
         """
-        return self.realtime.live_query(collection)
+        return LiveQuery(self.transport, self.db_type, collection)
 
     def profile(self, _id: str) -> Response:
         """
@@ -132,7 +119,7 @@ class SQL:
         :param _id: (str) The user's id
         :return: (Response) The response object containing values corresponding to the request
         """
-        return user_man.profile(self.project_id, self.db_type, self.token, self.stub, _id)
+        return self.transport.profile(_id, self.db_type)
 
     def profiles(self) -> Response:
         """
@@ -142,7 +129,7 @@ class SQL:
 
         :return: (Response) The response object containing values corresponding to the request
         """
-        return user_man.profiles(self.project_id, self.db_type, self.token, self.stub)
+        return self.transport.profiles(self.db_type)
 
     def edit_profile(self, _id: str, email: Optional[str] = None, name: Optional[str] = None,
                      password: Optional[str] = None) -> Response:
@@ -157,7 +144,7 @@ class SQL:
         :param password: (str) The (optional) new password
         :return: (Response) The response object containing values corresponding to the request
         """
-        return user_man.edit_profile(self.project_id, self.db_type, self.token, self.stub, _id, email, name, password)
+        return self.transport.edit_profile(_id, email, name, password, self.db_type)
 
     def sign_in(self, email: str, password: str) -> Response:
         """
@@ -169,7 +156,7 @@ class SQL:
         :param password: (str) The user's password
         :return: (Response) The response object containing values corresponding to the request
         """
-        return user_man.sign_in(self.project_id, self.db_type, self.token, self.stub, email, password)
+        return self.transport.sign_in(email, password, self.db_type)
 
     def sign_up(self, email: str, name: str, password: str, role: str) -> Response:
         """
@@ -183,7 +170,7 @@ class SQL:
         :param role: (str) The user's role
         :return: (Response) The response object containing values corresponding to the request
         """
-        return user_man.sign_up(self.project_id, self.db_type, self.token, self.stub, email, name, password, role)
+        return self.transport.sign_up(email, name, password, role, self.db_type)
 
 
 __all__ = ['SQL']

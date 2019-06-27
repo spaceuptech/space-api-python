@@ -1,7 +1,5 @@
-from typing import Optional
 from space_api.utils import generate_find, AND
-from space_api.transport import make_meta, update
-from space_api.proto.server_pb2_grpc import SpaceCloudStub
+from space_api.transport import Transport
 from space_api.response import Response
 
 
@@ -14,24 +12,18 @@ class Update:
         db = api.my_sql() # For a MySQL interface
         response = db.update('posts').where(AND(COND('title', '==', 'Title1'))).set({'title':'Title2'}).apply()
 
-    :param project_id: (str) The project ID
+    :param transport: (Transport) The API's transport instance
     :param collection: (str) The collection name
-    :param stub: (server_pb2_grpc.SpaceCloudStub) The gRPC endpoint stub
     :param db_type: (str) The database type
-    :param token: (str) The (optional) JWT Token
-    :param operation: (str) The (optional) operation (one/all) (Defaults to 'all')
+    :param operation: (str) The (optional) operation (one/all/upsert) (Defaults to 'all')
     """
 
-    def __init__(self, project_id: str, collection: str, stub: SpaceCloudStub, db_type: str,
-                 token: Optional[str] = None, operation: str = 'all'):
-        self.project_id = project_id
+    def __init__(self, transport: Transport, collection: str, db_type: str, operation: str = 'all'):
+        self.transport = transport
         self.collection = collection
-        self.stub = stub
         self.db_type = db_type
-        self.token = token
-        self.params = {'find': {}, 'update': {}}
-        self.meta = make_meta(self.project_id, self.db_type, self.collection, self.token)
         self.operation = operation
+        self.params = {'find': {}, 'update': {}}
 
     def where(self, *conditions) -> 'Update':
         """
@@ -57,8 +49,8 @@ class Update:
 
         :return: (Response) The response object containing values corresponding to the request
         """
-        return update(self.stub, find=self.params['find'], operation=self.operation, _update=self.params['update'],
-                      meta=self.meta)
+        return self.transport.update(self.params['find'], self.operation, self.params['update'], self.db_type,
+                                     self.collection)
 
 
 __all__ = ['Update']
