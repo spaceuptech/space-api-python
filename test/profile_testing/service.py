@@ -1,8 +1,9 @@
 from space_api import API
+import variables
 
-api = API('books-app', '192.168.43.226:8081')
+api = API(variables.app, variables.url)
 
-service = api.service('service')
+service = api.service(variables.service)
 
 
 def echo_func(params, auth, cb):

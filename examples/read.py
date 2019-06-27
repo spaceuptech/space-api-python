@@ -186,3 +186,24 @@ if response.status == 200:
     print(response.result)
 else:
     print(response.error)
+
+
+# ----------------------------------------------------------------------------------------------------
+# READ AGGREGATE
+from space_api import API, COND
+
+# Initialize api with the project name and url of the space cloud
+api = API("books-app", "localhost:8081")
+
+# Initialize database(s) you intend to use
+db = api.mongo()
+
+# The condition to be matched
+condition = COND("author", "==", "SomeAuthor")
+
+# Get the books
+response = db.aggr("books").where(condition).apply()
+if response.status == 200:
+    print(response.result)
+else:
+    print(response.error)

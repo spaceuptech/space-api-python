@@ -44,7 +44,7 @@ def AND(*conditions) -> dict:
     return {'type': 'and', 'clauses': conditions}
 
 
-def COND(f1: str, op: str, f2: str) -> dict:
+def COND(f1: str, op: str, f2) -> dict:
     return {'type': 'cond', 'f1': f1, 'op': op, 'f2': f2}
 
 
