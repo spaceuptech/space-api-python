@@ -1,10 +1,10 @@
 from space_api import API
 import time
-import threading
 import random
+import variables
 
-api = API('books-app', '192.168.43.226:8081')
-db = api.mongo()
+api = API(variables.app, variables.url)
+db = variables.db(api)
 
 
 def on_snapshot(docs, kind):
@@ -20,15 +20,5 @@ while True:
     time.sleep(random.randint(1, 5))
     unsubscribe()
     print("Closed")
-
-
-# def do_not_die():
-#     while True:
-#         time.sleep(0.01)
-#
-#
-# thread = threading.Thread(target=do_not_die)
-# thread.start()
-# thread.join()
 
 api.close()

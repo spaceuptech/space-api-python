@@ -1,6 +1,6 @@
 from space_api import API, COND
 
-api = API('grpc', 'localhost:8081')
+api = API('books-app', 'localhost:8081')
 db = api.my_sql()
 
 

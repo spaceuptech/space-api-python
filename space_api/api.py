@@ -1,14 +1,12 @@
 """
 SpaceUp Client Python API
 """
-import grpc
 from typing import Optional
-from space_api.proto.server_pb2_grpc import SpaceCloudStub
 from space_api.sql.sql import SQL
 from space_api.mongo.mongo import Mongo
-from space_api.transport import faas
 from space_api.response import Response
 from space_api.service import Service
+from space_api.transport import Transport
 
 
 class API:
@@ -31,23 +29,19 @@ class API:
         else:
             self.url = url
         self.token = None
-        self.channel = grpc.insecure_channel(self.url)
-        # self.channel = grpc.insecure_channel(self.url, options=[('grpc.keepalive_timeout_ms', 10000),
-        #                                                         ('grpc.keepalive_permit_without_calls', 1)])
-        self.stub = SpaceCloudStub(self.channel)
+        self.transport = Transport(self.url, self.project_id)
 
     def close(self):
         """
         Closes the communication channel
         """
-        self.channel.close()
+        self.transport.close()
 
     def connect(self):
         """
         Connects to the Space Cloud Instance
         """
-        self.channel = grpc.insecure_channel(self.url)
-        self.stub = SpaceCloudStub(self.channel)
+        self.transport.connect()
 
     def set_token(self, token: str):
         """
@@ -56,6 +50,7 @@ class API:
         :param token: (str) The signed JWT token received from the server on successful authentication
         """
         self.token = token
+        self.transport.token = token
 
     def set_project_id(self, project_id: str):
         """
@@ -64,6 +59,7 @@ class API:
         :param project_id: (str) The project ID
         """
         self.project_id = project_id
+        self.transport.project_id = project_id
 
     def mongo(self) -> 'Mongo':
         """
@@ -71,7 +67,7 @@ class API:
 
         :return: MongoDB client instance
         """
-        return Mongo(self.project_id, self.stub, self.token)
+        return Mongo(self.transport, 'mongo')
 
     def postgres(self) -> 'SQL':
         """
@@ -79,7 +75,7 @@ class API:
 
         :return: Postgres client instance
         """
-        return SQL(self.project_id, self.stub, 'sql-postgres', self.token)
+        return SQL(self.transport, 'sql-postgres')
 
     def my_sql(self) -> 'SQL':
         """
@@ -87,12 +83,12 @@ class API:
 
         :return: MySQL client instance
         """
-        return SQL(self.project_id, self.stub, 'sql-mysql', self.token)
+        return SQL(self.transport, 'sql-mysql')
 
     def __str__(self) -> str:
         return f'SpaceAPI(project_id:{self.project_id}, url:{self.url}, token:{self.token})'
 
-    def call(self, service_name: str, func_name: str, params, timeout: Optional[int] = 5) -> Response:
+    def call(self, service_name: str, func_name: str, params, timeout: Optional[int] = 5000) -> Response:
         """
         Calls a function from Function as a Service Engine
         ::
@@ -101,10 +97,10 @@ class API:
         :param service_name: (str) The name of service(engine) with which the function is registered
         :param func_name: (str) The name of function to be called
         :param params: The params for the function
-        :param timeout: (int) The (optional) timeout in seconds (defaults to 5)
+        :param timeout: (int) The (optional) timeout in milliseconds (defaults to 5000)
         :return: (Response) The response object containing values corresponding to the request
         """
-        return faas(self.project_id, self.stub, params, timeout, service_name, func_name, self.token)
+        return self.transport.faas(service_name, func_name, params, timeout)
 
     def service(self, service: str) -> 'Service':
         """
@@ -113,7 +109,7 @@ class API:
         :param service: (str) The name of the service
         :return: (Service) The Service instance
         """
-        return Service(self.stub, self.project_id, self.token, service)
+        return Service(self.transport, service)
 
     def file_store(self):
         raise NotImplementedError("Coming Soon!")
