@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='proto',
   syntax='proto3',
   serialized_options=_b('\n\037com.spaceuptech.space_api.protoB\017SpaceCloudProtoP\001'),
-  serialized_pb=_b('\n\x0cserver.proto\x12\x05proto\"O\n\rCreateRequest\x12\x10\n\x08\x64ocument\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12\x19\n\x04meta\x18\x03 \x01(\x0b\x32\x0b.proto.Meta\"n\n\x0bReadRequest\x12\x0c\n\x04\x66ind\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12#\n\x07options\x18\x03 \x01(\x0b\x32\x12.proto.ReadOptions\x12\x19\n\x04meta\x18\x04 \x01(\x0b\x32\x0b.proto.Meta\"\xf4\x01\n\x0bReadOptions\x12.\n\x06select\x18\x01 \x03(\x0b\x32\x1e.proto.ReadOptions.SelectEntry\x12*\n\x04sort\x18\x02 \x03(\x0b\x32\x1c.proto.ReadOptions.SortEntry\x12\x0c\n\x04skip\x18\x03 \x01(\x03\x12\r\n\x05limit\x18\x04 \x01(\x03\x12\x10\n\x08\x64istinct\x18\x05 \x01(\t\x1a-\n\x0bSelectEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a+\n\tSortEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\"[\n\rUpdateRequest\x12\x0c\n\x04\x66ind\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12\x0e\n\x06update\x18\x03 \x01(\x0c\x12\x19\n\x04meta\x18\x04 \x01(\x0b\x32\x0b.proto.Meta\"K\n\rDeleteRequest\x12\x0c\n\x04\x66ind\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12\x19\n\x04meta\x18\x03 \x01(\x0b\x32\x0b.proto.Meta\"R\n\x10\x41ggregateRequest\x12\x10\n\x08pipeline\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12\x19\n\x04meta\x18\x03 \x01(\x0b\x32\x0b.proto.Meta\"9\n\x08Response\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\r\n\x05\x65rror\x18\x02 \x01(\t\x12\x0e\n\x06result\x18\x03 \x01(\x0c\"C\n\x04Meta\x12\x0f\n\x07project\x18\x01 \x01(\t\x12\x0e\n\x06\x64\x62Type\x18\x02 \x01(\t\x12\x0b\n\x03\x63ol\x18\x03 \x01(\t\x12\r\n\x05token\x18\x04 \x01(\t\"j\n\nAllRequest\x12\x0b\n\x03\x63ol\x18\x01 \x01(\t\x12\x10\n\x08\x64ocument\x18\x02 \x01(\x0c\x12\x11\n\toperation\x18\x03 \x01(\t\x12\x0c\n\x04\x66ind\x18\x04 \x01(\x0c\x12\x0e\n\x06update\x18\x05 \x01(\x0c\x12\x0c\n\x04type\x18\x06 \x01(\t\"R\n\x0c\x42\x61tchRequest\x12\'\n\x0c\x62\x61tchrequest\x18\x01 \x03(\x0b\x32\x11.proto.AllRequest\x12\x19\n\x04meta\x18\x02 \x01(\x0b\x32\x0b.proto.Meta\"v\n\x10\x46unctionsRequest\x12\x0e\n\x06params\x18\x01 \x01(\x0c\x12\x0f\n\x07timeout\x18\x02 \x01(\x03\x12\x0f\n\x07service\x18\x03 \x01(\t\x12\x10\n\x08\x66unction\x18\x04 \x01(\t\x12\r\n\x05token\x18\x05 \x01(\t\x12\x0f\n\x07project\x18\x06 \x01(\t\"\x9c\x01\n\x10\x46unctionsPayload\x12\x0c\n\x04\x61uth\x18\x01 \x01(\x0c\x12\x0e\n\x06params\x18\x02 \x01(\x0c\x12\x0f\n\x07service\x18\x03 \x01(\t\x12\x10\n\x08\x66unction\x18\x04 \x01(\t\x12\x0c\n\x04type\x18\x05 \x01(\t\x12\n\n\x02id\x18\x06 \x01(\t\x12\r\n\x05\x65rror\x18\x07 \x01(\t\x12\x0f\n\x07project\x18\x08 \x01(\t\x12\r\n\x05token\x18\t \x01(\t\"{\n\x08\x46\x65\x65\x64\x44\x61ta\x12\x0f\n\x07queryId\x18\x01 \x01(\t\x12\r\n\x05\x64ocId\x18\x02 \x01(\t\x12\x0c\n\x04type\x18\x03 \x01(\t\x12\r\n\x05group\x18\x04 \x01(\t\x12\x0e\n\x06\x64\x62Type\x18\x05 \x01(\t\x12\x0f\n\x07payload\x18\x06 \x01(\x0c\x12\x11\n\ttimeStamp\x18\x07 \x01(\x03\"y\n\x0fRealTimeRequest\x12\r\n\x05token\x18\x01 \x01(\t\x12\x0e\n\x06\x64\x62Type\x18\x02 \x01(\t\x12\x0f\n\x07project\x18\x03 \x01(\t\x12\r\n\x05group\x18\x04 \x01(\t\x12\x0c\n\x04type\x18\x05 \x01(\t\x12\n\n\x02id\x18\x06 \x01(\t\x12\r\n\x05where\x18\x07 \x01(\x0c\"l\n\x10RealTimeResponse\x12\r\n\x05group\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\t\x12\x0b\n\x03\x61\x63k\x18\x03 \x01(\x08\x12\r\n\x05\x65rror\x18\x04 \x01(\t\x12!\n\x08\x66\x65\x65\x64\x44\x61ta\x18\x05 \x03(\x0b\x32\x0f.proto.FeedData\"7\n\x0eProfileRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x19\n\x04meta\x18\x02 \x01(\x0b\x32\x0b.proto.Meta\",\n\x0fProfilesRequest\x12\x19\n\x04meta\x18\x01 \x01(\x0b\x32\x0b.proto.Meta\"j\n\x12\x45\x64itProfileRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\r\n\x05\x65mail\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x10\n\x08password\x18\x04 \x01(\t\x12\x19\n\x04meta\x18\x05 \x01(\x0b\x32\x0b.proto.Meta\"K\n\rSignInRequest\x12\r\n\x05\x65mail\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\x12\x19\n\x04meta\x18\x03 \x01(\x0b\x32\x0b.proto.Meta\"g\n\rSignUpRequest\x12\r\n\x05\x65mail\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\t\x12\x0c\n\x04role\x18\x04 \x01(\t\x12\x19\n\x04meta\x18\x05 \x01(\x0b\x32\x0b.proto.Meta2\x87\x06\n\nSpaceCloud\x12\x31\n\x06\x43reate\x12\x14.proto.CreateRequest\x1a\x0f.proto.Response\"\x00\x12-\n\x04Read\x12\x12.proto.ReadRequest\x1a\x0f.proto.Response\"\x00\x12\x31\n\x06Update\x12\x14.proto.UpdateRequest\x1a\x0f.proto.Response\"\x00\x12\x31\n\x06\x44\x65lete\x12\x14.proto.DeleteRequest\x1a\x0f.proto.Response\"\x00\x12\x37\n\tAggregate\x12\x17.proto.AggregateRequest\x1a\x0f.proto.Response\"\x00\x12/\n\x05\x42\x61tch\x12\x13.proto.BatchRequest\x1a\x0f.proto.Response\"\x00\x12\x32\n\x04\x43\x61ll\x12\x17.proto.FunctionsRequest\x1a\x0f.proto.Response\"\x00\x12\x41\n\x08RealTime\x12\x16.proto.RealTimeRequest\x1a\x17.proto.RealTimeResponse\"\x00(\x01\x30\x01\x12\x41\n\x07Service\x12\x17.proto.FunctionsPayload\x1a\x17.proto.FunctionsPayload\"\x00(\x01\x30\x01\x12\x33\n\x07Profile\x12\x15.proto.ProfileRequest\x1a\x0f.proto.Response\"\x00\x12\x35\n\x08Profiles\x12\x16.proto.ProfilesRequest\x1a\x0f.proto.Response\"\x00\x12;\n\x0b\x45\x64itProfile\x12\x19.proto.EditProfileRequest\x1a\x0f.proto.Response\"\x00\x12\x31\n\x06SignIn\x12\x14.proto.SignInRequest\x1a\x0f.proto.Response\"\x00\x12\x31\n\x06SignUp\x12\x14.proto.SignUpRequest\x1a\x0f.proto.Response\"\x00\x42\x34\n\x1f\x63om.spaceuptech.space_api.protoB\x0fSpaceCloudProtoP\x01\x62\x06proto3')
+  serialized_pb=_b('\n\x0cserver.proto\x12\x05proto\"O\n\rCreateRequest\x12\x10\n\x08\x64ocument\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12\x19\n\x04meta\x18\x03 \x01(\x0b\x32\x0b.proto.Meta\"n\n\x0bReadRequest\x12\x0c\n\x04\x66ind\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12#\n\x07options\x18\x03 \x01(\x0b\x32\x12.proto.ReadOptions\x12\x19\n\x04meta\x18\x04 \x01(\x0b\x32\x0b.proto.Meta\"\xf4\x01\n\x0bReadOptions\x12.\n\x06select\x18\x01 \x03(\x0b\x32\x1e.proto.ReadOptions.SelectEntry\x12*\n\x04sort\x18\x02 \x03(\x0b\x32\x1c.proto.ReadOptions.SortEntry\x12\x0c\n\x04skip\x18\x03 \x01(\x03\x12\r\n\x05limit\x18\x04 \x01(\x03\x12\x10\n\x08\x64istinct\x18\x05 \x01(\t\x1a-\n\x0bSelectEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a+\n\tSortEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\"[\n\rUpdateRequest\x12\x0c\n\x04\x66ind\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12\x0e\n\x06update\x18\x03 \x01(\x0c\x12\x19\n\x04meta\x18\x04 \x01(\x0b\x32\x0b.proto.Meta\"K\n\rDeleteRequest\x12\x0c\n\x04\x66ind\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12\x19\n\x04meta\x18\x03 \x01(\x0b\x32\x0b.proto.Meta\"R\n\x10\x41ggregateRequest\x12\x10\n\x08pipeline\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12\x19\n\x04meta\x18\x03 \x01(\x0b\x32\x0b.proto.Meta\"9\n\x08Response\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\r\n\x05\x65rror\x18\x02 \x01(\t\x12\x0e\n\x06result\x18\x03 \x01(\x0c\"C\n\x04Meta\x12\x0f\n\x07project\x18\x01 \x01(\t\x12\x0e\n\x06\x64\x62Type\x18\x02 \x01(\t\x12\x0b\n\x03\x63ol\x18\x03 \x01(\t\x12\r\n\x05token\x18\x04 \x01(\t\"j\n\nAllRequest\x12\x0b\n\x03\x63ol\x18\x01 \x01(\t\x12\x10\n\x08\x64ocument\x18\x02 \x01(\x0c\x12\x11\n\toperation\x18\x03 \x01(\t\x12\x0c\n\x04\x66ind\x18\x04 \x01(\x0c\x12\x0e\n\x06update\x18\x05 \x01(\x0c\x12\x0c\n\x04type\x18\x06 \x01(\t\"R\n\x0c\x42\x61tchRequest\x12\'\n\x0c\x62\x61tchrequest\x18\x01 \x03(\x0b\x32\x11.proto.AllRequest\x12\x19\n\x04meta\x18\x02 \x01(\x0b\x32\x0b.proto.Meta\"v\n\x10\x46unctionsRequest\x12\x0e\n\x06params\x18\x01 \x01(\x0c\x12\x0f\n\x07timeout\x18\x02 \x01(\x03\x12\x0f\n\x07service\x18\x03 \x01(\t\x12\x10\n\x08\x66unction\x18\x04 \x01(\t\x12\r\n\x05token\x18\x05 \x01(\t\x12\x0f\n\x07project\x18\x06 \x01(\t\"\x9c\x01\n\x10\x46unctionsPayload\x12\x0c\n\x04\x61uth\x18\x01 \x01(\x0c\x12\x0e\n\x06params\x18\x02 \x01(\x0c\x12\x0f\n\x07service\x18\x03 \x01(\t\x12\x10\n\x08\x66unction\x18\x04 \x01(\t\x12\x0c\n\x04type\x18\x05 \x01(\t\x12\n\n\x02id\x18\x06 \x01(\t\x12\r\n\x05\x65rror\x18\x07 \x01(\t\x12\x0f\n\x07project\x18\x08 \x01(\t\x12\r\n\x05token\x18\t \x01(\t\"{\n\x08\x46\x65\x65\x64\x44\x61ta\x12\x0f\n\x07queryId\x18\x01 \x01(\t\x12\r\n\x05\x64ocId\x18\x02 \x01(\t\x12\x0c\n\x04type\x18\x03 \x01(\t\x12\r\n\x05group\x18\x04 \x01(\t\x12\x0e\n\x06\x64\x62Type\x18\x05 \x01(\t\x12\x0f\n\x07payload\x18\x06 \x01(\x0c\x12\x11\n\ttimeStamp\x18\x07 \x01(\x03\"y\n\x0fRealTimeRequest\x12\r\n\x05token\x18\x01 \x01(\t\x12\x0e\n\x06\x64\x62Type\x18\x02 \x01(\t\x12\x0f\n\x07project\x18\x03 \x01(\t\x12\r\n\x05group\x18\x04 \x01(\t\x12\x0c\n\x04type\x18\x05 \x01(\t\x12\n\n\x02id\x18\x06 \x01(\t\x12\r\n\x05where\x18\x07 \x01(\x0c\"l\n\x10RealTimeResponse\x12\r\n\x05group\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\t\x12\x0b\n\x03\x61\x63k\x18\x03 \x01(\x08\x12\r\n\x05\x65rror\x18\x04 \x01(\t\x12!\n\x08\x66\x65\x65\x64\x44\x61ta\x18\x05 \x03(\x0b\x32\x0f.proto.FeedData\"7\n\x0eProfileRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x19\n\x04meta\x18\x02 \x01(\x0b\x32\x0b.proto.Meta\",\n\x0fProfilesRequest\x12\x19\n\x04meta\x18\x01 \x01(\x0b\x32\x0b.proto.Meta\"j\n\x12\x45\x64itProfileRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\r\n\x05\x65mail\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x10\n\x08password\x18\x04 \x01(\t\x12\x19\n\x04meta\x18\x05 \x01(\x0b\x32\x0b.proto.Meta\"K\n\rSignInRequest\x12\r\n\x05\x65mail\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\x12\x19\n\x04meta\x18\x03 \x01(\x0b\x32\x0b.proto.Meta\"g\n\rSignUpRequest\x12\r\n\x05\x65mail\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\t\x12\x0c\n\x04role\x18\x04 \x01(\t\x12\x19\n\x04meta\x18\x05 \x01(\x0b\x32\x0b.proto.Meta\"L\n\x13\x43reateFolderRequest\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x19\n\x04meta\x18\x03 \x01(\x0b\x32\x0b.proto.Meta\";\n\x10ListFilesRequest\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\x19\n\x04meta\x18\x02 \x01(\x0b\x32\x0b.proto.Meta\"<\n\x11\x44\x65leteFileRequest\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\x19\n\x04meta\x18\x02 \x01(\x0b\x32\x0b.proto.Meta\">\n\x13\x44ownloadFileRequest\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\x19\n\x04meta\x18\x02 \x01(\x0b\x32\x0b.proto.Meta\"[\n\x11UploadFileRequest\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07payload\x18\x03 \x01(\x0c\x12\x19\n\x04meta\x18\x04 \x01(\x0b\x32\x0b.proto.Meta\"=\n\x0b\x46ilePayload\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\r\n\x05\x65rror\x18\x02 \x01(\t\x12\x0f\n\x07payload\x18\x03 \x01(\x0c\x32\xbb\x08\n\nSpaceCloud\x12\x31\n\x06\x43reate\x12\x14.proto.CreateRequest\x1a\x0f.proto.Response\"\x00\x12-\n\x04Read\x12\x12.proto.ReadRequest\x1a\x0f.proto.Response\"\x00\x12\x31\n\x06Update\x12\x14.proto.UpdateRequest\x1a\x0f.proto.Response\"\x00\x12\x31\n\x06\x44\x65lete\x12\x14.proto.DeleteRequest\x1a\x0f.proto.Response\"\x00\x12\x37\n\tAggregate\x12\x17.proto.AggregateRequest\x1a\x0f.proto.Response\"\x00\x12/\n\x05\x42\x61tch\x12\x13.proto.BatchRequest\x1a\x0f.proto.Response\"\x00\x12\x32\n\x04\x43\x61ll\x12\x17.proto.FunctionsRequest\x1a\x0f.proto.Response\"\x00\x12\x41\n\x08RealTime\x12\x16.proto.RealTimeRequest\x1a\x17.proto.RealTimeResponse\"\x00(\x01\x30\x01\x12\x41\n\x07Service\x12\x17.proto.FunctionsPayload\x1a\x17.proto.FunctionsPayload\"\x00(\x01\x30\x01\x12\x33\n\x07Profile\x12\x15.proto.ProfileRequest\x1a\x0f.proto.Response\"\x00\x12\x35\n\x08Profiles\x12\x16.proto.ProfilesRequest\x1a\x0f.proto.Response\"\x00\x12;\n\x0b\x45\x64itProfile\x12\x19.proto.EditProfileRequest\x1a\x0f.proto.Response\"\x00\x12\x31\n\x06SignIn\x12\x14.proto.SignInRequest\x1a\x0f.proto.Response\"\x00\x12\x31\n\x06SignUp\x12\x14.proto.SignUpRequest\x1a\x0f.proto.Response\"\x00\x12=\n\x0c\x43reateFolder\x12\x1a.proto.CreateFolderRequest\x1a\x0f.proto.Response\"\x00\x12\x37\n\tListFiles\x12\x17.proto.ListFilesRequest\x1a\x0f.proto.Response\"\x00\x12\x39\n\nDeleteFile\x12\x18.proto.DeleteFileRequest\x1a\x0f.proto.Response\"\x00\x12;\n\nUploadFile\x12\x18.proto.UploadFileRequest\x1a\x0f.proto.Response\"\x00(\x01\x12\x42\n\x0c\x44ownloadFile\x12\x1a.proto.DownloadFileRequest\x1a\x12.proto.FilePayload\"\x00\x30\x01\x42\x34\n\x1f\x63om.spaceuptech.space_api.protoB\x0fSpaceCloudProtoP\x01\x62\x06proto3')
 )
 
 
@@ -1187,6 +1187,262 @@ _SIGNUPREQUEST = _descriptor.Descriptor(
   serialized_end=2065,
 )
 
+
+_CREATEFOLDERREQUEST = _descriptor.Descriptor(
+  name='CreateFolderRequest',
+  full_name='proto.CreateFolderRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='path', full_name='proto.CreateFolderRequest.path', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='name', full_name='proto.CreateFolderRequest.name', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='meta', full_name='proto.CreateFolderRequest.meta', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2067,
+  serialized_end=2143,
+)
+
+
+_LISTFILESREQUEST = _descriptor.Descriptor(
+  name='ListFilesRequest',
+  full_name='proto.ListFilesRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='path', full_name='proto.ListFilesRequest.path', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='meta', full_name='proto.ListFilesRequest.meta', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2145,
+  serialized_end=2204,
+)
+
+
+_DELETEFILEREQUEST = _descriptor.Descriptor(
+  name='DeleteFileRequest',
+  full_name='proto.DeleteFileRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='path', full_name='proto.DeleteFileRequest.path', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='meta', full_name='proto.DeleteFileRequest.meta', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2206,
+  serialized_end=2266,
+)
+
+
+_DOWNLOADFILEREQUEST = _descriptor.Descriptor(
+  name='DownloadFileRequest',
+  full_name='proto.DownloadFileRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='path', full_name='proto.DownloadFileRequest.path', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='meta', full_name='proto.DownloadFileRequest.meta', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2268,
+  serialized_end=2330,
+)
+
+
+_UPLOADFILEREQUEST = _descriptor.Descriptor(
+  name='UploadFileRequest',
+  full_name='proto.UploadFileRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='path', full_name='proto.UploadFileRequest.path', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='name', full_name='proto.UploadFileRequest.name', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='payload', full_name='proto.UploadFileRequest.payload', index=2,
+      number=3, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b(""),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='meta', full_name='proto.UploadFileRequest.meta', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2332,
+  serialized_end=2423,
+)
+
+
+_FILEPAYLOAD = _descriptor.Descriptor(
+  name='FilePayload',
+  full_name='proto.FilePayload',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='status', full_name='proto.FilePayload.status', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='error', full_name='proto.FilePayload.error', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='payload', full_name='proto.FilePayload.payload', index=2,
+      number=3, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b(""),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2425,
+  serialized_end=2486,
+)
+
 _CREATEREQUEST.fields_by_name['meta'].message_type = _META
 _READREQUEST.fields_by_name['options'].message_type = _READOPTIONS
 _READREQUEST.fields_by_name['meta'].message_type = _META
@@ -1205,6 +1461,11 @@ _PROFILESREQUEST.fields_by_name['meta'].message_type = _META
 _EDITPROFILEREQUEST.fields_by_name['meta'].message_type = _META
 _SIGNINREQUEST.fields_by_name['meta'].message_type = _META
 _SIGNUPREQUEST.fields_by_name['meta'].message_type = _META
+_CREATEFOLDERREQUEST.fields_by_name['meta'].message_type = _META
+_LISTFILESREQUEST.fields_by_name['meta'].message_type = _META
+_DELETEFILEREQUEST.fields_by_name['meta'].message_type = _META
+_DOWNLOADFILEREQUEST.fields_by_name['meta'].message_type = _META
+_UPLOADFILEREQUEST.fields_by_name['meta'].message_type = _META
 DESCRIPTOR.message_types_by_name['CreateRequest'] = _CREATEREQUEST
 DESCRIPTOR.message_types_by_name['ReadRequest'] = _READREQUEST
 DESCRIPTOR.message_types_by_name['ReadOptions'] = _READOPTIONS
@@ -1225,6 +1486,12 @@ DESCRIPTOR.message_types_by_name['ProfilesRequest'] = _PROFILESREQUEST
 DESCRIPTOR.message_types_by_name['EditProfileRequest'] = _EDITPROFILEREQUEST
 DESCRIPTOR.message_types_by_name['SignInRequest'] = _SIGNINREQUEST
 DESCRIPTOR.message_types_by_name['SignUpRequest'] = _SIGNUPREQUEST
+DESCRIPTOR.message_types_by_name['CreateFolderRequest'] = _CREATEFOLDERREQUEST
+DESCRIPTOR.message_types_by_name['ListFilesRequest'] = _LISTFILESREQUEST
+DESCRIPTOR.message_types_by_name['DeleteFileRequest'] = _DELETEFILEREQUEST
+DESCRIPTOR.message_types_by_name['DownloadFileRequest'] = _DOWNLOADFILEREQUEST
+DESCRIPTOR.message_types_by_name['UploadFileRequest'] = _UPLOADFILEREQUEST
+DESCRIPTOR.message_types_by_name['FilePayload'] = _FILEPAYLOAD
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 CreateRequest = _reflection.GeneratedProtocolMessageType('CreateRequest', (_message.Message,), dict(
@@ -1383,6 +1650,48 @@ SignUpRequest = _reflection.GeneratedProtocolMessageType('SignUpRequest', (_mess
   ))
 _sym_db.RegisterMessage(SignUpRequest)
 
+CreateFolderRequest = _reflection.GeneratedProtocolMessageType('CreateFolderRequest', (_message.Message,), dict(
+  DESCRIPTOR = _CREATEFOLDERREQUEST,
+  __module__ = 'server_pb2'
+  # @@protoc_insertion_point(class_scope:proto.CreateFolderRequest)
+  ))
+_sym_db.RegisterMessage(CreateFolderRequest)
+
+ListFilesRequest = _reflection.GeneratedProtocolMessageType('ListFilesRequest', (_message.Message,), dict(
+  DESCRIPTOR = _LISTFILESREQUEST,
+  __module__ = 'server_pb2'
+  # @@protoc_insertion_point(class_scope:proto.ListFilesRequest)
+  ))
+_sym_db.RegisterMessage(ListFilesRequest)
+
+DeleteFileRequest = _reflection.GeneratedProtocolMessageType('DeleteFileRequest', (_message.Message,), dict(
+  DESCRIPTOR = _DELETEFILEREQUEST,
+  __module__ = 'server_pb2'
+  # @@protoc_insertion_point(class_scope:proto.DeleteFileRequest)
+  ))
+_sym_db.RegisterMessage(DeleteFileRequest)
+
+DownloadFileRequest = _reflection.GeneratedProtocolMessageType('DownloadFileRequest', (_message.Message,), dict(
+  DESCRIPTOR = _DOWNLOADFILEREQUEST,
+  __module__ = 'server_pb2'
+  # @@protoc_insertion_point(class_scope:proto.DownloadFileRequest)
+  ))
+_sym_db.RegisterMessage(DownloadFileRequest)
+
+UploadFileRequest = _reflection.GeneratedProtocolMessageType('UploadFileRequest', (_message.Message,), dict(
+  DESCRIPTOR = _UPLOADFILEREQUEST,
+  __module__ = 'server_pb2'
+  # @@protoc_insertion_point(class_scope:proto.UploadFileRequest)
+  ))
+_sym_db.RegisterMessage(UploadFileRequest)
+
+FilePayload = _reflection.GeneratedProtocolMessageType('FilePayload', (_message.Message,), dict(
+  DESCRIPTOR = _FILEPAYLOAD,
+  __module__ = 'server_pb2'
+  # @@protoc_insertion_point(class_scope:proto.FilePayload)
+  ))
+_sym_db.RegisterMessage(FilePayload)
+
 
 DESCRIPTOR._options = None
 _READOPTIONS_SELECTENTRY._options = None
@@ -1394,8 +1703,8 @@ _SPACECLOUD = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=2068,
-  serialized_end=2843,
+  serialized_start=2489,
+  serialized_end=3572,
   methods=[
   _descriptor.MethodDescriptor(
     name='Create',
@@ -1521,6 +1830,51 @@ _SPACECLOUD = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_SIGNUPREQUEST,
     output_type=_RESPONSE,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='CreateFolder',
+    full_name='proto.SpaceCloud.CreateFolder',
+    index=14,
+    containing_service=None,
+    input_type=_CREATEFOLDERREQUEST,
+    output_type=_RESPONSE,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='ListFiles',
+    full_name='proto.SpaceCloud.ListFiles',
+    index=15,
+    containing_service=None,
+    input_type=_LISTFILESREQUEST,
+    output_type=_RESPONSE,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='DeleteFile',
+    full_name='proto.SpaceCloud.DeleteFile',
+    index=16,
+    containing_service=None,
+    input_type=_DELETEFILEREQUEST,
+    output_type=_RESPONSE,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='UploadFile',
+    full_name='proto.SpaceCloud.UploadFile',
+    index=17,
+    containing_service=None,
+    input_type=_UPLOADFILEREQUEST,
+    output_type=_RESPONSE,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='DownloadFile',
+    full_name='proto.SpaceCloud.DownloadFile',
+    index=18,
+    containing_service=None,
+    input_type=_DOWNLOADFILEREQUEST,
+    output_type=_FILEPAYLOAD,
     serialized_options=None,
   ),
 ])

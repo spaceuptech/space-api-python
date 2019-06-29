@@ -84,6 +84,31 @@ class SpaceCloudStub(object):
         request_serializer=server__pb2.SignUpRequest.SerializeToString,
         response_deserializer=server__pb2.Response.FromString,
         )
+    self.CreateFolder = channel.unary_unary(
+        '/proto.SpaceCloud/CreateFolder',
+        request_serializer=server__pb2.CreateFolderRequest.SerializeToString,
+        response_deserializer=server__pb2.Response.FromString,
+        )
+    self.ListFiles = channel.unary_unary(
+        '/proto.SpaceCloud/ListFiles',
+        request_serializer=server__pb2.ListFilesRequest.SerializeToString,
+        response_deserializer=server__pb2.Response.FromString,
+        )
+    self.DeleteFile = channel.unary_unary(
+        '/proto.SpaceCloud/DeleteFile',
+        request_serializer=server__pb2.DeleteFileRequest.SerializeToString,
+        response_deserializer=server__pb2.Response.FromString,
+        )
+    self.UploadFile = channel.stream_unary(
+        '/proto.SpaceCloud/UploadFile',
+        request_serializer=server__pb2.UploadFileRequest.SerializeToString,
+        response_deserializer=server__pb2.Response.FromString,
+        )
+    self.DownloadFile = channel.unary_stream(
+        '/proto.SpaceCloud/DownloadFile',
+        request_serializer=server__pb2.DownloadFileRequest.SerializeToString,
+        response_deserializer=server__pb2.FilePayload.FromString,
+        )
 
 
 class SpaceCloudServicer(object):
@@ -188,6 +213,41 @@ class SpaceCloudServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def CreateFolder(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def ListFiles(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def DeleteFile(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def UploadFile(self, request_iterator, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def DownloadFile(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_SpaceCloudServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -260,6 +320,31 @@ def add_SpaceCloudServicer_to_server(servicer, server):
           servicer.SignUp,
           request_deserializer=server__pb2.SignUpRequest.FromString,
           response_serializer=server__pb2.Response.SerializeToString,
+      ),
+      'CreateFolder': grpc.unary_unary_rpc_method_handler(
+          servicer.CreateFolder,
+          request_deserializer=server__pb2.CreateFolderRequest.FromString,
+          response_serializer=server__pb2.Response.SerializeToString,
+      ),
+      'ListFiles': grpc.unary_unary_rpc_method_handler(
+          servicer.ListFiles,
+          request_deserializer=server__pb2.ListFilesRequest.FromString,
+          response_serializer=server__pb2.Response.SerializeToString,
+      ),
+      'DeleteFile': grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteFile,
+          request_deserializer=server__pb2.DeleteFileRequest.FromString,
+          response_serializer=server__pb2.Response.SerializeToString,
+      ),
+      'UploadFile': grpc.stream_unary_rpc_method_handler(
+          servicer.UploadFile,
+          request_deserializer=server__pb2.UploadFileRequest.FromString,
+          response_serializer=server__pb2.Response.SerializeToString,
+      ),
+      'DownloadFile': grpc.unary_stream_rpc_method_handler(
+          servicer.DownloadFile,
+          request_deserializer=server__pb2.DownloadFileRequest.FromString,
+          response_serializer=server__pb2.FilePayload.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

@@ -16,3 +16,6 @@ TypeRealtimeSubscribe = "realtime-subscribe"
 TypeRealtimeUnsubscribe = "realtime-unsubscribe"
 # TypeRealtimeFeed is the response type for realtime feed
 TypeRealtimeFeed = "realtime-feed"
+
+# PayloadSize is the size of the payload(in bytes) in file upload and download
+PayloadSize = 256 * 1024  # 256 kB

@@ -1,9 +1,11 @@
 import grpc
+import io
 from typing import Optional, Dict, List
 from space_api.proto import server_pb2
 from space_api.utils import obj_to_utf8_bytes
 from space_api.proto.server_pb2_grpc import SpaceCloudStub
 from space_api.response import Response
+from space_api import constants
 
 
 def make_read_options(select: Dict[str, int], sort: Dict[str, int], skip: int, limit: int,
@@ -246,6 +248,75 @@ class Transport:
         meta = self._make_meta(db_type=db_type)
         sign_up_request = server_pb2.SignUpRequest(email=email, name=name, password=password, role=role, meta=meta)
         return Response(self.stub.SignUp(sign_up_request))
+
+    def create_folder(self, path: str, name: str) -> Response:
+        """
+        Calls the gRPC CreateFolder function
+
+        :param path: (str) The location in which the folder is to be added
+        :param name: (str) The name of the folder
+        :return: (Response) The response object containing values corresponding to the request
+        """
+        meta = self._make_meta()
+        create_folder_request = server_pb2.CreateFolderRequest(path=path, name=name, meta=meta)
+        return Response(self.stub.CreateFolder(create_folder_request))
+
+    def delete_file(self, path: str) -> Response:
+        """
+        Calls the gRPC DeleteFile function
+
+        :param path: (str) The location of the file to be deleted
+        :return: (Response) The response object containing values corresponding to the request
+        """
+        meta = self._make_meta()
+        delete_file_request = server_pb2.DeleteFileRequest(path=path, meta=meta)
+        return Response(self.stub.DeleteFile(delete_file_request))
+
+    def list_files(self, path: str) -> Response:
+        """
+        Calls the gRPC ListFiles function
+
+        :param path: (str) The path of the folder to be searched
+        :return: (Response) The response object containing values corresponding to the request
+        """
+        meta = self._make_meta()
+        list_files_request = server_pb2.ListFilesRequest(path=path, meta=meta)
+        return Response(self.stub.ListFiles(list_files_request))
+
+    def upload_file(self, path: str, name: str, stream: io.BufferedReader) -> Response:
+        """
+        Calls the gRPC UploadFile function
+
+        :param path: (str) The location in which the file needs to be uploaded
+        :param name: (str) The name of the file to be created
+        :param stream: (io.BufferedReader) A BufferedReader to read from
+        :return: (Response) The response object containing values corresponding to the request
+        """
+        meta = self._make_meta()
+
+        def iterator():
+            yield server_pb2.UploadFileRequest(path=path, name=name, meta=meta)
+            for chunk in iter(lambda: stream.read(constants.PayloadSize), b''):
+                yield server_pb2.UploadFileRequest(payload=chunk)
+
+        return Response(self.stub.UploadFile(iterator()))
+
+    def download_file(self, path: str, stream: io.BufferedWriter) -> Response:
+        """
+        Calls the gRPC DownloadFile function
+
+        :param path: (str) The location of the file which needs to be downloaded
+        :param stream: (io.BufferedWriter) A BufferedWriter to write to
+        :return: (Response) The response object containing values corresponding to the request
+        """
+        meta = self._make_meta()
+        download_file_request = server_pb2.DownloadFileRequest(path=path, meta=meta)
+        for response in self.stub.DownloadFile(download_file_request):
+            if response.status == 200:
+                stream.write(response.payload)
+            else:
+                return Response(server_pb2.Response(status=response.status, error=response.error))
+        return Response(server_pb2.Response(status=200))
 
 
 __all__ = ["Transport", "make_read_options"]

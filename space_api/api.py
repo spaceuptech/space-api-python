@@ -6,6 +6,7 @@ from space_api.sql.sql import SQL
 from space_api.mongo.mongo import Mongo
 from space_api.response import Response
 from space_api.service import Service
+from space_api.filestore import FileStore
 from space_api.transport import Transport
 
 
@@ -111,8 +112,13 @@ class API:
         """
         return Service(self.transport, service)
 
-    def file_store(self):
-        raise NotImplementedError("Coming Soon!")
+    def file_store(self) -> 'FileStore':
+        """
+        Returns a FileStore instance
+
+        :return: (FileStore) The Service instance
+        """
+        return FileStore(self.transport)
 
 
 __all__ = ["API"]
