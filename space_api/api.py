@@ -8,6 +8,7 @@ from space_api.response import Response
 from space_api.service import Service
 from space_api.filestore import FileStore
 from space_api.transport import Transport
+from space_api import constants
 
 
 class API:
@@ -68,7 +69,7 @@ class API:
 
         :return: MongoDB client instance
         """
-        return Mongo(self.transport, 'mongo')
+        return Mongo(self.transport, constants.Mongo)
 
     def postgres(self) -> 'SQL':
         """
@@ -76,7 +77,7 @@ class API:
 
         :return: Postgres client instance
         """
-        return SQL(self.transport, 'sql-postgres')
+        return SQL(self.transport, constants.Postgres)
 
     def my_sql(self) -> 'SQL':
         """
@@ -84,7 +85,7 @@ class API:
 
         :return: MySQL client instance
         """
-        return SQL(self.transport, 'sql-mysql')
+        return SQL(self.transport, constants.MySQL)
 
     def __str__(self) -> str:
         return f'SpaceAPI(project_id:{self.project_id}, url:{self.url}, token:{self.token})'

@@ -12,47 +12,6 @@ from space_api.utils import Client, obj_to_utf8_bytes
 from space_api.transport import Transport
 
 
-def _snapshot_callback(storage: dict, rows: List[server_pb2.FeedData]):
-    """
-    A utility function to call the on_snapshot function
-
-    :param storage: (dict) The LiveQuery storage
-    :param rows: (List[server_pb2.FeedData]) The list of server_pb2.FeedData
-    """
-    if len(rows) == 0:
-        return
-    obj = {}
-    for feedData in rows:
-        # print(feedData)
-        obj = storage[feedData.queryId]
-        if feedData.type == constants.Insert or feedData.type == constants.Update:
-            exists = False
-            for i in range(len(obj['snapshot'])):
-                row = obj['snapshot'][i]
-                if row['id'] == feedData.docId:
-                    exists = True
-                    if row['time'] <= feedData.timeStamp:
-                        row['time'] = feedData.timeStamp
-                        row['payload'] = feedData.payload
-                        row['is_deleted'] = False
-                obj['snapshot'][i] = row
-            if not exists:
-                obj['snapshot'].append(
-                    {'id': feedData.docId, 'time': feedData.timeStamp, 'payload': feedData.payload,
-                     'is_deleted': False})
-        elif feedData.type == constants.Delete:
-            for i in range(len(obj['snapshot'])):
-                row = obj['snapshot'][i]
-                if row['id'] == feedData.docId and row['time'] <= feedData.timeStamp:
-                    row['time'] = feedData.timeStamp
-                    row['payload'] = {}
-                    row['is_deleted'] = True
-                obj['snapshot'][i] = row
-    change_type = rows[0].type if len(rows) == 1 else 'initial'
-    obj['subscription']['on_snapshot']([json.loads(row['payload']) for row in obj['snapshot'] if not row['is_deleted']],
-                                       change_type)
-
-
 class LiveQuery:
     """
     The LiveQuery Class
@@ -81,6 +40,8 @@ class LiveQuery:
         self.collection = collection
         self.client = Client()
         self.find = {}
+        self.skip_initial = False
+        self.changes_only = False  # no cache
         self.async_result = None
         self.id = str(uuid.uuid1())
         self.pool = futures.ThreadPoolExecutor()
@@ -96,13 +57,68 @@ class LiveQuery:
         self.find = generate_find(AND(*conditions))
         return self
 
+    def _snapshot_callback(self, rows: List[server_pb2.FeedData]):
+        """
+        A utility function to call the on_snapshot function
+
+        :param rows: (List[server_pb2.FeedData]) The list of server_pb2.FeedData
+        """
+        if len(rows) == 0:
+            return
+        if self.changes_only:
+            for feedData in rows:
+                data = json.loads(feedData.payload)
+                if data is not None:
+                    self.store['subscription']['on_snapshot'](
+                        [data], feedData.type)
+                else:
+                    if self.db_type == constants.Mongo:
+                        self.store['subscription']['on_snapshot'](
+                            [{"_id": feedData.docId}], feedData.type)
+                    else:
+                        self.store['subscription']['on_snapshot'](
+                            [{"id": int(feedData.docId)}], feedData.type)
+        else:
+            for feedData in rows:
+                if feedData.type == constants.Initial:
+                    self.store['snapshot'].append(
+                        {'id': feedData.docId, 'time': feedData.timeStamp, 'payload': feedData.payload,
+                         'is_deleted': False})
+                if feedData.type == constants.Insert or feedData.type == constants.Update:
+                    exists = False
+                    for i in range(len(self.store['snapshot'])):
+                        row = self.store['snapshot'][i]
+                        if row['id'] == feedData.docId:
+                            exists = True
+                            if row['time'] <= feedData.timeStamp:
+                                row['time'] = feedData.timeStamp
+                                row['payload'] = feedData.payload
+                                row['is_deleted'] = False
+                        self.store['snapshot'][i] = row
+                    if not exists:
+                        self.store['snapshot'].append(
+                            {'id': feedData.docId, 'time': feedData.timeStamp, 'payload': feedData.payload,
+                             'is_deleted': False})
+                elif feedData.type == constants.Delete:
+                    for i in range(len(self.store['snapshot'])):
+                        row = self.store['snapshot'][i]
+                        if row['id'] == feedData.docId and row['time'] <= feedData.timeStamp:
+                            row['time'] = feedData.timeStamp
+                            row['payload'] = {}
+                            row['is_deleted'] = True
+                        self.store['snapshot'][i] = row
+            change_type = rows[0].type
+            self.store['subscription']['on_snapshot'](
+                [json.loads(row['payload']) for row in self.store['snapshot'] if not row['is_deleted']],
+                change_type)
+
     def _run_client(self, _id: str, on_snapshot: Callable, on_error: Callable):
         responses = self.stub.RealTime(self.client)
         try:
             for response in responses:
                 if response.id == _id:
                     if response.ack:
-                        _snapshot_callback(self.store, response.feedData)
+                        self._snapshot_callback(response.feedData)
                     else:
                         on_error(response.error)
                         self.unsubscribe()
@@ -116,6 +132,17 @@ class LiveQuery:
     def _send(self, payload: server_pb2.RealTimeRequest):
         return self.client.add_request(payload)
 
+    def options(self, changes_only: bool = False) -> 'LiveQuery':
+        """
+        Provides additional options for the live query
+        :param changes_only: (bool) (default False) Do not cache the documents. Whenever a change occurs,
+        call 'on_snapshot' with that change
+        :return:
+        """
+        self.changes_only = changes_only
+        self.skip_initial = changes_only
+        return self
+
     def subscribe(self, on_snapshot: Callable, on_error: Callable) -> Callable:
         """
         Subscribes to the particular LiveQuery instance
@@ -125,14 +152,15 @@ class LiveQuery:
         :param on_error: (Callable) The function to be called when an error occurs (takes in an error(str))
         :return: (Callable) The unsubscribe function
         """
-        self.store[self.id] = {'snapshot': [], 'subscription': {}, 'find': self.find}
+        self.store = {'snapshot': [], 'subscription': {}, 'find': self.find}
         subscription = {'on_snapshot': on_snapshot, 'on_error': on_error}
-        self.store[self.id]['subscription'] = subscription
+        self.store['subscription'] = subscription
 
         self.async_result = self.run_pool.apply_async(self._run_client, (self.id, on_snapshot, on_error))
+        options = obj_to_utf8_bytes({"skipInitial": self.skip_initial})
         self.pool.map(self._send, (
             server_pb2.RealTimeRequest(token=self.token, dbType=self.db_type, project=self.project_id,
-                                       group=self.collection,
+                                       group=self.collection, options=options,
                                        type=constants.TypeRealtimeSubscribe, id=self.id,
                                        where=obj_to_utf8_bytes(self.find)),))
         return self.unsubscribe
@@ -141,15 +169,16 @@ class LiveQuery:
         """
         Unsubscribes from the particular LiveQuery instance
         """
+        options = obj_to_utf8_bytes({"skipInitial": self.skip_initial})
         self.pool.map(self._send, (
             server_pb2.RealTimeRequest(token=self.token, dbType=self.db_type, project=self.project_id,
-                                       group=self.collection,
+                                       group=self.collection, options=options,
                                        type=constants.TypeRealtimeUnsubscribe, id=self.id,
                                        where=obj_to_utf8_bytes(self.find)),))
         self.client.close()
         self.run_pool.close()
         try:
-            del self.store[self.id]
+            del self.store
         except KeyError:
             pass
 

@@ -15,12 +15,12 @@ def on_error(error):
     print("ERROR:", error)
 
 
-unsubscribe = db.live_query('books').subscribe(on_snapshot, on_error)
+unsubscribe = db.live_query('books').options(changes_only=False).subscribe(on_snapshot, on_error)
 
 
 def do_not_die():
-    for i in range(12):
-        print("Sleeping...")
+    for i in range(24):
+        # print("Sleeping...")
         time.sleep(1)
 
 
