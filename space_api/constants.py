@@ -1,3 +1,8 @@
+MySQL = 'sql-mysql'
+Postgres = 'sql-postgres'
+Mongo = 'mongo'
+
+
 # TypeServiceRegister is the request type for service registration
 TypeServiceRegister = "service-register"
 # TypeServiceUnregister is the request type for service removal
@@ -9,6 +14,7 @@ Insert = "insert"
 Write = "write"
 Delete = "delete"
 Update = "update"
+Initial = "initial"
 
 # TypeRealtimeSubscribe is the request type for live query subscription
 TypeRealtimeSubscribe = "realtime-subscribe"

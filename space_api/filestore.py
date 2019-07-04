@@ -1,7 +1,5 @@
-import io
 from space_api.response import Response
 from space_api.transport import Transport
-from space_api.proto import server_pb2
 
 
 class FileStore:
