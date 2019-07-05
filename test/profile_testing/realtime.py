@@ -7,7 +7,7 @@ api = API(variables.app, variables.url)
 db = variables.db(api)
 
 
-def on_snapshot(docs, kind):
+def on_snapshot(docs, kind, changed):
     print(docs)
 
 

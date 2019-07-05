@@ -36,13 +36,15 @@ class LiveQuery:
         self.project_id = transport.project_id
         self.token = transport.token
         self.db_type = db_type
-        self.store = {}
+        self.store = []
         self.collection = collection
         self.client = Client()
         self.find = {}
         self.skip_initial = False
         self.changes_only = False  # no cache
         self.async_result = None
+        self.on_snapshot = None
+        self.on_error = None
         self.id = str(uuid.uuid1())
         self.pool = futures.ThreadPoolExecutor()
         self.run_pool = ThreadPool(processes=1)
@@ -66,53 +68,62 @@ class LiveQuery:
         if len(rows) == 0:
             return
         if self.changes_only:
-            for feedData in rows:
-                data = json.loads(feedData.payload)
-                if data is not None:
-                    self.store['subscription']['on_snapshot'](
-                        [data], feedData.type)
-                else:
-                    if self.db_type == constants.Mongo:
-                        self.store['subscription']['on_snapshot'](
-                            [{"_id": feedData.docId}], feedData.type)
+            for feed_data in rows:
+                if not (self.skip_initial and feed_data.type == constants.Initial):
+                    if feed_data.type != constants.Delete:
+                        self.on_snapshot([], feed_data.type, json.loads(feed_data.payload))
                     else:
-                        self.store['subscription']['on_snapshot'](
-                            [{"id": int(feedData.docId)}], feedData.type)
+                        if self.db_type == constants.Mongo:
+                            self.on_snapshot([], feed_data.type, {"_id": feed_data.docId})
+                        else:
+                            self.on_snapshot([], feed_data.type, {"id": int(feed_data.docId)})
         else:
-            for feedData in rows:
-                if feedData.type == constants.Initial:
-                    self.store['snapshot'].append(
-                        {'id': feedData.docId, 'time': feedData.timeStamp, 'payload': feedData.payload,
+            for feed_data in rows:
+                if feed_data.type == constants.Initial:
+                    self.store.append(
+                        {'id': feed_data.docId, 'time': feed_data.timeStamp, 'payload': feed_data.payload,
                          'is_deleted': False})
-                if feedData.type == constants.Insert or feedData.type == constants.Update:
+                if feed_data.type == constants.Insert or feed_data.type == constants.Update:
                     exists = False
-                    for i in range(len(self.store['snapshot'])):
-                        row = self.store['snapshot'][i]
-                        if row['id'] == feedData.docId:
+                    for i in range(len(self.store)):
+                        row = self.store[i]
+                        if row['id'] == feed_data.docId:
                             exists = True
-                            if row['time'] <= feedData.timeStamp:
-                                row['time'] = feedData.timeStamp
-                                row['payload'] = feedData.payload
+                            if row['time'] <= feed_data.timeStamp:
+                                row['time'] = feed_data.timeStamp
+                                row['payload'] = feed_data.payload
                                 row['is_deleted'] = False
-                        self.store['snapshot'][i] = row
+                        self.store[i] = row
                     if not exists:
-                        self.store['snapshot'].append(
-                            {'id': feedData.docId, 'time': feedData.timeStamp, 'payload': feedData.payload,
+                        self.store.append(
+                            {'id': feed_data.docId, 'time': feed_data.timeStamp, 'payload': feed_data.payload,
                              'is_deleted': False})
-                elif feedData.type == constants.Delete:
-                    for i in range(len(self.store['snapshot'])):
-                        row = self.store['snapshot'][i]
-                        if row['id'] == feedData.docId and row['time'] <= feedData.timeStamp:
-                            row['time'] = feedData.timeStamp
+                elif feed_data.type == constants.Delete:
+                    for i in range(len(self.store)):
+                        row = self.store[i]
+                        if row['id'] == feed_data.docId and row['time'] <= feed_data.timeStamp:
+                            row['time'] = feed_data.timeStamp
                             row['payload'] = {}
                             row['is_deleted'] = True
-                        self.store['snapshot'][i] = row
+                        self.store[i] = row
             change_type = rows[0].type
-            self.store['subscription']['on_snapshot'](
-                [json.loads(row['payload']) for row in self.store['snapshot'] if not row['is_deleted']],
-                change_type)
+            if change_type == constants.Initial:
+                if not self.skip_initial:
+                    self.on_snapshot([json.loads(row['payload']) for row in self.store if not row['is_deleted']],
+                                     change_type, {})
+            else:  # There is definitely only 1 row
+                if change_type != constants.Delete:
+                    self.on_snapshot([json.loads(row['payload']) for row in self.store if not row['is_deleted']],
+                                     change_type, json.loads(rows[0].payload))
+                else:
+                    if self.db_type == constants.Mongo:
+                        self.on_snapshot([json.loads(row['payload']) for row in self.store if not row['is_deleted']],
+                                         change_type, {"_id": rows[0].docId})
+                    else:
+                        self.on_snapshot([json.loads(row['payload']) for row in self.store if not row['is_deleted']],
+                                         change_type, {"id": int(rows[0].docId)})
 
-    def _run_client(self, _id: str, on_snapshot: Callable, on_error: Callable):
+    def _run_client(self, _id: str):
         responses = self.stub.RealTime(self.client)
         try:
             for response in responses:
@@ -120,12 +131,12 @@ class LiveQuery:
                     if response.ack:
                         self._snapshot_callback(response.feedData)
                     else:
-                        on_error(response.error)
+                        self.on_error(response.error)
                         self.unsubscribe()
                         return
         except grpc._channel._Rendezvous as e:
             a = str(e).index('details = "')
-            on_error("Error:", str(e)[a + 11:str(e).index('"', a + 11)])
+            self.on_error("Error:", str(e)[a + 11:str(e).index('"', a + 11)])
             self.unsubscribe()
             return
 
@@ -147,16 +158,15 @@ class LiveQuery:
         """
         Subscribes to the particular LiveQuery instance
 
-        :param on_snapshot: (Callable) The function to be called when new live data is encountered (takes in docs(List)
-            and type of change(String))
+        :param on_snapshot: (Callable) The function to be called when new live data is encountered (takes in docs(List),
+            type of change(String) and the changed doc(dict))
         :param on_error: (Callable) The function to be called when an error occurs (takes in an error(str))
         :return: (Callable) The unsubscribe function
         """
-        self.store = {'snapshot': [], 'subscription': {}, 'find': self.find}
-        subscription = {'on_snapshot': on_snapshot, 'on_error': on_error}
-        self.store['subscription'] = subscription
+        self.on_snapshot = on_snapshot
+        self.on_error = on_error
 
-        self.async_result = self.run_pool.apply_async(self._run_client, (self.id, on_snapshot, on_error))
+        self.async_result = self.run_pool.apply_async(self._run_client, (self.id,))
         options = obj_to_utf8_bytes({"skipInitial": self.skip_initial})
         self.pool.map(self._send, (
             server_pb2.RealTimeRequest(token=self.token, dbType=self.db_type, project=self.project_id,

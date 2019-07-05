@@ -4,9 +4,10 @@ api = API('books-app', 'localhost:8081')
 db = api.my_sql()
 
 
-def on_snapshot(docs, kind):
+def on_snapshot(docs, kind, changed):
     print("DOCS:", docs)
     print("KIND OF LIVE QUERY:", kind)
+    print("CHANGED DOC:", changed)
 
 
 def on_error(error):
