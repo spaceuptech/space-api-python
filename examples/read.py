@@ -17,7 +17,6 @@ if response.status == 200:
 else:
     print(response.error)
 
-
 # ----------------------------------------------------------------------------------------------------
 # READ ONE
 from space_api import API, AND, OR, COND
@@ -37,7 +36,6 @@ if response.status == 200:
     print(response.result)
 else:
     print(response.error)
-
 
 # ----------------------------------------------------------------------------------------------------
 # READ MULTIPLE CONDITIONS
@@ -59,7 +57,6 @@ if response.status == 200:
 else:
     print(response.error)
 
-
 # ----------------------------------------------------------------------------------------------------
 # READ SELECT
 from space_api import API, AND, OR, COND
@@ -74,12 +71,11 @@ db = api.my_sql()
 condition = COND("author", "==", "SomeAuthor")
 
 # Get the books
-response = db.get("books").where(condition).select({"name":1}).apply()
+response = db.get("books").where(condition).select({"name": 1}).apply()
 if response.status == 200:
     print(response.result)
 else:
     print(response.error)
-
 
 # ----------------------------------------------------------------------------------------------------
 # READ SORT
@@ -103,7 +99,6 @@ if response.status == 200:
 else:
     print(response.error)
 
-
 # ----------------------------------------------------------------------------------------------------
 # READ SKIP
 from space_api import API, AND, OR, COND
@@ -123,7 +118,6 @@ if response.status == 200:
     print(response.result)
 else:
     print(response.error)
-
 
 # ----------------------------------------------------------------------------------------------------
 # READ LIMIT
@@ -145,7 +139,6 @@ if response.status == 200:
 else:
     print(response.error)
 
-
 # ----------------------------------------------------------------------------------------------------
 # READ DISTINCT
 from space_api import API, COND
@@ -165,7 +158,6 @@ if response.status == 200:
     print(response.result)
 else:
     print(response.error)
-
 
 # ----------------------------------------------------------------------------------------------------
 # READ COUNT
@@ -187,7 +179,6 @@ if response.status == 200:
 else:
     print(response.error)
 
-
 # ----------------------------------------------------------------------------------------------------
 # READ AGGREGATE
 from space_api import API, COND
@@ -198,11 +189,13 @@ api = API("books-app", "localhost:8081")
 # Initialize database(s) you intend to use
 db = api.mongo()
 
-# The condition to be matched
-condition = COND("author", "==", "SomeAuthor")
+pipe = [
+    {"$match": {"status": "A"}},
+    {"$group": {"_id": "$cust_id", "total": {"$sum": "amount"}}}
+]
 
 # Get the books
-response = db.aggr("books").where(condition).apply()
+response = db.aggr("books").pipe(pipe).apply()
 if response.status == 200:
     print(response.result)
 else:
