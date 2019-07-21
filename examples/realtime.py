@@ -14,7 +14,7 @@ def on_error(error):
     print("ERROR:", error)
 
 
-unsubscribe = db.live_query('books').subscribe(on_snapshot, on_error)
+unsubscribe = db.live_query('books').options(changes_only=False).subscribe(on_snapshot, on_error)
 
 # After some logic/condition
 unsubscribe()
