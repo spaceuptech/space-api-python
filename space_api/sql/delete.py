@@ -8,7 +8,7 @@ class Delete:
     The SQL Delete Class
     ::
         from space_api import API, AND, OR, COND
-        api = API("My-Project", "localhost:8080")
+        api = API("My-Project", "localhost:4124")
         db = api.my_sql() # For a MySQL interface
         response = db.delete('posts').where(AND(COND('title', '==', 'Title1'))).apply()
 

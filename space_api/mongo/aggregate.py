@@ -7,7 +7,7 @@ class Aggregate:
     The Mongo Aggregate Class
     ::
         from space_api import API, AND, OR, COND
-        api = API("My-Project", "localhost:8080")
+        api = API("My-Project", "localhost:4124")
         db = api.mongo()
         _pipe = [
             {'$match': {'status': 'A'}},

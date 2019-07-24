@@ -15,7 +15,7 @@ class Mongo:
     The Mongo Client Class
     ::
         from space_api import API
-        api = API("My-Project", "localhost:8080")
+        api = API("My-Project", "localhost:4124")
         db = api.mongo()
 
     :param transport: (Transport) The API's transport instance

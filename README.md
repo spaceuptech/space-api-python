@@ -15,7 +15,7 @@ The complete documentation can be found [here](https://spaceuptech.com/docs).
 ```python
 from space_api import API, AND, OR, COND
 
-api = API('demo-project', 'localhost:8081')
+api = API('demo-project', 'localhost:4124')
 
 # For MongoDB
 db = api.mongo()

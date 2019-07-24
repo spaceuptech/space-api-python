@@ -7,7 +7,7 @@ class Insert:
     The Mongo Insert Class
     ::
         from space_api import API
-        api = API("My-Project", "localhost:8080")
+        api = API("My-Project", "localhost:4124")
         db = api.mongo()
         record = {'author': 'John', 'title': 'Title1'}
         response = db.insert('posts').doc(record).apply()

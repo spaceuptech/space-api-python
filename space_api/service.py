@@ -15,7 +15,7 @@ class Service:
     The Service Class
     ::
         from space_api import API
-        api = API('project', 'localhost:8081')
+        api = API('project', 'localhost:4124')
 
         service = api.service('service')
         service.register_func(my_awesome_function)

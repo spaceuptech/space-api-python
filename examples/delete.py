@@ -2,7 +2,7 @@
 from space_api import API, COND
 
 # Initialize api with the project name and url of the space cloud
-api = API("books-app", "localhost:8081")
+api = API("books-app", "localhost:4124")
 
 # Initialize database(s) you intend to use
 db = api.my_sql()
@@ -23,7 +23,7 @@ else:
 from space_api import API, COND
 
 # Initialize api with the project name and url of the space cloud
-api = API("books-app", "localhost:8081")
+api = API("books-app", "localhost:4124")
 
 # Initialize database(s) you intend to use
 db = api.my_sql()
@@ -44,7 +44,7 @@ else:
 from space_api import API, COND, OR, AND
 
 # Initialize api with the project name and url of the space cloud
-api = API("books-app", "localhost:8081")
+api = API("books-app", "localhost:4124")
 
 # Initialize database(s) you intend to use
 db = api.my_sql()

@@ -16,7 +16,7 @@ class API:
     The SpaceUp Client API
     ::
         from space_api import API
-        api = API("My-Project", "localhost:8080")
+        api = API("My-Project", "localhost:4124")
 
     :param project_id: (str) The project ID
     :param url: (str) The base URL of space-cloud server
