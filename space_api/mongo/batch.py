@@ -12,7 +12,7 @@ class Batch:
     The Mongo Batch Class
     ::
         from space_api import API, AND, OR, COND
-        api = API("My-Project", "localhost:8080")
+        api = API("My-Project", "localhost:4124")
         db = api.mongo() # For a Mongo interface
 
     :param transport: (Transport) The API's transport instance

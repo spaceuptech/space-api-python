@@ -1,6 +1,6 @@
 from space_api import API
 
-api = API('books-app', 'localhost:8081')
+api = API('books-app', 'localhost:4124')
 
 
 def my_func(params, auth, cb):  # Function to be registered

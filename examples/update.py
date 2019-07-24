@@ -1,6 +1,6 @@
 # UPDATE
 from space_api import API, AND, OR, COND
-api = API("books-app", "localhost:8081")
+api = API("books-app", "localhost:4124")
 db = api.my_sql()
 
 # The condition to be matched
@@ -18,7 +18,7 @@ else:
 # ----------------------------------------------------------------------------------------------------
 # UPDATE ONE
 from space_api import API, AND, OR, COND
-api = API("books-app", "localhost:8081")
+api = API("books-app", "localhost:4124")
 db = api.my_sql()
 
 # The condition to be matched
@@ -36,7 +36,7 @@ else:
 # ----------------------------------------------------------------------------------------------------
 # UPDATE CONDITION
 from space_api import API, AND, OR, COND
-api = API("books-app", "localhost:8081")
+api = API("books-app", "localhost:4124")
 db = api.my_sql()
 
 # The condition to be matched
@@ -54,7 +54,7 @@ else:
 # ----------------------------------------------------------------------------------------------------
 # UPDATE MULTIPLE CONDITIONS
 from space_api import API, AND, OR, COND
-api = API("books-app", "localhost:8081")
+api = API("books-app", "localhost:4124")
 db = api.my_sql()
 
 # The condition to be matched
@@ -72,7 +72,7 @@ else:
 # ----------------------------------------------------------------------------------------------------
 # UPDATE SET
 from space_api import API, AND, OR, COND
-api = API("books-app", "localhost:8081")
+api = API("books-app", "localhost:4124")
 db = api.my_sql()
 
 # The condition to be matched
@@ -90,7 +90,7 @@ else:
 # ----------------------------------------------------------------------------------------------------
 # UPDATE UPSERT
 from space_api import API, COND
-api = API("books-app", "localhost:8081")
+api = API("books-app", "localhost:4124")
 db = api.mongo()
 
 # The condition to be matched
@@ -108,7 +108,7 @@ else:
 # ----------------------------------------------------------------------------------------------------
 # UPDATE PUSH
 from space_api import API, COND
-api = API("books-app", "localhost:8081")
+api = API("books-app", "localhost:4124")
 db = api.mongo()
 
 # The condition to be matched
@@ -126,7 +126,7 @@ else:
 # ----------------------------------------------------------------------------------------------------
 # UPDATE REMOVE
 from space_api import API, COND
-api = API("books-app", "localhost:8081")
+api = API("books-app", "localhost:4124")
 db = api.mongo()
 
 # The condition to be matched
@@ -144,7 +144,7 @@ else:
 # ----------------------------------------------------------------------------------------------------
 # UPDATE RENAME
 from space_api import API, COND
-api = API("books-app", "localhost:8081")
+api = API("books-app", "localhost:4124")
 db = api.mongo()
 
 # The condition to be matched
@@ -162,7 +162,7 @@ else:
 # ----------------------------------------------------------------------------------------------------
 # UPDATE INC
 from space_api import API, COND
-api = API("books-app", "localhost:8081")
+api = API("books-app", "localhost:4124")
 db = api.mongo()
 
 # The condition to be matched
@@ -180,7 +180,7 @@ else:
 # ----------------------------------------------------------------------------------------------------
 # UPDATE MUL
 from space_api import API, COND
-api = API("books-app", "localhost:8081")
+api = API("books-app", "localhost:4124")
 db = api.mongo()
 
 # The condition to be matched
@@ -198,7 +198,7 @@ else:
 # ----------------------------------------------------------------------------------------------------
 # UPDATE MAX
 from space_api import API, COND
-api = API("books-app", "localhost:8081")
+api = API("books-app", "localhost:4124")
 db = api.mongo()
 
 # The condition to be matched
@@ -216,7 +216,7 @@ else:
 # ----------------------------------------------------------------------------------------------------
 # UPDATE MIN
 from space_api import API, COND
-api = API("books-app", "localhost:8081")
+api = API("books-app", "localhost:4124")
 db = api.mongo()
 
 # The condition to be matched
@@ -234,7 +234,7 @@ else:
 # ----------------------------------------------------------------------------------------------------
 # UPDATE CURRENT TIMESTAMP
 from space_api import API, COND
-api = API("books-app", "localhost:8081")
+api = API("books-app", "localhost:4124")
 db = api.mongo()
 
 # The condition to be matched
@@ -252,7 +252,7 @@ else:
 # ----------------------------------------------------------------------------------------------------
 # UPDATE CURRENT DATE
 from space_api import API, COND
-api = API("books-app", "localhost:8081")
+api = API("books-app", "localhost:4124")
 db = api.mongo()
 
 # The condition to be matched

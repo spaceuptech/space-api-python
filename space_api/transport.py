@@ -27,7 +27,7 @@ class Transport:
     """
         The SpaceUp Transport Instance
         ::
-            transport = Transport("localhost:8081")
+            transport = Transport("localhost:4124")
 
         :param url: (str) The URL of space-cloud server
 

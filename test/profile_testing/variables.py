@@ -1,6 +1,6 @@
 app = 'books-app'
-# url = '192.168.43.226:8081'
-url = 'localhost:8081'
+# url = '192.168.43.226:4124'
+url = 'localhost:4124'
 service = 'service'
 id = "id"
 

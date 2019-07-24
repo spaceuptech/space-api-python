@@ -14,7 +14,7 @@ class SQL:
     The SQL Client Class
     ::
         from space_api import API
-        api = API("My-Project", "localhost:8080")
+        api = API("My-Project", "localhost:4124")
         db = api.my_sql() # For a MySQL interface
         db = api.postgres() # For a Postgres interface
 

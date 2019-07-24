@@ -17,7 +17,7 @@ class LiveQuery:
     The LiveQuery Class
     ::
         from space_api import API
-        api = API('project', 'localhost:8081')
+        api = API('project', 'localhost:4124')
         db = api.my_sql()
 
         unsubscribe = db.live_query('books').subscribe(on_snapshot, on_error)

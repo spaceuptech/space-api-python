@@ -7,7 +7,7 @@ class Insert:
     The SQL Insert Class
     ::
         from space_api import API
-        api = API("My-Project", "localhost:8080")
+        api = API("My-Project", "localhost:4124")
         db = api.my_sql() # For a MySQL interface
         record = {'author': 'John', 'title': 'Title1'}
         response = db.insert('posts').doc(record).apply()
