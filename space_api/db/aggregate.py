@@ -1,16 +1,19 @@
-from space_api.utils import generate_find, AND
 from space_api.transport import Transport
 from space_api.response import Response
 
 
-class Delete:
+class Aggregate:
     """
-    The Mongo Delete Class
+    The DB Aggregate Class
     ::
         from space_api import API, AND, OR, COND
         api = API("My-Project", "localhost:4124")
-        db = api.mongo()
-        response = db.delete('posts').where(AND(COND('title', '==', 'Title1'))).apply()
+        db = api.mongo()  # For a MongoDB interface
+        _pipe = [
+            {'$match': {'status': 'A'}},
+            {'$group': {'_id': '$customer_id', 'total': {'$sum': '$amount'}}}
+        ]
+        response = db.aggr('posts').pipe(_pipe).apply()
 
     :param transport: (Transport) The API's transport instance
     :param collection: (str) The collection name
@@ -23,24 +26,26 @@ class Delete:
         self.collection = collection
         self.db_type = db_type
         self.operation = operation
-        self.params = {'find': {}}
+        self.params = {}
 
-    def where(self, *conditions) -> 'Delete':
+    def pipe(self, pipe_obj) -> 'Aggregate':
         """
-        Prepares the find parameters
+        Prepares the pipe query
 
-        :param conditions: (*) The conditions to find by
+        :param pipe_obj: The pipeline object
         """
-        self.params['find'] = generate_find(AND(*conditions))
+        self.params['pipe'] = pipe_obj
         return self
 
     def apply(self) -> Response:
         """
-        Triggers the delete request
+        Triggers the aggregate request
+        ::
+            response = db.aggr('posts').pipe([...]).apply()
 
         :return: (Response) The response object containing values corresponding to the request
         """
-        return self.transport.delete(self.params['find'], self.operation, self.db_type, self.collection)
+        return self.transport.aggregate(self.params['pipe'], self.operation, self.db_type, self.collection)
 
 
-__all__ = ['Delete']
+__all__ = ['Aggregate']

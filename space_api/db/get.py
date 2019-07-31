@@ -5,11 +5,11 @@ from space_api.response import Response
 
 class Get:
     """
-    The SQL Get Class
+    The DB Get Class
     ::
         from space_api import API, AND, OR, COND
         api = API("My-Project", "localhost:4124")
-        db = api.my_sql() # For a MySQL interface
+        db = api.mongo()
         response = db.get('posts').where(AND(COND('title', '==', 'Title1'))).apply()
 
     :param transport: (Transport) The API's transport instance
@@ -85,14 +85,22 @@ class Get:
             response = db.get('posts').limit(10).apply()
 
         :param _limit: (int) The maximum number of results returned
-        :return:
         """
         self.params['options']['limit'] = _limit
         return self
 
+    def key(self, key) -> 'Get':
+        """
+        Sets the key for distinct values
+
+        :param key: The key for distinct values
+        """
+        self.params['options']['distinct'] = key
+        return self
+
     def apply(self) -> Response:
         """
-        Triggers the get query
+        Triggers the get request
         ::
             response = db.get('posts').apply()
 

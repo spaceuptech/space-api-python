@@ -5,11 +5,11 @@ from space_api.response import Response
 
 class Update:
     """
-    The Mongo Update Class
+    The DB Update Class
     ::
         from space_api import API, AND, OR, COND
         api = API("My-Project", "localhost:4124")
-        db = api.mongo()
+        db = api.mongo()  # For a MongoDB interface
         response = db.update('posts').where(AND(COND('title', '==', 'Title1'))).set({'title':'Title2'}).apply()
 
     :param transport: (Transport) The API's transport instance
