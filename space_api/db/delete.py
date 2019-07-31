@@ -3,19 +3,19 @@ from space_api.transport import Transport
 from space_api.response import Response
 
 
-class Update:
+class Delete:
     """
-    The SQL Update Class
+    The DB Delete Class
     ::
         from space_api import API, AND, OR, COND
         api = API("My-Project", "localhost:4124")
-        db = api.my_sql() # For a MySQL interface
-        response = db.update('posts').where(AND(COND('title', '==', 'Title1'))).set({'title':'Title2'}).apply()
+        db = api.mongo()  # For a MongoDB interface
+        response = db.delete('posts').where(AND(COND('title', '==', 'Title1'))).apply()
 
     :param transport: (Transport) The API's transport instance
     :param collection: (str) The collection name
     :param db_type: (str) The database type
-    :param operation: (str) The (optional) operation (one/all/upsert) (Defaults to 'all')
+    :param operation: (str) The (optional) operation (one/all) (Defaults to 'all')
     """
 
     def __init__(self, transport: Transport, collection: str, db_type: str, operation: str = 'all'):
@@ -23,9 +23,9 @@ class Update:
         self.collection = collection
         self.db_type = db_type
         self.operation = operation
-        self.params = {'find': {}, 'update': {}}
+        self.params = {'find': {}}
 
-    def where(self, *conditions) -> 'Update':
+    def where(self, *conditions) -> 'Delete':
         """
         Prepares the find parameters
 
@@ -34,23 +34,13 @@ class Update:
         self.params['find'] = generate_find(AND(*conditions))
         return self
 
-    def set(self, obj) -> 'Update':
-        """
-        Prepares the updated values
-
-        :param obj: The object containing the fields to set
-        """
-        self.params['update']['$set'] = obj
-        return self
-
     def apply(self) -> Response:
         """
-        Triggers the update request
+        Triggers the delete request
 
         :return: (Response) The response object containing values corresponding to the request
         """
-        return self.transport.update(self.params['find'], self.operation, self.params['update'], self.db_type,
-                                     self.collection)
+        return self.transport.delete(self.params['find'], self.operation, self.db_type, self.collection)
 
 
-__all__ = ['Update']
+__all__ = ['Delete']

@@ -2,8 +2,7 @@
 SpaceUp Client Python API
 """
 from typing import Optional
-from space_api.sql.sql import SQL
-from space_api.mongo.mongo import Mongo
+from space_api.db.db import DB
 from space_api.response import Response
 from space_api.service import Service
 from space_api.filestore import FileStore
@@ -63,29 +62,29 @@ class API:
         self.project_id = project_id
         self.transport.project_id = project_id
 
-    def mongo(self) -> 'Mongo':
+    def mongo(self) -> 'DB':
         """
         Returns a MongoDB client instance
 
         :return: MongoDB client instance
         """
-        return Mongo(self.transport, constants.Mongo)
+        return DB(self.transport, constants.Mongo)
 
-    def postgres(self) -> 'SQL':
+    def postgres(self) -> 'DB':
         """
         Returns a Postgres client instance
 
         :return: Postgres client instance
         """
-        return SQL(self.transport, constants.Postgres)
+        return DB(self.transport, constants.Postgres)
 
-    def my_sql(self) -> 'SQL':
+    def my_sql(self) -> 'DB':
         """
         Returns a MySQL client instance
 
         :return: MySQL client instance
         """
-        return SQL(self.transport, constants.MySQL)
+        return DB(self.transport, constants.MySQL)
 
     def __str__(self) -> str:
         return f'SpaceAPI(project_id:{self.project_id}, url:{self.url}, token:{self.token})'

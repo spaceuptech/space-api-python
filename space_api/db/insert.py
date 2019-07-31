@@ -4,11 +4,11 @@ from space_api.response import Response
 
 class Insert:
     """
-    The Mongo Insert Class
+    The DB Insert Class
     ::
         from space_api import API
         api = API("My-Project", "localhost:4124")
-        db = api.mongo()
+        db = api.mongo()  # For a MongoDB interface
         record = {'author': 'John', 'title': 'Title1'}
         response = db.insert('posts').doc(record).apply()
 

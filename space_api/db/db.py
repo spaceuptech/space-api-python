@@ -1,22 +1,22 @@
 from typing import Optional
 from space_api.transport import Transport
-from space_api.mongo.get import Get
-from space_api.mongo.insert import Insert
-from space_api.mongo.update import Update
-from space_api.mongo.delete import Delete
-from space_api.mongo.aggregate import Aggregate
-from space_api.mongo.batch import Batch
+from space_api.db.get import Get
+from space_api.db.insert import Insert
+from space_api.db.update import Update
+from space_api.db.delete import Delete
+from space_api.db.aggregate import Aggregate
+from space_api.db.batch import Batch
 from space_api.response import Response
 from space_api.livequery import LiveQuery
 
 
-class Mongo:
+class DB:
     """
-    The Mongo Client Class
+    The DB Client Class
     ::
         from space_api import API
         api = API("My-Project", "localhost:4124")
-        db = api.mongo()
+        db = api.mongo()  # For a MongoDB interface
 
     :param transport: (Transport) The API's transport instance
     :param db_type: (str) The database type
@@ -28,113 +28,113 @@ class Mongo:
 
     def get(self, collection: str) -> 'Get':
         """
-        Returns a Mongo Get object, with operation 'all'
+        Returns a DB Get object, with operation 'all'
 
         :param collection: (str) The collection name
-        :return: The Mongo Get object
+        :return: The DB Get object
         """
         return Get(self.transport, collection, self.db_type)
 
     def get_one(self, collection: str) -> 'Get':
         """
-        Returns a Mongo Get object, with operation 'one'
+        Returns a DB Get object, with operation 'one'
 
         :param collection: (str) The collection name
-        :return: The Mongo Get object
+        :return: The DB Get object
         """
         return Get(self.transport, collection, self.db_type, operation='one')
 
     def count(self, collection: str) -> 'Get':
         """
-        Returns a Mongo Get object, with operation 'count'
+        Returns a DB Get object, with operation 'count'
         ::
             response = db.count('posts').apply()
 
         :param collection: (str) The collection name
-        :return: The Mongo Get object
+        :return: The DB Get object
         """
         return Get(self.transport, collection, self.db_type, operation='count')
 
     def distinct(self, collection: str) -> 'Get':
         """
-        Returns a Mongo Get object, with operation 'distinct'
+        Returns a DB Get object, with operation 'distinct'
         ::
             response = db.distinct('post').key('category').apply()
 
         :param collection: (str) The collection name
-        :return: The Mongo Get object
+        :return: The DB Get object
         """
         return Get(self.transport, collection, self.db_type, operation='distinct')
 
     def insert(self, collection: str) -> 'Insert':
         """
-        Returns a Mongo Insert object
+        Returns a DB Insert object
 
         :param collection: (str) The collection name
-        :return: The Mongo Insert object
+        :return: The DB Insert object
         """
         return Insert(self.transport, collection, self.db_type)
 
     def update(self, collection: str) -> 'Update':
         """
-        Returns a Mongo Update object, with operation 'all'
+        Returns a DB Update object, with operation 'all'
 
         :param collection: (str) The collection name
-        :return: The Mongo Update object
+        :return: The DB Update object
         """
         return Update(self.transport, collection, self.db_type)
 
     def update_one(self, collection: str) -> 'Update':
         """
-        Returns a Mongo Update object, with operation 'one'
+        Returns a DB Update object, with operation 'one'
 
         :param collection: (str) The collection name
-        :return: The Mongo Update object
+        :return: The DB Update object
         """
         return Update(self.transport, collection, self.db_type, operation='one')
 
     def upsert(self, collection: str) -> 'Update':
         """
-        Returns a Mongo Update object, with operation 'upsert'
+        Returns a DB Update object, with operation 'upsert'
 
         :param collection: (str) The collection name
-        :return: The Mongo Update object
+        :return: The DB Update object
         """
         return Update(self.transport, collection, self.db_type, operation='upsert')
 
     def delete(self, collection: str) -> 'Delete':
         """
-        Returns a Mongo Delete object, with operation 'all'
+        Returns a DB Delete object, with operation 'all'
 
         :param collection: (str) The collection name
-        :return: The Mongo Delete object
+        :return: The DB Delete object
         """
         return Delete(self.transport, collection, self.db_type)
 
     def delete_one(self, collection: str) -> 'Delete':
         """
-        Returns a Mongo Delete object, with operation 'one'
+        Returns a DB Delete object, with operation 'one'
 
         :param collection: (str) The collection name
-        :return: The Mongo Delete object
+        :return: The DB Delete object
         """
         return Delete(self.transport, collection, self.db_type, operation='one')
 
     def aggr(self, collection: str) -> 'Aggregate':
         """
-        Returns a Mongo Aggregate object, with operation 'all'
+        Returns a DB Aggregate object, with operation 'all'
 
         :param collection: (str) The collection name
-        :return: The Mongo Aggregate object
+        :return: The DB Aggregate object
         """
         return Aggregate(self.transport, collection, self.db_type)
 
     def aggr_one(self, collection: str) -> 'Aggregate':
         """
-        Returns a Mongo Aggregate object, with operation 'one'
+        Returns a DB Aggregate object, with operation 'one'
 
         :param collection: (str) The collection name
-        :return: The Mongo Aggregate object
+        :return: The DB Aggregate object
         """
         return Aggregate(self.transport, collection, self.db_type, operation='one')
 
@@ -146,18 +146,17 @@ class Mongo:
             batch_obj.add(...)
             response = batch_obj.apply()
 
-        :return: (Batch) A Mongo Batch object
+        :return: (Batch) A DB Batch object
         """
         return Batch(self.transport, self.db_type)
 
     def live_query(self, collection: str) -> LiveQuery:
         """
-        Returns a Mongo LiveQuery object
+        Returns a DB LiveQuery object
 
         :param collection: (str) The collection name
-        :return: The Mongo LiveQuery object
+        :return: The DB LiveQuery object
         """
-
         return LiveQuery(self.transport, self.db_type, collection)
 
     def profile(self, _id: str) -> Response:
@@ -223,4 +222,4 @@ class Mongo:
         return self.transport.sign_up(email, name, password, role, self.db_type)
 
 
-__all__ = ['Mongo']
+__all__ = ['DB']

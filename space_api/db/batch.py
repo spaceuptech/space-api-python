@@ -2,18 +2,18 @@ from typing import Union
 from space_api.transport import Transport
 from space_api.utils import obj_to_utf8_bytes
 from space_api.proto import server_pb2
-from space_api.sql.delete import Delete
-from space_api.sql.insert import Insert
-from space_api.sql.update import Update
+from space_api.db.delete import Delete
+from space_api.db.insert import Insert
+from space_api.db.update import Update
 
 
 class Batch:
     """
-    The SQL Batch Class
+    The DB Batch Class
     ::
         from space_api import API, AND, OR, COND
         api = API("My-Project", "localhost:4124")
-        db = api.my_sql() # For a MySQL interface
+        db = api.mongo()  # For a MongoDB interface
 
     :param transport: (Transport) The API's transport instance
     :param db_type: (str) The database type
@@ -29,7 +29,7 @@ class Batch:
         Adds a request to the batch request object
         ::
             batch_object.add(db.delete('books').where(COND('name', '!=', 'Book_name')))
-        
+
         :param request: (Insert or Update or Delete) A request to add to the batch request
         """
         if self.db_type != request.db_type:
