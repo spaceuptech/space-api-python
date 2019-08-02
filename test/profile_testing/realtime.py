@@ -16,9 +16,9 @@ def on_error(error):
 
 
 while True:
-    unsubscribe = db.live_query('books').subscribe(on_snapshot, on_error)
+    subscription = db.live_query('books').subscribe(on_snapshot, on_error)
     time.sleep(random.randint(1, 5))
-    unsubscribe()
+    subscription.unsubscribe()
     print("Closed")
 
 api.close()

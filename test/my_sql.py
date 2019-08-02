@@ -65,6 +65,8 @@ print("update min")
 print(db.update("books").min({'views': 10}).apply())
 print("update current_date")
 print(db.update("books").current_date('views').apply())
+print("upsert current_date where")
+print(db.upsert('books').current_date("views").where(COND("id", "==", 122)).apply())
 
 
 # testing
