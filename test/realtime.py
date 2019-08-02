@@ -1,6 +1,6 @@
-from space_api import API
 import time
 import threading
+from space_api import API
 
 api = API('books-app', 'localhost:4124')
 db = api.my_sql()
@@ -16,7 +16,7 @@ def on_error(error):
     print("ERROR:", error)
 
 
-unsubscribe = db.live_query('books').options(changes_only=True).subscribe(on_snapshot, on_error)
+subscription = db.live_query('books').options(changes_only=True).subscribe(on_snapshot, on_error)
 
 
 def do_not_die():
@@ -29,5 +29,5 @@ thread = threading.Thread(target=do_not_die)
 thread.start()
 thread.join()
 
-unsubscribe()
+subscription.unsubscribe()
 api.close()

@@ -12,6 +12,15 @@ from space_api.utils import Client, obj_to_utf8_bytes
 from space_api.transport import Transport
 
 
+class LiveQuerySubscription:
+    def __init__(self, unsubscribe: Callable, snapshot):
+        self.unsubscribe = unsubscribe
+        self._snapshot = snapshot
+
+    def get_snapshot(self):
+        return self._snapshot
+
+
 class LiveQuery:
     """
     The LiveQuery Class
@@ -20,10 +29,10 @@ class LiveQuery:
         api = API('project', 'localhost:4124')
         db = api.my_sql()
 
-        unsubscribe = db.live_query('books').subscribe(on_snapshot, on_error)
+        subscription = db.live_query('books').subscribe(on_snapshot, on_error)
 
         # After some condition
-        unsubscribe()
+        subscription.unsubscribe()
         api.close()
 
     :param transport: (Transport) The API's transport instance
@@ -48,6 +57,7 @@ class LiveQuery:
         self.id = str(uuid.uuid1())
         self.pool = futures.ThreadPoolExecutor()
         self.run_pool = ThreadPool(processes=1)
+        self.subscription = None
         # TODO Register Callbacks for Reconnect
 
     def where(self, *conditions) -> 'LiveQuery':
@@ -109,19 +119,23 @@ class LiveQuery:
             change_type = rows[0].type
             if change_type == constants.Initial:
                 if not self.skip_initial:
-                    self.on_snapshot([json.loads(row['payload']) for row in self.store if not row['is_deleted']],
-                                     change_type, {})
+                    doc = [json.loads(row['payload']) for row in self.store if not row['is_deleted']]
+                    self.subscription._snapshot = doc
+                    self.on_snapshot(doc, change_type, {})
             else:  # There is definitely only 1 row
                 if change_type != constants.Delete:
-                    self.on_snapshot([json.loads(row['payload']) for row in self.store if not row['is_deleted']],
-                                     change_type, json.loads(rows[0].payload))
+                    doc = [json.loads(row['payload']) for row in self.store if not row['is_deleted']]
+                    self.subscription._snapshot = doc
+                    self.on_snapshot(doc, change_type, json.loads(rows[0].payload))
                 else:
                     if self.db_type == constants.Mongo:
-                        self.on_snapshot([json.loads(row['payload']) for row in self.store if not row['is_deleted']],
-                                         change_type, {"_id": rows[0].docId})
+                        doc = [json.loads(row['payload']) for row in self.store if not row['is_deleted']]
+                        self.subscription._snapshot = doc
+                        self.on_snapshot(doc, change_type, {"_id": rows[0].docId})
                     else:
-                        self.on_snapshot([json.loads(row['payload']) for row in self.store if not row['is_deleted']],
-                                         change_type, {"id": int(rows[0].docId)})
+                        doc = [json.loads(row['payload']) for row in self.store if not row['is_deleted']]
+                        self.subscription._snapshot = doc
+                        self.on_snapshot(doc, change_type, {"id": int(rows[0].docId)})
 
     def _run_client(self, _id: str):
         responses = self.stub.RealTime(self.client)
@@ -154,7 +168,7 @@ class LiveQuery:
         self.skip_initial = changes_only
         return self
 
-    def subscribe(self, on_snapshot: Callable, on_error: Callable) -> Callable:
+    def subscribe(self, on_snapshot: Callable, on_error: Callable) -> LiveQuerySubscription:
         """
         Subscribes to the particular LiveQuery instance
 
@@ -173,7 +187,8 @@ class LiveQuery:
                                        group=self.collection, options=options,
                                        type=constants.TypeRealtimeSubscribe, id=self.id,
                                        where=obj_to_utf8_bytes(self.find)),))
-        return self.unsubscribe
+        self.subscription = LiveQuerySubscription(self.unsubscribe, [])
+        return self.subscription
 
     def unsubscribe(self):
         """
