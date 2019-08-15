@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='proto',
   syntax='proto3',
   serialized_options=_b('\n\037com.spaceuptech.space_api.protoB\017SpaceCloudProtoP\001'),
-  serialized_pb=_b('\n\x0cserver.proto\x12\x05proto\"O\n\rCreateRequest\x12\x10\n\x08\x64ocument\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12\x19\n\x04meta\x18\x03 \x01(\x0b\x32\x0b.proto.Meta\"n\n\x0bReadRequest\x12\x0c\n\x04\x66ind\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12#\n\x07options\x18\x03 \x01(\x0b\x32\x12.proto.ReadOptions\x12\x19\n\x04meta\x18\x04 \x01(\x0b\x32\x0b.proto.Meta\"\xf4\x01\n\x0bReadOptions\x12.\n\x06select\x18\x01 \x03(\x0b\x32\x1e.proto.ReadOptions.SelectEntry\x12*\n\x04sort\x18\x02 \x03(\x0b\x32\x1c.proto.ReadOptions.SortEntry\x12\x0c\n\x04skip\x18\x03 \x01(\x03\x12\r\n\x05limit\x18\x04 \x01(\x03\x12\x10\n\x08\x64istinct\x18\x05 \x01(\t\x1a-\n\x0bSelectEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a+\n\tSortEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\"[\n\rUpdateRequest\x12\x0c\n\x04\x66ind\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12\x0e\n\x06update\x18\x03 \x01(\x0c\x12\x19\n\x04meta\x18\x04 \x01(\x0b\x32\x0b.proto.Meta\"K\n\rDeleteRequest\x12\x0c\n\x04\x66ind\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12\x19\n\x04meta\x18\x03 \x01(\x0b\x32\x0b.proto.Meta\"R\n\x10\x41ggregateRequest\x12\x10\n\x08pipeline\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12\x19\n\x04meta\x18\x03 \x01(\x0b\x32\x0b.proto.Meta\"9\n\x08Response\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\r\n\x05\x65rror\x18\x02 \x01(\t\x12\x0e\n\x06result\x18\x03 \x01(\x0c\"C\n\x04Meta\x12\x0f\n\x07project\x18\x01 \x01(\t\x12\x0e\n\x06\x64\x62Type\x18\x02 \x01(\t\x12\x0b\n\x03\x63ol\x18\x03 \x01(\t\x12\r\n\x05token\x18\x04 \x01(\t\"j\n\nAllRequest\x12\x0b\n\x03\x63ol\x18\x01 \x01(\t\x12\x10\n\x08\x64ocument\x18\x02 \x01(\x0c\x12\x11\n\toperation\x18\x03 \x01(\t\x12\x0c\n\x04\x66ind\x18\x04 \x01(\x0c\x12\x0e\n\x06update\x18\x05 \x01(\x0c\x12\x0c\n\x04type\x18\x06 \x01(\t\"R\n\x0c\x42\x61tchRequest\x12\'\n\x0c\x62\x61tchrequest\x18\x01 \x03(\x0b\x32\x11.proto.AllRequest\x12\x19\n\x04meta\x18\x02 \x01(\x0b\x32\x0b.proto.Meta\"v\n\x10\x46unctionsRequest\x12\x0e\n\x06params\x18\x01 \x01(\x0c\x12\x0f\n\x07timeout\x18\x02 \x01(\x03\x12\x0f\n\x07service\x18\x03 \x01(\t\x12\x10\n\x08\x66unction\x18\x04 \x01(\t\x12\r\n\x05token\x18\x05 \x01(\t\x12\x0f\n\x07project\x18\x06 \x01(\t\"\x9c\x01\n\x10\x46unctionsPayload\x12\x0c\n\x04\x61uth\x18\x01 \x01(\x0c\x12\x0e\n\x06params\x18\x02 \x01(\x0c\x12\x0f\n\x07service\x18\x03 \x01(\t\x12\x10\n\x08\x66unction\x18\x04 \x01(\t\x12\x0c\n\x04type\x18\x05 \x01(\t\x12\n\n\x02id\x18\x06 \x01(\t\x12\r\n\x05\x65rror\x18\x07 \x01(\t\x12\x0f\n\x07project\x18\x08 \x01(\t\x12\r\n\x05token\x18\t \x01(\t\"{\n\x08\x46\x65\x65\x64\x44\x61ta\x12\x0f\n\x07queryId\x18\x01 \x01(\t\x12\r\n\x05\x64ocId\x18\x02 \x01(\t\x12\x0c\n\x04type\x18\x03 \x01(\t\x12\r\n\x05group\x18\x04 \x01(\t\x12\x0e\n\x06\x64\x62Type\x18\x05 \x01(\t\x12\x0f\n\x07payload\x18\x06 \x01(\x0c\x12\x11\n\ttimeStamp\x18\x07 \x01(\x03\"\x8a\x01\n\x0fRealTimeRequest\x12\r\n\x05token\x18\x01 \x01(\t\x12\x0e\n\x06\x64\x62Type\x18\x02 \x01(\t\x12\x0f\n\x07project\x18\x03 \x01(\t\x12\r\n\x05group\x18\x04 \x01(\t\x12\x0c\n\x04type\x18\x05 \x01(\t\x12\n\n\x02id\x18\x06 \x01(\t\x12\r\n\x05where\x18\x07 \x01(\x0c\x12\x0f\n\x07options\x18\x08 \x01(\x0c\"l\n\x10RealTimeResponse\x12\r\n\x05group\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\t\x12\x0b\n\x03\x61\x63k\x18\x03 \x01(\x08\x12\r\n\x05\x65rror\x18\x04 \x01(\t\x12!\n\x08\x66\x65\x65\x64\x44\x61ta\x18\x05 \x03(\x0b\x32\x0f.proto.FeedData\"7\n\x0eProfileRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x19\n\x04meta\x18\x02 \x01(\x0b\x32\x0b.proto.Meta\",\n\x0fProfilesRequest\x12\x19\n\x04meta\x18\x01 \x01(\x0b\x32\x0b.proto.Meta\"j\n\x12\x45\x64itProfileRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\r\n\x05\x65mail\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x10\n\x08password\x18\x04 \x01(\t\x12\x19\n\x04meta\x18\x05 \x01(\x0b\x32\x0b.proto.Meta\"K\n\rSignInRequest\x12\r\n\x05\x65mail\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\x12\x19\n\x04meta\x18\x03 \x01(\x0b\x32\x0b.proto.Meta\"g\n\rSignUpRequest\x12\r\n\x05\x65mail\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\t\x12\x0c\n\x04role\x18\x04 \x01(\t\x12\x19\n\x04meta\x18\x05 \x01(\x0b\x32\x0b.proto.Meta\"L\n\x13\x43reateFolderRequest\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x19\n\x04meta\x18\x03 \x01(\x0b\x32\x0b.proto.Meta\";\n\x10ListFilesRequest\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\x19\n\x04meta\x18\x02 \x01(\x0b\x32\x0b.proto.Meta\"<\n\x11\x44\x65leteFileRequest\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\x19\n\x04meta\x18\x02 \x01(\x0b\x32\x0b.proto.Meta\">\n\x13\x44ownloadFileRequest\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\x19\n\x04meta\x18\x02 \x01(\x0b\x32\x0b.proto.Meta\"[\n\x11UploadFileRequest\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07payload\x18\x03 \x01(\x0c\x12\x19\n\x04meta\x18\x04 \x01(\x0b\x32\x0b.proto.Meta\"=\n\x0b\x46ilePayload\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\r\n\x05\x65rror\x18\x02 \x01(\t\x12\x0f\n\x07payload\x18\x03 \x01(\x0c\x32\xbb\x08\n\nSpaceCloud\x12\x31\n\x06\x43reate\x12\x14.proto.CreateRequest\x1a\x0f.proto.Response\"\x00\x12-\n\x04Read\x12\x12.proto.ReadRequest\x1a\x0f.proto.Response\"\x00\x12\x31\n\x06Update\x12\x14.proto.UpdateRequest\x1a\x0f.proto.Response\"\x00\x12\x31\n\x06\x44\x65lete\x12\x14.proto.DeleteRequest\x1a\x0f.proto.Response\"\x00\x12\x37\n\tAggregate\x12\x17.proto.AggregateRequest\x1a\x0f.proto.Response\"\x00\x12/\n\x05\x42\x61tch\x12\x13.proto.BatchRequest\x1a\x0f.proto.Response\"\x00\x12\x32\n\x04\x43\x61ll\x12\x17.proto.FunctionsRequest\x1a\x0f.proto.Response\"\x00\x12\x41\n\x08RealTime\x12\x16.proto.RealTimeRequest\x1a\x17.proto.RealTimeResponse\"\x00(\x01\x30\x01\x12\x41\n\x07Service\x12\x17.proto.FunctionsPayload\x1a\x17.proto.FunctionsPayload\"\x00(\x01\x30\x01\x12\x33\n\x07Profile\x12\x15.proto.ProfileRequest\x1a\x0f.proto.Response\"\x00\x12\x35\n\x08Profiles\x12\x16.proto.ProfilesRequest\x1a\x0f.proto.Response\"\x00\x12;\n\x0b\x45\x64itProfile\x12\x19.proto.EditProfileRequest\x1a\x0f.proto.Response\"\x00\x12\x31\n\x06SignIn\x12\x14.proto.SignInRequest\x1a\x0f.proto.Response\"\x00\x12\x31\n\x06SignUp\x12\x14.proto.SignUpRequest\x1a\x0f.proto.Response\"\x00\x12=\n\x0c\x43reateFolder\x12\x1a.proto.CreateFolderRequest\x1a\x0f.proto.Response\"\x00\x12\x37\n\tListFiles\x12\x17.proto.ListFilesRequest\x1a\x0f.proto.Response\"\x00\x12\x39\n\nDeleteFile\x12\x18.proto.DeleteFileRequest\x1a\x0f.proto.Response\"\x00\x12;\n\nUploadFile\x12\x18.proto.UploadFileRequest\x1a\x0f.proto.Response\"\x00(\x01\x12\x42\n\x0c\x44ownloadFile\x12\x1a.proto.DownloadFileRequest\x1a\x12.proto.FilePayload\"\x00\x30\x01\x42\x34\n\x1f\x63om.spaceuptech.space_api.protoB\x0fSpaceCloudProtoP\x01\x62\x06proto3')
+  serialized_pb=_b('\n\x0cserver.proto\x12\x05proto\"O\n\rCreateRequest\x12\x10\n\x08\x64ocument\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12\x19\n\x04meta\x18\x03 \x01(\x0b\x32\x0b.proto.Meta\"n\n\x0bReadRequest\x12\x0c\n\x04\x66ind\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12#\n\x07options\x18\x03 \x01(\x0b\x32\x12.proto.ReadOptions\x12\x19\n\x04meta\x18\x04 \x01(\x0b\x32\x0b.proto.Meta\"\xf4\x01\n\x0bReadOptions\x12.\n\x06select\x18\x01 \x03(\x0b\x32\x1e.proto.ReadOptions.SelectEntry\x12*\n\x04sort\x18\x02 \x03(\x0b\x32\x1c.proto.ReadOptions.SortEntry\x12\x0c\n\x04skip\x18\x03 \x01(\x03\x12\r\n\x05limit\x18\x04 \x01(\x03\x12\x10\n\x08\x64istinct\x18\x05 \x01(\t\x1a-\n\x0bSelectEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a+\n\tSortEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\"[\n\rUpdateRequest\x12\x0c\n\x04\x66ind\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12\x0e\n\x06update\x18\x03 \x01(\x0c\x12\x19\n\x04meta\x18\x04 \x01(\x0b\x32\x0b.proto.Meta\"K\n\rDeleteRequest\x12\x0c\n\x04\x66ind\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12\x19\n\x04meta\x18\x03 \x01(\x0b\x32\x0b.proto.Meta\"R\n\x10\x41ggregateRequest\x12\x10\n\x08pipeline\x18\x01 \x01(\x0c\x12\x11\n\toperation\x18\x02 \x01(\t\x12\x19\n\x04meta\x18\x03 \x01(\x0b\x32\x0b.proto.Meta\"9\n\x08Response\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\r\n\x05\x65rror\x18\x02 \x01(\t\x12\x0e\n\x06result\x18\x03 \x01(\x0c\"C\n\x04Meta\x12\x0f\n\x07project\x18\x01 \x01(\t\x12\x0e\n\x06\x64\x62Type\x18\x02 \x01(\t\x12\x0b\n\x03\x63ol\x18\x03 \x01(\t\x12\r\n\x05token\x18\x04 \x01(\t\"j\n\nAllRequest\x12\x0b\n\x03\x63ol\x18\x01 \x01(\t\x12\x10\n\x08\x64ocument\x18\x02 \x01(\x0c\x12\x11\n\toperation\x18\x03 \x01(\t\x12\x0c\n\x04\x66ind\x18\x04 \x01(\x0c\x12\x0e\n\x06update\x18\x05 \x01(\x0c\x12\x0c\n\x04type\x18\x06 \x01(\t\"R\n\x0c\x42\x61tchRequest\x12\'\n\x0c\x62\x61tchrequest\x18\x01 \x03(\x0b\x32\x11.proto.AllRequest\x12\x19\n\x04meta\x18\x02 \x01(\x0b\x32\x0b.proto.Meta\"v\n\x10\x46unctionsRequest\x12\x0e\n\x06params\x18\x01 \x01(\x0c\x12\x0f\n\x07timeout\x18\x02 \x01(\x03\x12\x0f\n\x07service\x18\x03 \x01(\t\x12\x10\n\x08\x66unction\x18\x04 \x01(\t\x12\r\n\x05token\x18\x05 \x01(\t\x12\x0f\n\x07project\x18\x06 \x01(\t\"\x9c\x01\n\x10\x46unctionsPayload\x12\x0c\n\x04\x61uth\x18\x01 \x01(\x0c\x12\x0e\n\x06params\x18\x02 \x01(\x0c\x12\x0f\n\x07service\x18\x03 \x01(\t\x12\x10\n\x08\x66unction\x18\x04 \x01(\t\x12\x0c\n\x04type\x18\x05 \x01(\t\x12\n\n\x02id\x18\x06 \x01(\t\x12\r\n\x05\x65rror\x18\x07 \x01(\t\x12\x0f\n\x07project\x18\x08 \x01(\t\x12\r\n\x05token\x18\t \x01(\t\"{\n\x08\x46\x65\x65\x64\x44\x61ta\x12\x0f\n\x07queryId\x18\x01 \x01(\t\x12\r\n\x05\x64ocId\x18\x02 \x01(\t\x12\x0c\n\x04type\x18\x03 \x01(\t\x12\r\n\x05group\x18\x04 \x01(\t\x12\x0e\n\x06\x64\x62Type\x18\x05 \x01(\t\x12\x0f\n\x07payload\x18\x06 \x01(\x0c\x12\x11\n\ttimeStamp\x18\x07 \x01(\x03\"\x8a\x01\n\x0fRealTimeRequest\x12\r\n\x05token\x18\x01 \x01(\t\x12\x0e\n\x06\x64\x62Type\x18\x02 \x01(\t\x12\x0f\n\x07project\x18\x03 \x01(\t\x12\r\n\x05group\x18\x04 \x01(\t\x12\x0c\n\x04type\x18\x05 \x01(\t\x12\n\n\x02id\x18\x06 \x01(\t\x12\r\n\x05where\x18\x07 \x01(\x0c\x12\x0f\n\x07options\x18\x08 \x01(\x0c\"l\n\x10RealTimeResponse\x12\r\n\x05group\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\t\x12\x0b\n\x03\x61\x63k\x18\x03 \x01(\x08\x12\r\n\x05\x65rror\x18\x04 \x01(\t\x12!\n\x08\x66\x65\x65\x64\x44\x61ta\x18\x05 \x03(\x0b\x32\x0f.proto.FeedData\"7\n\x0eProfileRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x19\n\x04meta\x18\x02 \x01(\x0b\x32\x0b.proto.Meta\",\n\x0fProfilesRequest\x12\x19\n\x04meta\x18\x01 \x01(\x0b\x32\x0b.proto.Meta\"j\n\x12\x45\x64itProfileRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\r\n\x05\x65mail\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x10\n\x08password\x18\x04 \x01(\t\x12\x19\n\x04meta\x18\x05 \x01(\x0b\x32\x0b.proto.Meta\"K\n\rSignInRequest\x12\r\n\x05\x65mail\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\x12\x19\n\x04meta\x18\x03 \x01(\x0b\x32\x0b.proto.Meta\"g\n\rSignUpRequest\x12\r\n\x05\x65mail\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\t\x12\x0c\n\x04role\x18\x04 \x01(\t\x12\x19\n\x04meta\x18\x05 \x01(\x0b\x32\x0b.proto.Meta\"L\n\x13\x43reateFolderRequest\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x19\n\x04meta\x18\x03 \x01(\x0b\x32\x0b.proto.Meta\";\n\x10ListFilesRequest\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\x19\n\x04meta\x18\x02 \x01(\x0b\x32\x0b.proto.Meta\"<\n\x11\x44\x65leteFileRequest\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\x19\n\x04meta\x18\x02 \x01(\x0b\x32\x0b.proto.Meta\">\n\x13\x44ownloadFileRequest\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\x19\n\x04meta\x18\x02 \x01(\x0b\x32\x0b.proto.Meta\"[\n\x11UploadFileRequest\x12\x0c\n\x04path\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07payload\x18\x03 \x01(\x0c\x12\x19\n\x04meta\x18\x04 \x01(\x0b\x32\x0b.proto.Meta\"=\n\x0b\x46ilePayload\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12\r\n\x05\x65rror\x18\x02 \x01(\t\x12\x0f\n\x07payload\x18\x03 \x01(\x0c\"O\n\x14PubsubPublishRequest\x12\x0f\n\x07subject\x18\x01 \x01(\t\x12\x0b\n\x03msg\x18\x02 \x01(\x0c\x12\x19\n\x04meta\x18\x03 \x01(\x0b\x32\x0b.proto.Meta\"r\n\x16PubsubSubscribeRequest\x12\x0f\n\x07subject\x18\x01 \x01(\t\x12\r\n\x05queue\x18\x02 \x01(\t\x12\x0c\n\x04type\x18\x03 \x01(\t\x12\r\n\x05token\x18\x04 \x01(\t\x12\x0f\n\x07project\x18\x05 \x01(\t\x12\n\n\x02id\x18\x06 \x01(\t\"Y\n\x11PubsubMsgResponse\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04type\x18\x02 \x01(\t\x12\x0e\n\x06status\x18\x03 \x01(\x05\x12\r\n\x05\x65rror\x18\x04 \x01(\t\x12\x0b\n\x03msg\x18\x05 \x01(\x0c\x32\xce\t\n\nSpaceCloud\x12\x31\n\x06\x43reate\x12\x14.proto.CreateRequest\x1a\x0f.proto.Response\"\x00\x12-\n\x04Read\x12\x12.proto.ReadRequest\x1a\x0f.proto.Response\"\x00\x12\x31\n\x06Update\x12\x14.proto.UpdateRequest\x1a\x0f.proto.Response\"\x00\x12\x31\n\x06\x44\x65lete\x12\x14.proto.DeleteRequest\x1a\x0f.proto.Response\"\x00\x12\x37\n\tAggregate\x12\x17.proto.AggregateRequest\x1a\x0f.proto.Response\"\x00\x12/\n\x05\x42\x61tch\x12\x13.proto.BatchRequest\x1a\x0f.proto.Response\"\x00\x12\x32\n\x04\x43\x61ll\x12\x17.proto.FunctionsRequest\x1a\x0f.proto.Response\"\x00\x12\x41\n\x08RealTime\x12\x16.proto.RealTimeRequest\x1a\x17.proto.RealTimeResponse\"\x00(\x01\x30\x01\x12\x41\n\x07Service\x12\x17.proto.FunctionsPayload\x1a\x17.proto.FunctionsPayload\"\x00(\x01\x30\x01\x12\x33\n\x07Profile\x12\x15.proto.ProfileRequest\x1a\x0f.proto.Response\"\x00\x12\x35\n\x08Profiles\x12\x16.proto.ProfilesRequest\x1a\x0f.proto.Response\"\x00\x12;\n\x0b\x45\x64itProfile\x12\x19.proto.EditProfileRequest\x1a\x0f.proto.Response\"\x00\x12\x31\n\x06SignIn\x12\x14.proto.SignInRequest\x1a\x0f.proto.Response\"\x00\x12\x31\n\x06SignUp\x12\x14.proto.SignUpRequest\x1a\x0f.proto.Response\"\x00\x12=\n\x0c\x43reateFolder\x12\x1a.proto.CreateFolderRequest\x1a\x0f.proto.Response\"\x00\x12\x37\n\tListFiles\x12\x17.proto.ListFilesRequest\x1a\x0f.proto.Response\"\x00\x12\x39\n\nDeleteFile\x12\x18.proto.DeleteFileRequest\x1a\x0f.proto.Response\"\x00\x12;\n\nUploadFile\x12\x18.proto.UploadFileRequest\x1a\x0f.proto.Response\"\x00(\x01\x12\x42\n\x0c\x44ownloadFile\x12\x1a.proto.DownloadFileRequest\x1a\x12.proto.FilePayload\"\x00\x30\x01\x12?\n\rPubsubPublish\x12\x1b.proto.PubsubPublishRequest\x1a\x0f.proto.Response\"\x00\x12P\n\x0fPubsubSubscribe\x12\x1d.proto.PubsubSubscribeRequest\x1a\x18.proto.PubsubMsgResponse\"\x00(\x01\x30\x01\x42\x34\n\x1f\x63om.spaceuptech.space_api.protoB\x0fSpaceCloudProtoP\x01\x62\x06proto3')
 )
 
 
@@ -1450,6 +1450,176 @@ _FILEPAYLOAD = _descriptor.Descriptor(
   serialized_end=2504,
 )
 
+
+_PUBSUBPUBLISHREQUEST = _descriptor.Descriptor(
+  name='PubsubPublishRequest',
+  full_name='proto.PubsubPublishRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='subject', full_name='proto.PubsubPublishRequest.subject', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='msg', full_name='proto.PubsubPublishRequest.msg', index=1,
+      number=2, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b(""),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='meta', full_name='proto.PubsubPublishRequest.meta', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2506,
+  serialized_end=2585,
+)
+
+
+_PUBSUBSUBSCRIBEREQUEST = _descriptor.Descriptor(
+  name='PubsubSubscribeRequest',
+  full_name='proto.PubsubSubscribeRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='subject', full_name='proto.PubsubSubscribeRequest.subject', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='queue', full_name='proto.PubsubSubscribeRequest.queue', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='type', full_name='proto.PubsubSubscribeRequest.type', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='token', full_name='proto.PubsubSubscribeRequest.token', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='project', full_name='proto.PubsubSubscribeRequest.project', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='id', full_name='proto.PubsubSubscribeRequest.id', index=5,
+      number=6, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2587,
+  serialized_end=2701,
+)
+
+
+_PUBSUBMSGRESPONSE = _descriptor.Descriptor(
+  name='PubsubMsgResponse',
+  full_name='proto.PubsubMsgResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='proto.PubsubMsgResponse.id', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='type', full_name='proto.PubsubMsgResponse.type', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='status', full_name='proto.PubsubMsgResponse.status', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='error', full_name='proto.PubsubMsgResponse.error', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='msg', full_name='proto.PubsubMsgResponse.msg', index=4,
+      number=5, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b(""),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2703,
+  serialized_end=2792,
+)
+
 _CREATEREQUEST.fields_by_name['meta'].message_type = _META
 _READREQUEST.fields_by_name['options'].message_type = _READOPTIONS
 _READREQUEST.fields_by_name['meta'].message_type = _META
@@ -1473,6 +1643,7 @@ _LISTFILESREQUEST.fields_by_name['meta'].message_type = _META
 _DELETEFILEREQUEST.fields_by_name['meta'].message_type = _META
 _DOWNLOADFILEREQUEST.fields_by_name['meta'].message_type = _META
 _UPLOADFILEREQUEST.fields_by_name['meta'].message_type = _META
+_PUBSUBPUBLISHREQUEST.fields_by_name['meta'].message_type = _META
 DESCRIPTOR.message_types_by_name['CreateRequest'] = _CREATEREQUEST
 DESCRIPTOR.message_types_by_name['ReadRequest'] = _READREQUEST
 DESCRIPTOR.message_types_by_name['ReadOptions'] = _READOPTIONS
@@ -1499,6 +1670,9 @@ DESCRIPTOR.message_types_by_name['DeleteFileRequest'] = _DELETEFILEREQUEST
 DESCRIPTOR.message_types_by_name['DownloadFileRequest'] = _DOWNLOADFILEREQUEST
 DESCRIPTOR.message_types_by_name['UploadFileRequest'] = _UPLOADFILEREQUEST
 DESCRIPTOR.message_types_by_name['FilePayload'] = _FILEPAYLOAD
+DESCRIPTOR.message_types_by_name['PubsubPublishRequest'] = _PUBSUBPUBLISHREQUEST
+DESCRIPTOR.message_types_by_name['PubsubSubscribeRequest'] = _PUBSUBSUBSCRIBEREQUEST
+DESCRIPTOR.message_types_by_name['PubsubMsgResponse'] = _PUBSUBMSGRESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 CreateRequest = _reflection.GeneratedProtocolMessageType('CreateRequest', (_message.Message,), dict(
@@ -1699,6 +1873,27 @@ FilePayload = _reflection.GeneratedProtocolMessageType('FilePayload', (_message.
   ))
 _sym_db.RegisterMessage(FilePayload)
 
+PubsubPublishRequest = _reflection.GeneratedProtocolMessageType('PubsubPublishRequest', (_message.Message,), dict(
+  DESCRIPTOR = _PUBSUBPUBLISHREQUEST,
+  __module__ = 'server_pb2'
+  # @@protoc_insertion_point(class_scope:proto.PubsubPublishRequest)
+  ))
+_sym_db.RegisterMessage(PubsubPublishRequest)
+
+PubsubSubscribeRequest = _reflection.GeneratedProtocolMessageType('PubsubSubscribeRequest', (_message.Message,), dict(
+  DESCRIPTOR = _PUBSUBSUBSCRIBEREQUEST,
+  __module__ = 'server_pb2'
+  # @@protoc_insertion_point(class_scope:proto.PubsubSubscribeRequest)
+  ))
+_sym_db.RegisterMessage(PubsubSubscribeRequest)
+
+PubsubMsgResponse = _reflection.GeneratedProtocolMessageType('PubsubMsgResponse', (_message.Message,), dict(
+  DESCRIPTOR = _PUBSUBMSGRESPONSE,
+  __module__ = 'server_pb2'
+  # @@protoc_insertion_point(class_scope:proto.PubsubMsgResponse)
+  ))
+_sym_db.RegisterMessage(PubsubMsgResponse)
+
 
 DESCRIPTOR._options = None
 _READOPTIONS_SELECTENTRY._options = None
@@ -1710,8 +1905,8 @@ _SPACECLOUD = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=2507,
-  serialized_end=3590,
+  serialized_start=2795,
+  serialized_end=4025,
   methods=[
   _descriptor.MethodDescriptor(
     name='Create',
@@ -1882,6 +2077,24 @@ _SPACECLOUD = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_DOWNLOADFILEREQUEST,
     output_type=_FILEPAYLOAD,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='PubsubPublish',
+    full_name='proto.SpaceCloud.PubsubPublish',
+    index=19,
+    containing_service=None,
+    input_type=_PUBSUBPUBLISHREQUEST,
+    output_type=_RESPONSE,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='PubsubSubscribe',
+    full_name='proto.SpaceCloud.PubsubSubscribe',
+    index=20,
+    containing_service=None,
+    input_type=_PUBSUBSUBSCRIBEREQUEST,
+    output_type=_PUBSUBMSGRESPONSE,
     serialized_options=None,
   ),
 ])

@@ -25,3 +25,15 @@ TypeRealtimeFeed = "realtime-feed"
 
 # PayloadSize is the size of the payload(in bytes) in file upload and download
 PayloadSize = 256 * 1024  # 256 kB
+
+# TypePubsubSubscribe is type triggering a pubsub subscribe
+TypePubsubSubscribe = "pubsub-subscribe"
+
+# TypePubsubSubscribeFeed is type having a pubsub subscribe feed
+TypePubsubSubscribeFeed = "pubsub-subscribe-feed"
+
+# TypePubsubUnsubscribe is type triggering a pubsub unsubscribe
+TypePubsubUnsubscribe = "pubsub-unsubscribe"
+
+# TypePubsubUnsubscribeAll is type triggering a pubsub unsubscribe all
+TypePubsubUnsubscribeAll = "pubsub-unsubscribe-all"

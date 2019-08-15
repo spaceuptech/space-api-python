@@ -109,6 +109,16 @@ class SpaceCloudStub(object):
         request_serializer=server__pb2.DownloadFileRequest.SerializeToString,
         response_deserializer=server__pb2.FilePayload.FromString,
         )
+    self.PubsubPublish = channel.unary_unary(
+        '/proto.SpaceCloud/PubsubPublish',
+        request_serializer=server__pb2.PubsubPublishRequest.SerializeToString,
+        response_deserializer=server__pb2.Response.FromString,
+        )
+    self.PubsubSubscribe = channel.stream_stream(
+        '/proto.SpaceCloud/PubsubSubscribe',
+        request_serializer=server__pb2.PubsubSubscribeRequest.SerializeToString,
+        response_deserializer=server__pb2.PubsubMsgResponse.FromString,
+        )
 
 
 class SpaceCloudServicer(object):
@@ -248,6 +258,20 @@ class SpaceCloudServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def PubsubPublish(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def PubsubSubscribe(self, request_iterator, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_SpaceCloudServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -345,6 +369,16 @@ def add_SpaceCloudServicer_to_server(servicer, server):
           servicer.DownloadFile,
           request_deserializer=server__pb2.DownloadFileRequest.FromString,
           response_serializer=server__pb2.FilePayload.SerializeToString,
+      ),
+      'PubsubPublish': grpc.unary_unary_rpc_method_handler(
+          servicer.PubsubPublish,
+          request_deserializer=server__pb2.PubsubPublishRequest.FromString,
+          response_serializer=server__pb2.Response.SerializeToString,
+      ),
+      'PubsubSubscribe': grpc.stream_stream_rpc_method_handler(
+          servicer.PubsubSubscribe,
+          request_deserializer=server__pb2.PubsubSubscribeRequest.FromString,
+          response_serializer=server__pb2.PubsubMsgResponse.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
