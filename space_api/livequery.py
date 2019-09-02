@@ -13,6 +13,12 @@ from space_api.transport import Transport
 
 
 class LiveQuerySubscription:
+    """
+    The LiveQuerySubscription Class
+
+    :param unsubscribe: (Callable) The unsubscribe function
+    :param snapshot: The initial snapshot
+    """
     def __init__(self, unsubscribe: Callable, snapshot):
         self.unsubscribe = unsubscribe
         self._snapshot = snapshot
@@ -150,7 +156,7 @@ class LiveQuery:
                         return
         except grpc._channel._Rendezvous as e:
             a = str(e).index('details = "')
-            self.on_error("Error:", str(e)[a + 11:str(e).index('"', a + 11)])
+            self.on_error("Transport Error:", str(e)[a + 11:str(e).index('"', a + 11)])
             self.unsubscribe()
             return
 
@@ -175,7 +181,7 @@ class LiveQuery:
         :param on_snapshot: (Callable) The function to be called when new live data is encountered (takes in docs(List),
             type of change(String) and the changed doc(dict))
         :param on_error: (Callable) The function to be called when an error occurs (takes in an error(str))
-        :return: (Callable) The unsubscribe function
+        :return: (LiveQuerySubscription) The LiveQuerySubscription instance
         """
         self.on_snapshot = on_snapshot
         self.on_error = on_error

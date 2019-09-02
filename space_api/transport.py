@@ -318,5 +318,18 @@ class Transport:
                 return Response(server_pb2.Response(status=response.status, error=response.error))
         return Response(server_pb2.Response(status=200))
 
+    def pubsub_publish(self, subject: str, msg) -> Response:
+        """
+        Calls the gRPC PubsubPublish function
+
+        :param subject: (str) The subject to publish to
+        :param msg: The message to be published
+        :return: (Response) The response object containing values corresponding to the request
+        """
+        msg = obj_to_utf8_bytes(msg)
+        meta = self._make_meta()
+        publish_request = server_pb2.PubsubPublishRequest(subject=subject, msg=msg, meta=meta)
+        return Response(self.stub.PubsubPublish(publish_request))
+
 
 __all__ = ["Transport", "make_read_options"]

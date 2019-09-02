@@ -6,6 +6,7 @@ from space_api.db.db import DB
 from space_api.response import Response
 from space_api.service import Service
 from space_api.filestore import FileStore
+from space_api.pubsub import Pubsub
 from space_api.transport import Transport
 from space_api import constants
 
@@ -116,9 +117,17 @@ class API:
         """
         Returns a FileStore instance
 
-        :return: (FileStore) The Service instance
+        :return: (FileStore) The FileStore instance
         """
         return FileStore(self.transport)
+
+    def pubsub(self) -> 'Pubsub':
+        """
+        Returns a Pubsub instance
+
+        :return: (Pubsub) The Pubsub instance
+        """
+        return Pubsub(self.transport)
 
 
 __all__ = ["API"]
