@@ -1,5 +1,7 @@
 # Python Client API for Space Cloud
 
+> **The python API is deprecated**
+
 ## Installation
 ```bash
 $ pip install space-api-py
